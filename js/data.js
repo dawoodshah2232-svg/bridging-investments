@@ -201,6 +201,90 @@ const BIDEMO = {
     ["Xero", "Accounting", "Approved general ledger sync", "connected"]
   ],
 
+
+  referralProgram: {
+    levels: [
+      { level: 1, label: "Direct", rate: 2.5, desc: "Investors who join with your link" },
+      { level: 2, label: "Level 2", rate: 1.25, desc: "Investors invited by your direct referrals" },
+      { level: 3, label: "Level 3", rate: 0.50, desc: "Investors invited at the third level" }
+    ],
+    minPayout: 500, cookieDays: 90,
+    terms: [
+      "Commission is calculated on cleared, funded investment only — reservations do not earn commission.",
+      "Commission becomes payable after the 14-day cooling period on the referred investment.",
+      "Minimum payout AED 500; smaller balances roll forward to the next cycle.",
+      "Self-referrals and duplicate accounts earn no commission and may close the IB account.",
+      "The program applies to demo data in this build; production terms are set by governance."
+    ]
+  },
+
+  myReferral: {
+    code: "INV-2041",
+    url: "https://dawoodshah2232-svg.github.io/bridging-investments/investor/login.html?ref=INV-2041",
+    network: [
+      { level: 1, name: "Sara M.", id: "INV-3102", invested: 60000, date: "12 Jul 2026", via: "Direct" },
+      { level: 1, name: "Omar K.", id: "INV-3188", invested: 40000, date: "28 Jul 2026", via: "Direct" },
+      { level: 2, name: "Layla H.", id: "INV-3241", invested: 100000, date: "09 Aug 2026", via: "Sara M." },
+      { level: 2, name: "Yusuf R.", id: "INV-3290", invested: 20000, date: "17 Aug 2026", via: "Omar K." },
+      { level: 3, name: "Nadia S.", id: "INV-3355", invested: 80000, date: "02 Sep 2026", via: "Layla H." }
+    ],
+    ledger: [
+      { id: "COM-904", from: "Sara M.", level: 1, base: 60000, rate: 2.5, amount: 1500, status: "Approved", date: "12 Jul 2026" },
+      { id: "COM-905", from: "Omar K.", level: 1, base: 40000, rate: 2.5, amount: 1000, status: "Paid", date: "28 Jul 2026" },
+      { id: "COM-906", from: "Layla H.", level: 2, base: 100000, rate: 1.25, amount: 1250, status: "Pending", date: "09 Aug 2026" },
+      { id: "COM-907", from: "Yusuf R.", level: 2, base: 20000, rate: 1.25, amount: 250, status: "Approved", date: "17 Aug 2026" },
+      { id: "COM-908", from: "Nadia S.", level: 3, base: 80000, rate: 0.50, amount: 400, status: "Pending", date: "02 Sep 2026" }
+    ]
+  },
+
+  ibApplications: [
+    { id: "IB-201", name: "Faisal D.", email: "faisal.d@sample.ae", country: "UAE", exp: "5 yrs FX introducing broker", status: "Pending", date: "27 Sep 2026" },
+    { id: "IB-202", name: "Maria C.", email: "maria.c@sample.ae", country: "Philippines", exp: "2 yrs community manager, 40k followers", status: "Pending", date: "28 Sep 2026" },
+    { id: "IB-203", name: "Tariq A.", email: "tariq.a@sample.ae", country: "UAE", exp: "Real-estate broker network, Dubai", status: "Approved", date: "20 Sep 2026" },
+    { id: "IB-204", name: "John P.", email: "john.p@sample.ae", country: "UK", exp: "No relevant experience declared", status: "Rejected", date: "18 Sep 2026" }
+  ],
+
+  ibNetwork: [
+    { level: 1, ib: "Tariq A.", name: "Hassan B.", id: "INV-3401", invested: 120000, date: "21 Sep 2026" },
+    { level: 1, ib: "Tariq A.", name: "Rania F.", id: "INV-3418", invested: 40000, date: "24 Sep 2026" },
+    { level: 2, ib: "Tariq A.", name: "Khalid N.", id: "INV-3440", invested: 60000, date: "26 Sep 2026", via: "Hassan B." },
+    { level: 1, ib: "Sara M.", name: "Layla H.", id: "INV-3241", invested: 100000, date: "09 Aug 2026" },
+    { level: 3, ib: "Sara M.", name: "Nadia S.", id: "INV-3355", invested: 80000, date: "02 Sep 2026", via: "Layla H." }
+  ],
+
+  ibLedger: [
+    { id: "COM-910", ib: "Tariq A.", from: "Hassan B.", level: 1, base: 120000, rate: 2.5, amount: 3000, status: "Pending", date: "21 Sep 2026" },
+    { id: "COM-911", ib: "Tariq A.", from: "Rania F.", level: 1, base: 40000, rate: 2.5, amount: 1000, status: "Pending", date: "24 Sep 2026" },
+    { id: "COM-912", ib: "Tariq A.", from: "Khalid N.", level: 2, base: 60000, rate: 1.25, amount: 750, status: "Pending", date: "26 Sep 2026" },
+    { id: "COM-904", ib: "Ahmed Khan", from: "Sara M.", level: 1, base: 60000, rate: 2.5, amount: 1500, status: "Approved", date: "12 Jul 2026" },
+    { id: "COM-906", ib: "Ahmed Khan", from: "Layla H.", level: 2, base: 100000, rate: 1.25, amount: 1250, status: "Pending", date: "09 Aug 2026" }
+  ],
+
+  notifications: [
+    { id: "N-1", title: "Distribution approved — Sep 2026", body: "AED 2,100 approved to your Emirates NBD **** 4418.", time: "2h ago", read: false },
+    { id: "N-2", title: "Commission approved", body: "AED 1,500 (COM-904) from Sara M. — Level 1.", time: "10 Sep 2026", read: false },
+    { id: "N-3", title: "August reports published", body: "Monthly reports are ready for 2 projects.", time: "14 Sep 2026", read: true },
+    { id: "N-4", title: "Payment cleared", body: "PAY-55198 — AED 40,000 received and allocated.", time: "05 Sep 2026", read: true }
+  ],
+
+  announcements: [
+    { id: "AN-31", title: "September distributions approved", audience: "All investors", date: "29 Sep 2026", status: "Published" },
+    { id: "AN-30", title: "New document: Yacht valuation — Sep 2026", audience: "Yacht investors", date: "15 Sep 2026", status: "Published" }
+  ],
+
+  auditSeed: [
+    { time: "29 Sep 2026 · 09:41", actor: "S. Iqbal", action: "Commission approved", detail: "COM-904 · AED 1,500 · Sara M. (Level 1)" },
+    { time: "28 Sep 2026 · 16:02", actor: "S. Iqbal", action: "IB application approved", detail: "IB-203 · Tariq A." },
+    { time: "27 Sep 2026 · 11:20", actor: "System", action: "Reports published", detail: "August 2026 · 2 projects" }
+  ],
+
+  statementTx: [
+    ["05 Sep 2026", "PAY-55198", "Investment funding — Yacht (2 units)", 40000, "Cleared"],
+    ["15 Sep 2026", "DIST-2091", "Distribution — Property, Aug 2026", 2100, "Paid"],
+    ["28 Jul 2026", "COM-905", "Referral commission — Omar K. (L1)", 1000, "Paid"],
+    ["12 Jul 2026", "COM-904", "Referral commission — Sara M. (L1)", 1500, "Approved"]
+  ],
+
   posts: [
     { slug: "due-diligence-checklist", title: "The 10-point checklist before you invest in anything private", date: "30 Sep 2026", read: "7 min read", excerpt: "Twenty minutes that protect your capital. The ten questions every private investment must survive.", tag: "Investor guide" },
     { slug: "guaranteed-returns-myth", title: "Guaranteed returns: why the phrase itself is the warning", date: "30 Sep 2026", read: "5 min read", excerpt: "No honest investment guarantees returns. The tricks behind the word — and the one-sentence test that protects you.", tag: "Investor guide" },

@@ -38,7 +38,18 @@
   };
   window.closeModal = function () { const m = document.getElementById("modal"); if (m) m.classList.remove("on"); document.body.style.overflow = ""; const b = document.querySelector("#modal .modal-box"); if (b) b.classList.remove("wide"); };
 
-  /* ---------- instant document viewer (tiny local sample PDFs) ---------- */
+  /* ---------- audit trail (demo, localStorage) ---------- */
+  window.audit = function (action, detail) {
+    try {
+      const log = JSON.parse(localStorage.getItem("bi_audit") || "[]");
+      const now = new Date();
+      const t = now.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" }) + " · " +
+                now.toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" });
+      log.unshift({ time: t, actor: document.body.dataset.role === "admin" ? "S. Iqbal" : "A. Khan", action, detail });
+      localStorage.setItem("bi_audit", JSON.stringify(log.slice(0, 50)));
+      if (typeof renderAudit === "function") renderAudit();
+    } catch (e) {}
+  };
   window.openDoc = function (url, title) {
     window.openModal(`<h3 style="margin-bottom:4px">${title}</h3>
       <p style="font-size:12.5px;color:var(--dim);margin-bottom:14px">Sample demo document — illustrative only, not a legal instrument.</p>

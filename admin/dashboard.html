@@ -5,7 +5,7 @@
 <title>Admin CRM — Bridging Investments</title>
 <meta name="robots" content="noindex">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop stop-color='%23ff7a1a'/%3E%3Cstop offset='1' stop-color='%23ffd97a'/%3E%3C/linearGradient%3E%3ClinearGradient id='s' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop stop-color='%23ffe3a3'/%3E%3Cstop offset='1' stop-color='%23f0b429'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='24' cy='11' r='6.5' fill='url(%23s)'/%3E%3Cpath d='M6 35c5.5-10.5 12-15 18-15s12.5 4.5 18 15' stroke='url(%23g)' stroke-width='4.4' stroke-linecap='round' fill='none'/%3E%3Cpath d='M3.5 35h41' stroke='url(%23g)' stroke-width='4.4' stroke-linecap='round'/%3E%3Ccircle cx='24' cy='35' r='2.2' fill='%23ffd97a'/%3E%3C/svg%3E">
-<link rel="stylesheet" href="../css/style.css?v=20260929b">
+<link rel="stylesheet" href="../css/style.css?v=20260929c">
 </head>
 <body data-role="admin">
 <div class="portal">
@@ -21,6 +21,8 @@
 <a class="tab" data-tab="treasury"><span class="ti">🏦</span>Treasury</a>
 <a class="tab" data-tab="register"><span class="ti">📜</span>Ownership register</a>
 <a class="tab" data-tab="finance"><span class="ti">💹</span>Finance & payouts</a>
+<a class="tab" data-tab="ib"><span class="ti">🤝</span>IB & referrals</a>
+<a class="tab" data-tab="announce"><span class="ti">📢</span>Announcements</a>
 <div class="side-sec">System</div>
 <a class="tab" data-tab="integrations"><span class="ti">🔌</span>Integrations & API</a>
 <a class="tab" data-tab="governance"><span class="ti">⚖</span>Governance</a>
@@ -169,6 +171,65 @@
 </section>
 
 <!-- GOVERNANCE -->
+<!-- IB & REFERRALS -->
+<section class="pane" id="pane-ib">
+<h1 class="page-title">IB & referrals <span class="badge demo">DEMO</span></h1>
+<p class="page-sub">Three-level introducing-broker program — applications, network, commissions, verification.</p>
+
+<div class="stat-grid" id="ibRates"></div>
+
+<div class="two-col" style="align-items:start">
+<div>
+<div class="panel"><h3>Commission calculator</h3>
+<p class="ph-sub">Enter a funded investment to preview the 3-level split.</p>
+<div style="display:flex;gap:10px;margin:12px 0">
+<input id="calcAmt" type="number" value="100000" min="0" style="flex:1;background:#0d141b;border:1px solid var(--line2);color:var(--ivory);border-radius:12px;padding:12px 14px;font-size:14px">
+<button class="btn btn-primary btn-sm" onclick="calcCom()">Calculate</button>
+</div>
+<div id="calcOut"></div></div>
+<div class="panel"><h3>IB applications</h3><div class="table-wrap" style="border:0"><table style="min-width:640px" id="ibApps"></table></div></div>
+</div>
+<div>
+<div class="panel"><h3>Network — 3 levels (sample)</h3><div id="ibTree"></div></div>
+<div class="panel"><h3>Verify a referral link</h3>
+<p class="ph-sub">Paste an investor referral link to check it resolves.</p>
+<div style="display:flex;gap:10px;margin:12px 0">
+<input id="verifyLink" placeholder="https://…/investor/login.html?ref=INV-2041" style="flex:1;background:#0d141b;border:1px solid var(--line2);color:var(--ivory);border-radius:12px;padding:12px 14px;font-size:13px">
+<button class="btn btn-ghost btn-sm" onclick="verifyLink()">Verify</button>
+</div>
+<div id="verifyOut"></div></div>
+</div>
+</div>
+
+<div class="panel"><h3>Commission ledger</h3>
+<p class="ph-sub">Pending → Approved → Paid. Every action is written to the audit trail.</p>
+<div class="table-wrap" style="border:0"><table style="min-width:760px" id="ibLedger"></table></div></div>
+</section>
+
+<!-- ANNOUNCEMENTS -->
+<section class="pane" id="pane-announce">
+<h1 class="page-title">Announcements <span class="badge demo">DEMO</span></h1>
+<p class="page-sub">Broadcasts to investors — published items appear as investor notifications in this demo.</p>
+<div class="two-col" style="align-items:start">
+<div>
+<div class="panel"><h3>New announcement</h3>
+<label style="font-size:13px;color:var(--muted)">Title</label>
+<input id="anTitle" placeholder="e.g. September distributions approved" style="width:100%;background:#0d141b;border:1px solid var(--line2);color:var(--ivory);border-radius:12px;padding:12px 14px;font-size:14px;margin:6px 0 12px">
+<label style="font-size:13px;color:var(--muted)">Audience</label>
+<select id="anAud" style="width:100%;background:#0d141b;border:1px solid var(--line2);color:var(--ivory);border-radius:12px;padding:12px 14px;font-size:14px;margin:6px 0 12px">
+<option>All investors</option><option>Yacht investors</option><option>Property investors</option><option>IB partners</option></select>
+<label style="font-size:13px;color:var(--muted)">Message</label>
+<textarea id="anMsg" rows="3" placeholder="Write the announcement…" style="width:100%;background:#0d141b;border:1px solid var(--line2);color:var(--ivory);border-radius:12px;padding:12px 14px;font-size:14px;margin:6px 0 14px"></textarea>
+<button class="btn btn-primary" style="width:100%" onclick="publishAn()">Publish announcement</button>
+<p style="font-size:12.5px;color:var(--dim);margin-top:10px">Demo: publishing notifies the sample investor inbox on this device.</p>
+</div>
+</div>
+<div>
+<div class="panel"><h3>Published</h3><div id="anList"></div></div>
+</div>
+</div>
+</section>
+
 <section class="pane" id="pane-governance">
 <h1 class="page-title">Governance</h1>
 <p class="page-sub">Audit trail, access control and system safeguards.</p>
@@ -187,7 +248,7 @@
 </div><!-- /main -->
 </div><!-- /portal -->
 
-<script src="../js/data.js?v=20260929b"></script>
+<script src="../js/data.js?v=20260929c"></script>
 <script src="../js/portal.js"></script>
 <script>
 function goTab(id){ document.querySelector(`.side a.tab[data-tab="${id}"]`).click(); }
@@ -292,6 +353,100 @@ document.getElementById("intGrid").innerHTML = BIDEMO.integrations.map(g=>`
   <span class="badge mut">${g[1]}</span>
   <button class="btn btn-sm ${g[3]==="connected"?"btn-gold":"btn-ghost"}" data-on="${g[3]==="connected"?"1":"0"}" onclick="demoToggle('${g[0]}',this)">${g[3]==="connected"?"✓ Connected":"Connect"}</button>
   </div></div>`).join("");
+
+/* ---------- IB & referrals ---------- */
+(function(){
+  const P = BIDEMO.referralProgram;
+  document.getElementById("ibRates").innerHTML = P.levels.map(l=>`
+    <div class="stat-card"><div class="sl">Level ${l.level} · ${l.label}</div><div class="sv" style="color:var(--orange2)">${l.rate}%</div><div class="sl" style="margin:6px 0 0">${l.desc}</div></div>`).join("");
+  renderIbApps(); renderIbTree(); renderIbLedger();
+})();
+function ibBadge(st){ return `<span class="badge ${st==="Approved"||st==="Paid"?"ok":st==="Rejected"?"warn":"info"}">${st}</span>`; }
+function renderIbApps(){
+  document.getElementById("ibApps").innerHTML =
+    `<tr><th>ID</th><th>Applicant</th><th>Background</th><th>Applied</th><th>Status</th><th></th></tr>` +
+    BIDEMO.ibApplications.map((a,i)=>`<tr><td>${a.id}</td><td><b>${a.name}</b><div class="dm">${a.email} · ${a.country}</div></td><td>${a.exp}</td><td>${a.date}</td><td>${ibBadge(a.status)}</td><td style="white-space:nowrap">${a.status==="Pending"?`<button class="btn btn-gold btn-sm" onclick="ibDecide(${i},'Approved')">Approve</button> <button class="btn btn-ghost btn-sm" onclick="ibDecide(${i},'Rejected')">Reject</button>`:""}</td></tr>`).join("");
+}
+function ibDecide(i, st){
+  const a = BIDEMO.ibApplications[i]; a.status = st; renderIbApps();
+  audit("IB application "+st.toLowerCase(), a.id+" · "+a.name);
+  toast(`Demo: ${a.id} ${st.toLowerCase()} — logged to audit trail`);
+}
+function renderIbTree(){
+  const groups = {};
+  BIDEMO.ibNetwork.forEach(n=>{ (groups[n.ib]=groups[n.ib]||[]).push(n); });
+  document.getElementById("ibTree").innerHTML = Object.keys(groups).map(ib=>`
+    <div style="margin-bottom:16px"><b style="font-size:13.5px">🤝 ${ib} <span class="badge mut">IB</span></b>
+    ${groups[ib].map(n=>`<div class="doc-row"><div><b>${n.name}</b><div class="dm">${n.id} · Level ${n.level}${n.via?" · via "+n.via:""} · ${n.date}</div></div><span style="font-weight:800;color:var(--gold)">${fmtAED(n.invested)}</span></div>`).join("")}</div>`).join("");
+}
+function renderIbLedger(){
+  document.getElementById("ibLedger").innerHTML =
+    `<tr><th>ID</th><th>IB partner</th><th>From investor</th><th>Lvl</th><th>Base</th><th>Rate</th><th>Commission</th><th>Status</th><th>Date</th><th></th></tr>` +
+    BIDEMO.ibLedger.map((l,i)=>`<tr><td>${l.id}</td><td>${l.ib}</td><td>${l.from}</td><td>${l.level}</td><td>${fmtAED(l.base)}</td><td>${l.rate}%</td><td><b>${fmtAED(l.amount)}</b></td><td>${ibBadge(l.status)}</td><td>${l.date}</td>
+    <td style="white-space:nowrap">${l.status==="Pending"?`<button class="btn btn-gold btn-sm" onclick="ibCom(${i},'Approved')">Approve</button>`:l.status==="Approved"?`<button class="btn btn-ghost btn-sm" onclick="ibCom(${i},'Paid')">Mark paid</button>`:""}</td></tr>`).join("");
+}
+function ibCom(i, st){
+  const l = BIDEMO.ibLedger[i]; l.status = st; renderIbLedger();
+  audit("Commission "+st.toLowerCase(), l.id+" · "+fmtAED(l.amount)+" · "+l.from+" (L"+l.level+")");
+  toast(`Demo: ${l.id} marked ${st} — logged to audit trail`);
+}
+function calcCom(){
+  const amt = Math.max(0, Number(document.getElementById("calcAmt").value)||0);
+  const rows = BIDEMO.referralProgram.levels.map(l=>{ const c = amt*l.rate/100;
+    return `<div class="doc-row"><div><b>Level ${l.level} — ${l.label}</b><div class="dm">${l.rate}% of ${fmtAED(amt)}</div></div><b style="color:var(--orange2)">${fmtAED(c)}</b></div>`; }).join("");
+  const tot = BIDEMO.referralProgram.levels.reduce((a,l)=>a+amt*l.rate/100,0);
+  document.getElementById("calcOut").innerHTML = rows + `<div class="doc-row"><div><b>Total program cost</b></div><b style="color:var(--gold)">${fmtAED(tot)}</b></div>
+  <p style="font-size:12.5px;color:var(--dim)">Demo calculator — illustrative only.</p>`;
+}
+function verifyLink(){
+  const v = document.getElementById("verifyLink").value.trim();
+  const m = v.match(/[?&]ref=([A-Za-z0-9-]+)/);
+  const out = document.getElementById("verifyOut");
+  if(!m){ out.innerHTML = `<span class="badge warn">Invalid — no ?ref= code found</span>`; return; }
+  const known = ["INV-2041","INV-3102","INV-3188"];
+  const ok = known.includes(m[1].toUpperCase());
+  audit("Referral link verified", m[1].toUpperCase()+" · "+(ok?"valid investor":"unknown code"));
+  out.innerHTML = ok
+    ? `<span class="badge ok">Valid</span> <span style="font-size:13.5px"> ${m[1].toUpperCase()} resolves to a verified investor. Attribution active for ${BIDEMO.referralProgram.cookieDays} days.</span>`
+    : `<span class="badge warn">Unknown code</span> <span style="font-size:13.5px"> ${m[1].toUpperCase()} is not a registered investor code.</span>`;
+}
+
+/* ---------- announcements ---------- */
+function renderAns(){
+  document.getElementById("anList").innerHTML = BIDEMO.announcements.map(a=>`
+    <div class="doc-row"><div><b>${a.title}</b><div class="dm">${a.id} · ${a.audience} · ${a.date}</div></div>${ibBadge(a.status)}</div>`).join("");
+}
+function publishAn(){
+  const t = document.getElementById("anTitle").value.trim();
+  if(!t){ toast("Give the announcement a title first"); return; }
+  const a = { id: "AN-"+(32+BIDEMO.announcements.length), title: t, audience: document.getElementById("anAud").value, date: "29 Sep 2026", status: "Published" };
+  BIDEMO.announcements.unshift(a); renderAns();
+  const notifs = JSON.parse(localStorage.getItem("bi_notifs")||"[]");
+  notifs.unshift({ id:"N-"+Date.now(), title: t, body: document.getElementById("anMsg").value||a.audience, time: "Just now", read: false });
+  localStorage.setItem("bi_notifs", JSON.stringify(notifs));
+  audit("Announcement published", a.id+" · "+t+" → "+a.audience);
+  document.getElementById("anTitle").value=""; document.getElementById("anMsg").value="";
+  toast("Demo: announcement published — investor inbox updated on this device");
+}
+renderAns();
+
+/* ---------- audit trail (governance) ---------- */
+(function(){
+  const el = document.querySelector("#pane-governance .panel");
+  if(!el) return;
+  const box = document.createElement("div");
+  box.className = "panel";
+  box.innerHTML = `<h3>Audit trail</h3><p class="ph-sub">Immutable log of admin actions — demo entries plus this session.</p><div class="table-wrap" style="border:0"><table style="min-width:560px" id="auditTable"></table></div>`;
+  el.parentNode.insertBefore(box, el);
+  renderAudit();
+})();
+function renderAudit(){
+  const sess = JSON.parse(localStorage.getItem("bi_audit")||"[]");
+  const all = sess.concat(BIDEMO.auditSeed);
+  const t = document.getElementById("auditTable");
+  if(t) t.innerHTML = `<tr><th>Time</th><th>Actor</th><th>Action</th><th>Detail</th></tr>` +
+    all.map(a=>`<tr><td style="white-space:nowrap">${a.time}</td><td>${a.actor}</td><td><b>${a.action}</b></td><td>${a.detail}</td></tr>`).join("");
+}
 
 /* team */
 document.getElementById("teamGrid").innerHTML = BIDEMO.team.map(t=>`

@@ -5,7 +5,7 @@
 <title>Investor portal — Bridging Investments</title>
 <meta name="robots" content="noindex">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop stop-color='%23ff7a1a'/%3E%3Cstop offset='1' stop-color='%23ffd97a'/%3E%3C/linearGradient%3E%3ClinearGradient id='s' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop stop-color='%23ffe3a3'/%3E%3Cstop offset='1' stop-color='%23f0b429'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='24' cy='11' r='6.5' fill='url(%23s)'/%3E%3Cpath d='M6 35c5.5-10.5 12-15 18-15s12.5 4.5 18 15' stroke='url(%23g)' stroke-width='4.4' stroke-linecap='round' fill='none'/%3E%3Cpath d='M3.5 35h41' stroke='url(%23g)' stroke-width='4.4' stroke-linecap='round'/%3E%3Ccircle cx='24' cy='35' r='2.2' fill='%23ffd97a'/%3E%3C/svg%3E">
-<link rel="stylesheet" href="../css/style.css?v=20260929b">
+<link rel="stylesheet" href="../css/style.css?v=20260929c">
 <link rel="prefetch" href="../docs/yacht-offering-terms-v1-2.pdf">
 <link rel="prefetch" href="../docs/yacht-risk-acknowledgement.pdf">
 <link rel="prefetch" href="../docs/subscription-agreement-rsv-88097.pdf">
@@ -21,6 +21,7 @@
 <a class="tab" data-tab="reservations"><span class="ti">📌</span>Reservations</a>
 <a class="tab" data-tab="payments"><span class="ti">💳</span>Payments</a>
 <a class="tab" data-tab="investments"><span class="ti">🏛</span>Investments</a>
+<a class="tab" data-tab="referrals"><span class="ti">🤝</span>Referrals</a>
 <div class="side-sec">Information</div>
 <a class="tab" data-tab="reports"><span class="ti">📊</span>Reports & distributions</a>
 <a class="tab" data-tab="documents"><span class="ti">📁</span>Documents</a>
@@ -36,6 +37,8 @@
 <button class="side-toggle" aria-label="Menu">☰</button>
 <b style="font-size:15px">Investor portal</b><span class="badge demo">DEMO</span>
 <div class="who">
+<button class="bell-btn" id="bellBtn" onclick="toggleNotifs(event)" aria-label="Notifications">🔔<span class="bell-n" id="bellN"></span></button>
+<div class="notif-drop" id="notifDrop"></div>
 <button class="pal-btn" onclick="togglePalette(true)">⌘K commands</button>
 <div class="who-name" style="text-align:right"><b style="font-size:14px" id="whoName">Ahmed Khan</b><div style="font-size:12px;color:var(--dim)">INV-2041 · Verified</div></div>
 <div class="avatar">AK</div>
@@ -102,6 +105,7 @@
 <!-- PAYMENTS -->
 <section class="pane" id="pane-payments">
 <h1 class="page-title">Payments</h1>
+<div style="margin:-6px 0 18px"><button class="btn btn-ghost btn-sm" onclick="downloadStatement()">⬇ Download statement (CSV)</button></div>
 <p class="page-sub">Bank transfer only. Every payment is reconciled to its reservation reference.</p>
 <div class="panel" style="border-color:rgba(255,176,32,.45)">
 <h3>⏳ Pending — action required</h3>
@@ -131,6 +135,42 @@
 <h1 class="page-title">Investments</h1>
 <p class="page-sub">Your legal holdings — issued into project company registers.</p>
 <div id="invList"></div>
+</section>
+
+
+<!-- REFERRALS -->
+<section class="pane" id="pane-referrals">
+<h1 class="page-title">Referrals <span class="badge demo">DEMO</span></h1>
+<p class="page-sub">Invite investors with your unique link and earn commission on three levels.</p>
+
+<div class="panel" style="border-color:rgba(255,122,26,.4)">
+<h3>Your unique referral link</h3>
+<div style="display:flex;gap:10px;margin:14px 0;flex-wrap:wrap">
+<input id="refLink" readonly value="" style="flex:1;min-width:220px;background:#0d141b;border:1px solid var(--line2);color:var(--ivory);border-radius:12px;padding:12px 14px;font-size:13px">
+<button class="btn btn-primary btn-sm" onclick="copyRefLink()">Copy link</button>
+</div>
+<div style="display:flex;gap:8px;flex-wrap:wrap">
+<button class="btn btn-ghost btn-sm" onclick="shareRef('whatsapp')">WhatsApp</button>
+<button class="btn btn-ghost btn-sm" onclick="shareRef('telegram')">Telegram</button>
+<button class="btn btn-ghost btn-sm" onclick="shareRef('x')">X</button>
+<button class="btn btn-ghost btn-sm" onclick="shareRef('email')">Email</button>
+</div>
+<p style="font-size:12.5px;color:var(--dim);margin-top:12px">Anyone who signs up through this link is attached to your network for commission. Sample link — illustrative only.</p>
+</div>
+
+<div class="stat-grid" id="refStats"></div>
+
+<div class="two-col" style="align-items:start">
+<div>
+<div class="panel"><h3>Program rates</h3><div id="refRates"></div></div>
+<div class="panel"><h3>Your network — 3 levels</h3><div id="refTree"></div></div>
+</div>
+<div>
+<div class="panel"><h3>Commission ledger</h3><div class="table-wrap" style="border:0"><table style="min-width:560px" id="refLedger"></table></div>
+<p style="font-size:12.5px;color:var(--dim);margin-top:10px">Minimum payout AED 500 — smaller balances roll forward. Demo figures, illustrative only.</p></div>
+<div class="panel"><h3>Program terms</h3><ul id="refTerms" style="color:var(--muted);font-size:13.5px;padding-left:20px;display:grid;gap:8px"></ul></div>
+</div>
+</div>
 </section>
 
 <!-- REPORTS -->
@@ -201,7 +241,7 @@
 </div><!-- /main -->
 </div><!-- /portal -->
 
-<script src="../js/data.js?v=20260929b"></script>
+<script src="../js/data.js?v=20260929c"></script>
 <script src="../js/portal.js"></script>
 <script>
 function goTab(id){ document.querySelector(`.side a.tab[data-tab="${id}"]`).click(); }
@@ -253,6 +293,68 @@ document.getElementById("invList").innerHTML = BIDEMO.investments.map(iv=>`
 document.getElementById("docList").innerHTML = BIDEMO.documents.map(d=>`
   <div class="doc-row"><div><b>${d[0]}</b><div class="dm">${d[1]} · ${d[2]} · hash ${d[3]}</div></div>
   <button class="btn btn-ghost btn-sm" onclick="openDoc('../${d[4]}','${d[0].replace(/'/g, "")}')">Preview</button></div>`).join("");
+
+
+/* ---------- referrals ---------- */
+(function(){
+  const R = BIDEMO.myReferral, P = BIDEMO.referralProgram;
+  document.getElementById("refLink").value = R.url;
+  const l1 = R.network.filter(n=>n.level===1), l2 = R.network.filter(n=>n.level===2), l3 = R.network.filter(n=>n.level===3);
+  const vol = R.network.reduce((a,n)=>a+n.invested,0);
+  const earn = st => R.ledger.filter(l=>l.status===st).reduce((a,l)=>a+l.amount,0);
+  const stat = (l,v)=>`<div class="stat-card"><div class="sl">${l}</div><div class="sv">${v}</div></div>`;
+  document.getElementById("refStats").innerHTML =
+    stat("Level 1 · Direct", l1.length) + stat("Level 2", l2.length) + stat("Level 3", l3.length) +
+    stat("Network volume", fmtAED(vol)) + stat("Paid out", fmtAED(earn("Paid"))) + stat("Pending", fmtAED(earn("Pending")));
+  document.getElementById("refRates").innerHTML = P.levels.map(l=>`
+    <div class="doc-row"><div><b>Level ${l.level} — ${l.label}</b><div class="dm">${l.desc}</div></div>
+    <span class="badge ok" style="font-size:16px">${l.rate}%</span></div>`).join("");
+  const lvlName = {1:"Direct — Level 1", 2:"Level 2", 3:"Level 3"};
+  document.getElementById("refTree").innerHTML = [1,2,3].map(lv=>`
+    <div style="margin-bottom:14px"><b style="font-size:13px;color:var(--orange2)">${lvlName[lv]}</b>
+    ${R.network.filter(n=>n.level===lv).map(n=>`
+      <div class="doc-row"><div><b>${n.name}</b><div class="dm">${n.id} · via ${n.via} · joined ${n.date}</div></div>
+      <span style="font-weight:800;color:var(--gold)">${fmtAED(n.invested)}</span></div>`).join("")}</div>`).join("");
+  const bc = {Pending:"warn", Approved:"info", Paid:"ok"};
+  document.getElementById("refLedger").innerHTML =
+    `<tr><th>ID</th><th>From</th><th>Lvl</th><th>Base</th><th>Rate</th><th>Commission</th><th>Status</th><th>Date</th></tr>` +
+    R.ledger.map(l=>`<tr><td>${l.id}</td><td>${l.from}</td><td>${l.level}</td><td>${fmtAED(l.base)}</td><td>${l.rate}%</td><td><b>${fmtAED(l.amount)}</b></td><td><span class="badge ${bc[l.status]}">${l.status}</span></td><td>${l.date}</td></tr>`).join("");
+  document.getElementById("refTerms").innerHTML = P.terms.map(t=>`<li>${t}</li>`).join("");
+})();
+function copyRefLink(){ const i=document.getElementById("refLink"); i.select(); try{navigator.clipboard.writeText(i.value);}catch(e){} toast("Referral link copied — share it anywhere"); }
+function shareRef(ch){
+  const u=encodeURIComponent(BIDEMO.myReferral.url), t=encodeURIComponent("Join me on Bridging Investments — curated shared ownership in commercial projects.");
+  const links={whatsapp:"https://wa.me/?text="+t+"%20"+u, telegram:"https://t.me/share/url?url="+u+"&text="+t, x:"https://twitter.com/intent/tweet?text="+t+"&url="+u, email:"mailto:?subject="+t+"&body="+u};
+  window.open(links[ch],"_blank");
+}
+
+/* ---------- notifications ---------- */
+function renderNotifs(){
+  const extra = JSON.parse(localStorage.getItem("bi_notifs")||"[]");
+  const all = extra.concat(BIDEMO.notifications);
+  const unread = all.filter(n=>!n.read).length;
+  const b=document.getElementById("bellN");
+  b.textContent = unread||""; b.style.display = unread?"grid":"none";
+  document.getElementById("notifDrop").innerHTML =
+    `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><b>Notifications</b><button class="btn btn-ghost btn-sm" onclick="markAllRead(event)">Mark all read</button></div>` +
+    (all.map(n=>`<div class="doc-row" style="${n.read?"opacity:.6":""}"><div><b>${n.title}</b><div class="dm">${n.body}</div><div class="dm">${n.time}</div></div>${n.read?"":'<span class="badge info">New</span>'}</div>`).join("") || '<p style="color:var(--dim)">No notifications.</p>');
+}
+function toggleNotifs(e){ e.stopPropagation(); const d=document.getElementById("notifDrop"); d.classList.toggle("on"); }
+function markAllRead(e){ e.stopPropagation();
+  const extra=JSON.parse(localStorage.getItem("bi_notifs")||"[]").map(n=>({...n,read:true}));
+  localStorage.setItem("bi_notifs", JSON.stringify(extra));
+  BIDEMO.notifications.forEach(n=>n.read=true); renderNotifs();
+}
+document.addEventListener("click", e=>{ const d=document.getElementById("notifDrop"); if(d&&d.classList.contains("on")&&!d.contains(e.target)) d.classList.remove("on"); });
+renderNotifs();
+
+/* ---------- statement CSV ---------- */
+function downloadStatement(){
+  const rows=[["Date","Reference","Description","Amount (AED)","Status"]].concat(BIDEMO.statementTx);
+  const csv=rows.map(r=>r.map(c=>`"${c}"`).join(",")).join("\n");
+  const a=document.createElement("a"); a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv"})); a.download="bridging-investments-statement-demo.csv"; a.click();
+  toast("Demo statement downloaded (CSV)");
+}
 
 document.getElementById("ticketList").innerHTML = BIDEMO.tickets.map(t=>`
   <div class="doc-row"><div><b>${t.subject}</b><div class="dm">${t.id} · ${t.date}</div></div>
