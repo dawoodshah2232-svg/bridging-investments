@@ -576,3 +576,9 @@ canvas{width:100%;display:block}
   .bento{grid-template-columns:1fr}.span4,.span3,.span2{grid-column:span 1}
   .stat-hero{padding:26px 20px}
 }
+
+/* ---- document viewer + project film ---- */
+.modal-box.wide{width:min(880px,100%)}
+.doc-frame{width:100%;height:62vh;min-height:380px;border:1px solid var(--line2,#e2e8f0);border-radius:14px;background:#fff}
+@media(max-width:640px){.doc-frame{height:56vh;min-height:320px}}
+video{max-width:100%}

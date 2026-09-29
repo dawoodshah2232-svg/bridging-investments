@@ -175,6 +175,8 @@
           <div class="p-img" style="border-radius:var(--r);border:1px solid var(--line)">
             ${p.img ? `<img src="${BASE}${p.img}" alt="${p.name}" style="width:100%;height:100%;object-fit:cover;aspect-ratio:16/10">` : ""}
             ${statusChip(p.status)}</div>
+          ${p.video ? `<div class="panel" style="margin-top:22px"><h3>Project film</h3><p class="ph-sub">A 10-second cinematic look at the asset — sample footage</p>
+            <video controls playsinline preload="none" poster="${BASE}${p.img}" style="width:100%;border-radius:14px;background:#000;aspect-ratio:16/9"><source src="${BASE}${p.video}" type="video/mp4"></video></div>` : ""}
           <div class="panel" style="margin-top:22px"><h3>Capital budget</h3><p class="ph-sub">Use of funds — illustrative, from approved documents ${p.version}</p>
             <div class="table-wrap" style="border:0"><table style="min-width:0">
             ${p.budget.map(b => `<tr><td>${b[0]}</td><td class="num" style="text-align:right">${fmtAED(b[1])}</td></tr>`).join("")}
@@ -183,7 +185,7 @@
           <div class="panel"><h3>Key risks</h3><p class="ph-sub">Read before reserving. Capital is at risk.</p>
             <ul style="color:var(--muted);font-size:14.5px;padding-left:20px;display:grid;gap:9px">${p.risks.map(r => `<li>${r}</li>`).join("")}</ul></div>
           <div class="panel"><h3>Document room</h3><p class="ph-sub">Approved documents · version-controlled</p>
-            ${p.docs.map(d => `<div class="doc-row"><div><b>${d[0]}</b><div class="dm">${d[1]}</div></div><button class="btn btn-ghost btn-sm" onclick="toast('Demo: document preview opens after sign-in')">Preview</button></div>`).join("") || '<p style="color:var(--dim)">No documents published yet.</p>'}</div>
+            ${p.docs.map(d => `<div class="doc-row"><div><b>${d[0]}</b><div class="dm">${d[1]} · sample PDF</div></div>${d[2] ? `<button class="btn btn-ghost btn-sm" onclick="openDoc('${BASE}${d[2]}','${d[0].replace(/'/g, "")}')">Preview</button>` : '<span class="badge mut">Soon</span>'}</div>`).join("") || '<p style="color:var(--dim)">No documents published yet.</p>'}</div>
         </div>
         <div>
           <div class="panel" style="border-color:rgba(255,122,26,.35)">
@@ -256,6 +258,15 @@
     m.classList.add("on"); document.body.style.overflow = "hidden";
   };
   window.closeModal = function () { const m = document.getElementById("modal"); if (m) m.classList.remove("on"); document.body.style.overflow = ""; };
+  window.openDoc = function (url, title) {
+    openModal(`<h3 style="margin-bottom:4px">${title}</h3>
+      <p style="font-size:12.5px;color:var(--dim);margin-bottom:14px">Sample demo document — illustrative only, not a legal instrument.</p>
+      <iframe src="${url}" class="doc-frame" title="${title}"></iframe>
+      <div style="display:flex;gap:10px;margin-top:16px"><a class="btn btn-primary" style="flex:1" href="${url}" download>Download PDF</a><button class="btn btn-ghost" style="flex:1" onclick="closeModal()">Close</button></div>`);
+    document.querySelector("#modal .modal-box").classList.add("wide");
+  };
+  const _cm = window.closeModal;
+  window.closeModal = function () { _cm(); const b = document.querySelector("#modal .modal-box"); if (b) b.classList.remove("wide"); };
   window.toast = function (msg) {
     let t = document.getElementById("toast");
     if (!t) { t = document.createElement("div"); t.id = "toast"; t.style.cssText = "position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(20px);background:#182028;border:1px solid rgba(255,122,26,.5);color:var(--ivory);padding:14px 22px;border-radius:14px;z-index:300;font-size:14px;font-weight:600;opacity:0;transition:.3s;max-width:92%;text-align:center"; document.body.appendChild(t); }

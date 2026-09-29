@@ -36,7 +36,16 @@
     document.getElementById("modalBody").innerHTML = html;
     m.classList.add("on"); document.body.style.overflow = "hidden";
   };
-  window.closeModal = function () { const m = document.getElementById("modal"); if (m) m.classList.remove("on"); document.body.style.overflow = ""; };
+  window.closeModal = function () { const m = document.getElementById("modal"); if (m) m.classList.remove("on"); document.body.style.overflow = ""; const b = document.querySelector("#modal .modal-box"); if (b) b.classList.remove("wide"); };
+
+  /* ---------- instant document viewer (tiny local sample PDFs) ---------- */
+  window.openDoc = function (url, title) {
+    window.openModal(`<h3 style="margin-bottom:4px">${title}</h3>
+      <p style="font-size:12.5px;color:var(--dim);margin-bottom:14px">Sample demo document — illustrative only, not a legal instrument.</p>
+      <iframe src="${url}" class="doc-frame" title="${title}"></iframe>
+      <div style="display:flex;gap:10px;margin-top:16px"><a class="btn btn-primary" style="flex:1" href="${url}" download>Download PDF</a><button class="btn btn-ghost" style="flex:1" onclick="closeModal()">Close</button></div>`);
+    const b = document.querySelector("#modal .modal-box"); if (b) b.classList.add("wide");
+  };
 
   /* ---------- canvas helpers ---------- */
   function setup(cv, h) {

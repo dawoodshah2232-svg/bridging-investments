@@ -23,7 +23,7 @@ const BIDEMO = {
   projects: [
     {
       id: "yacht", code: "BI-YT-01", name: "Dubai Charter Yacht", category: "Maritime charter",
-      location: "Dubai Marina, UAE", img: "assets/yacht.jpg", status: "funding",
+      location: "Dubai Marina, UAE", img: "assets/yacht.jpg", video: "assets/videos/yacht.mp4", status: "funding",
       tagline: "A 78ft luxury charter yacht with an established operator and forward bookings.",
       capital: 2000000, units: 100, unitPrice: 20000, reserved: 62, funded: 20,
       min: 1, max: 20, operator: "Marina Crest Charters LLC", issuer: "BI Yacht One Ltd",
@@ -34,12 +34,12 @@ const BIDEMO = {
         ["Legal setup & disclosed closing fees", 50000]
       ],
       risks: ["Charter revenue is seasonal and not guaranteed.", "The yacht is a single physical asset — damage or downtime reduces income.", "Holdings are illiquid; no public market exists for the units.", "Capital is at risk; you may get back less than you invest."],
-      docs: [["Offering terms v1.2", "PDF · 2.1 MB"], ["Risk acknowledgement", "PDF · 310 KB"], ["Independent survey summary", "PDF · 1.4 MB"], ["Operator agreement summary", "PDF · 880 KB"], ["Valuation report — Sep 2026", "PDF · 1.1 MB"]],
+      docs: [["Offering terms v1.2", "PDF · 2.1 MB", "docs/yacht-offering-terms-v1-2.pdf"], ["Risk acknowledgement", "PDF · 310 KB", "docs/yacht-risk-acknowledgement.pdf"], ["Independent survey summary", "PDF · 1.4 MB", "docs/yacht-survey-summary.pdf"], ["Operator agreement summary", "PDF · 880 KB", "docs/yacht-operator-agreement-summary.pdf"], ["Valuation report — Sep 2026", "PDF · 1.1 MB", "docs/yacht-valuation-sep-2026.pdf"]],
       timeline: [["Campaign opens", "01 Oct 2026"], ["Funding call (if fully reserved)", "05 Nov 2026"], ["Long stop date", "30 Nov 2026"], ["Legal closing & issuance", "Dec 2026"], ["First monthly report", "15 Jan 2027"]]
     },
     {
       id: "property", code: "BI-CP-02", name: "Business Bay Commercial Tower — Levels 12–14", category: "Commercial property",
-      location: "Business Bay, Dubai, UAE", img: "assets/property.jpg", status: "funding",
+      location: "Business Bay, Dubai, UAE", img: "assets/property.jpg", video: "assets/videos/property.mp4", status: "funding",
       tagline: "Three tenanted office floors with contracted rental income and 94% occupancy.",
       capital: 5000000, units: 250, unitPrice: 20000, reserved: 141, funded: 88,
       min: 1, max: 25, operator: "Bayline Facilities Management LLC", issuer: "BI Property Two Ltd",
@@ -50,27 +50,27 @@ const BIDEMO = {
         ["Working capital & service-charge reserve", 160000]
       ],
       risks: ["Rental income depends on tenants paying on time; voids reduce distributions.", "Property values can fall; sale proceeds are not guaranteed.", "Holdings are illiquid with a planned 5-year holding period.", "Capital is at risk; you may get back less than you invest."],
-      docs: [["Offering terms v1.0", "PDF · 2.4 MB"], ["Risk acknowledgement", "PDF · 310 KB"], ["Title & encumbrance review", "PDF · 980 KB"], ["Tenancy schedule (redacted)", "PDF · 1.2 MB"], ["Valuation report — Aug 2026", "PDF · 1.6 MB"]],
+      docs: [["Offering terms v1.0", "PDF · 2.4 MB", "docs/property-offering-terms-v1-0.pdf"], ["Risk acknowledgement", "PDF · 310 KB", "docs/property-risk-acknowledgement.pdf"], ["Title & encumbrance review", "PDF · 980 KB", "docs/property-title-review.pdf"], ["Tenancy schedule (redacted)", "PDF · 1.2 MB", "docs/property-tenancy-schedule.pdf"], ["Valuation report — Aug 2026", "PDF · 1.6 MB", "docs/property-valuation-aug-2026.pdf"]],
       timeline: [["Campaign opens", "15 Sep 2026"], ["Funding call (if fully reserved)", "05 Dec 2026"], ["Long stop date", "15 Dec 2026"], ["Legal closing & issuance", "Jan 2027"], ["First monthly report", "15 Feb 2027"]]
     },
     {
       id: "restaurant", code: "BI-RS-03", name: "JBR Flagship Restaurant", category: "Hospitality",
-      location: "JBR, Dubai, UAE", img: "assets/restaurant.jpg", status: "evaluation",
+      location: "JBR, Dubai, UAE", img: "assets/restaurant.jpg", video: "assets/videos/restaurant.mp4", status: "evaluation",
       tagline: "A flagship dining outlet under evaluation — revenue reconciliation in progress.",
       capital: 3200000, units: 160, unitPrice: 20000, reserved: 0, funded: 0,
       min: 1, max: 20, operator: "Under selection", issuer: "TBC", longStop: "TBC", campaignEnds: "TBC", version: "draft",
       budget: [["Fit-out & kitchen", 1800000], ["Licences & approvals", 320000], ["Launch working capital", 780000], ["Reserve", 300000]],
       risks: ["Still under evaluation — no offer has been approved.", "Restaurant revenue is volatile and operator-dependent."],
-      docs: [["Evaluation note (summary)", "PDF · 420 KB"]],
+      docs: [["Evaluation note (summary)", "PDF · 420 KB", "docs/restaurant-evaluation-note.pdf"], ["Risk acknowledgement", "PDF · 300 KB", "docs/restaurant-risk-acknowledgement.pdf"]],
       timeline: [["Evaluation", "In progress"], ["Investment committee review", "Oct 2026"]]
     },
     {
       id: "falcon", code: "BI-FX-04", name: "Project Falcon — FX Brokerage Equity", category: "Financial services",
-      location: "Under review", img: "", status: "review",
+      location: "Under review", img: "", video: "assets/videos/falcon.mp4", status: "review",
       tagline: "Brokerage equity requires separate regulatory approval before any offer can be made.",
       capital: 0, units: 0, unitPrice: 0, reserved: 0, funded: 0,
       min: 0, max: 0, operator: "—", issuer: "—", longStop: "—", campaignEnds: "—", version: "—",
-      budget: [], risks: ["Not an approved product. Subscriptions are never trader deposits."], docs: [], timeline: [["Regulatory review", "Pending"]]
+      budget: [], risks: ["Not an approved product. Subscriptions are never trader deposits."], docs: [["Evaluation note (summary)", "PDF · 350 KB", "docs/falcon-evaluation-note.pdf"]], timeline: [["Regulatory review", "Pending"]]
     }
   ],
 
@@ -109,11 +109,11 @@ const BIDEMO = {
   ],
 
   documents: [
-    ["Offering terms — Yacht v1.2", "Project", "v1.2 · 12 Sep 2026", "a3f9…c21d"],
-    ["Risk acknowledgement (signed)", "Compliance", "Signed 14 Jun 2026", "77b1…0e9a"],
-    ["Subscription agreement — RSV-88097", "Legal", "Signed 02 Sep 2026", "e40c…19bb"],
-    ["Share certificate CRT-2026-0912", "Register", "Issued 20 Aug 2026", "92de…44f0"],
-    ["August 2026 monthly report — Property", "Reporting", "15 Sep 2026", "11aa…78cd"]
+    ["Offering terms — Yacht v1.2", "Project", "v1.2 · 12 Sep 2026", "a3f9…c21d", "docs/yacht-offering-terms-v1-2.pdf"],
+    ["Risk acknowledgement (signed)", "Compliance", "Signed 14 Jun 2026", "77b1…0e9a", "docs/yacht-risk-acknowledgement.pdf"],
+    ["Subscription agreement — RSV-88097", "Legal", "Signed 02 Sep 2026", "e40c…19bb", "docs/subscription-agreement-rsv-88097.pdf"],
+    ["Share certificate CRT-2026-0912", "Register", "Issued 20 Aug 2026", "92de…44f0", "docs/share-certificate-crt-2026-0912.pdf"],
+    ["August 2026 monthly report — Property", "Reporting", "15 Sep 2026", "11aa…78cd", "docs/monthly-report-aug-2026-property.pdf"]
   ],
 
   activity: [
