@@ -15,7 +15,7 @@ const BIDEMO = {
     curveLabels: ["Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep"],
     allocation: [
       { label: "Commercial property", pct: 66, color: "#ff7a1a" },
-      { label: "Charter yacht", pct: 27, color: "#22c55e" },
+      { label: "Charter yacht", pct: 27, color: "#f0b429" },
       { label: "Cash (pending)", pct: 7, color: "#38bdf8" }
     ]
   },

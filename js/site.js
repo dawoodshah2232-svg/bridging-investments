@@ -71,7 +71,7 @@
       g1.addColorStop(0, "rgba(255,122,26,.14)"); g1.addColorStop(1, "transparent");
       ctx.fillStyle = g1; ctx.fillRect(0, 0, W, H);
       const g2 = ctx.createRadialGradient(W * .15, H * .85, 0, W * .15, H * .85, W * .4);
-      g2.addColorStop(0, "rgba(34,197,94,.10)"); g2.addColorStop(1, "transparent");
+      g2.addColorStop(0, "rgba(240,180,41,.10)"); g2.addColorStop(1, "transparent");
       ctx.fillStyle = g2; ctx.fillRect(0, 0, W, H);
       // particles
       parts.forEach(p => {
@@ -86,12 +86,12 @@
       for (let i = 0; i <= steps * curveP; i++) { const p = i / steps; pts.push([p * W, curveY(p)]); }
       if (pts.length > 1) {
         const lg = ctx.createLinearGradient(0, 0, W, 0);
-        lg.addColorStop(0, "#ff7a1a"); lg.addColorStop(.6, "#ffb020"); lg.addColorStop(1, "#22c55e");
+        lg.addColorStop(0, "#ff7a1a"); lg.addColorStop(.6, "#ffb020"); lg.addColorStop(1, "#f0b429");
         ctx.beginPath(); pts.forEach((pt, i) => i ? ctx.lineTo(pt[0], pt[1]) : ctx.moveTo(pt[0], pt[1]));
         ctx.strokeStyle = lg; ctx.lineWidth = 3; ctx.shadowColor = "rgba(255,140,40,.7)"; ctx.shadowBlur = 14; ctx.stroke(); ctx.shadowBlur = 0;
         const last = pts[pts.length - 1];
         ctx.beginPath(); ctx.arc(last[0], last[1], 5 + Math.sin(t * 4) * 1.5, 0, 7);
-        ctx.fillStyle = "#22c55e"; ctx.fill();
+        ctx.fillStyle = "#f0b429"; ctx.fill();
         ctx.lineTo(last[0], H); ctx.lineTo(pts[0][0], H); ctx.closePath();
         const fg = ctx.createLinearGradient(0, H * .3, 0, H);
         fg.addColorStop(0, "rgba(255,140,40,.16)"); fg.addColorStop(1, "transparent");
@@ -120,12 +120,12 @@
           <div class="p-meta"><span>📍 ${p.location}</span><span>🏷 ${p.category}</span></div>
           ${p.units ? `<div class="p-econ">
             <div>Unit price<b>${fmtAED(p.unitPrice)}</b></div>
-            <div style="text-align:right">Available<b style="color:var(--green)">${avail} units</b></div>
+            <div style="text-align:right">Available<b style="color:var(--gold)">${avail} units</b></div>
           </div>
           <div class="p-bars">
             <div class="bar-row"><span>Allocated</span><b style="color:var(--orange2)">${allocated}%</b></div>
             <div class="bar o"><i data-w="${allocated}"></i></div>
-            <div class="bar-row"><span>Funded</span><b style="color:var(--green)">${fundedPct}%</b></div>
+            <div class="bar-row"><span>Funded</span><b style="color:var(--gold)">${fundedPct}%</b></div>
             <div class="bar g"><i data-w="${fundedPct}"></i></div>
           </div>` : `<p style="color:var(--muted);font-size:14px">${p.tagline}</p>`}
           <div class="p-cta">
@@ -195,9 +195,9 @@
             <div class="p-bars" style="margin-bottom:18px">
               <div class="bar-row"><span>${p.reserved} reserved · ${p.funded} funded</span><b style="color:var(--orange2)">${allocated}% allocated</b></div>
               <div class="bar o"><i data-w="${allocated}" style="width:${allocated}%"></i></div>
-              <div class="bar-row"><span>Funded allocations</span><b style="color:var(--green)">${fundedPct}%</b></div>
+              <div class="bar-row"><span>Funded allocations</span><b style="color:var(--gold)">${fundedPct}%</b></div>
               <div class="bar g"><i data-w="${fundedPct}" style="width:${fundedPct}%"></i></div>
-              <div class="bar-row"><span><b style="color:var(--green)">${avail} units available</b></span><span>Min ${p.min} · Max ${p.max}</span></div>
+              <div class="bar-row"><span><b style="color:var(--gold)">${avail} units available</b></span><span>Min ${p.min} · Max ${p.max}</span></div>
             </div>
             <div class="stepper" style="margin-bottom:16px">
               <button id="qMinus" aria-label="Fewer units">−</button><b id="qVal">1</b><button id="qPlus" aria-label="More units">+</button>
@@ -238,7 +238,7 @@
   window.openReserve = function (p, qty) {
     openModal(`<h3>Reserve ${qty} unit${qty > 1 ? "s" : ""}</h3>
       <p style="color:var(--muted);font-size:14.5px;margin-bottom:18px">${p.name} · ${fmtAED(p.unitPrice)} / unit · Offer ${p.version}</p>
-      <div class="p-econ" style="margin-bottom:18px"><div>Commitment<b>${fmtAED(qty * p.unitPrice)}</b></div><div style="text-align:right">Reference<b style="color:var(--green)">RSV-${Math.floor(88000 + Math.random() * 1999)}</b></div></div>
+      <div class="p-econ" style="margin-bottom:18px"><div>Commitment<b>${fmtAED(qty * p.unitPrice)}</b></div><div style="text-align:right">Reference<b style="color:var(--gold)">RSV-${Math.floor(88000 + Math.random() * 1999)}</b></div></div>
       <p style="font-size:13px;color:var(--dim);margin-bottom:20px">Demo mode: no account is created and no money moves. In production this step requires a verified, eligible investor and creates a time-limited hold with an idempotency key.</p>
       <button class="btn btn-primary btn-lg" style="width:100%" onclick="closeModal();toast('Demo reservation confirmed — check the investor portal tour')">Confirm demo reservation</button>
       <div style="text-align:center;margin-top:14px"><a href="${BASE}investor/login.html" style="color:var(--orange2);font-weight:700;font-size:14px">Have an account? Sign in →</a></div>`);

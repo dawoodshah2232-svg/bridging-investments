@@ -4,13 +4,13 @@
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Admin CRM — Bridging Investments</title>
 <meta name="robots" content="noindex">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%2322c55e'/%3E%3Ctext x='32' y='42' font-size='26' font-family='Arial' font-weight='900' text-anchor='middle' fill='%230a0d10'%3EBI%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop stop-color='%23ff7a1a'/%3E%3Cstop offset='1' stop-color='%23ffd97a'/%3E%3C/linearGradient%3E%3ClinearGradient id='s' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop stop-color='%23ffe3a3'/%3E%3Cstop offset='1' stop-color='%23f0b429'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='24' cy='11' r='6.5' fill='url(%23s)'/%3E%3Cpath d='M6 35c5.5-10.5 12-15 18-15s12.5 4.5 18 15' stroke='url(%23g)' stroke-width='4.4' stroke-linecap='round' fill='none'/%3E%3Cpath d='M3.5 35h41' stroke='url(%23g)' stroke-width='4.4' stroke-linecap='round'/%3E%3Ccircle cx='24' cy='35' r='2.2' fill='%23ffd97a'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="../css/style.css">
 </head>
 <body data-role="admin">
 <div class="portal">
 <aside class="side" id="side">
-<a class="logo" href="../index.html"><span class="logo-mark" style="background:linear-gradient(135deg,#22c55e,#0e9f5c)">BI</span><span>Bridging Investments<small>Admin CRM</small></span></a>
+<a class="logo" href="../index.html"><span class="logo-mark"><svg viewBox="0 0 48 48" fill="none" aria-hidden="true"><defs><linearGradient id="bi-lg" x1="8" y1="4" x2="40" y2="44" gradientUnits="userSpaceOnUse"><stop stop-color="#ff7a1a"/><stop offset="1" stop-color="#ffd97a"/></linearGradient><linearGradient id="bi-sn" x1="24" y1="4" x2="24" y2="22" gradientUnits="userSpaceOnUse"><stop stop-color="#ffe3a3"/><stop offset="1" stop-color="#f0b429"/></linearGradient></defs><circle cx="24" cy="11" r="6.5" fill="url(#bi-sn)"/><path d="M6 35c5.5-10.5 12-15 18-15s12.5 4.5 18 15" stroke="url(#bi-lg)" stroke-width="4.4" stroke-linecap="round" fill="none"/><path d="M3.5 35h41" stroke="url(#bi-lg)" stroke-width="4.4" stroke-linecap="round"/><path d="M13.5 35v-6.5M34.5 35v-6.5" stroke="#ff7a1a" stroke-width="3" stroke-linecap="round" opacity=".8"/><circle cx="24" cy="35" r="2.2" fill="#ffd97a"/></svg></span><span>Bridging Investments<small>Admin CRM</small></span></a>
 <div class="side-sec">Command</div>
 <a class="tab on" data-tab="overview"><span class="ti">◈</span>Overview</a>
 <a class="tab" data-tab="investors"><span class="ti">👥</span>Investors</a>
@@ -37,7 +37,7 @@
 <div class="who">
 <button class="pal-btn" onclick="togglePalette(true)">⌘K commands</button>
 <div style="text-align:right"><b style="font-size:14px">S. Iqbal</b><div style="font-size:12px;color:var(--dim)">System admin</div></div>
-<div class="avatar" style="background:linear-gradient(135deg,#22c55e,#0e9f5c)">SI</div>
+<div class="avatar" style="background:linear-gradient(135deg,#f0b429,#c98a12)">SI</div>
 </div>
 </div>
 
@@ -52,8 +52,8 @@
 </div>
 <div class="bento">
 <div class="panel span2"><h3>Reconciliation health</h3><div class="ring-row"><div id="ring1"></div><div style="font-size:13.5px;color:var(--muted)">2 breaks open<br><b style="color:var(--orange2)">1 unmatched payment</b><br>1 amount mismatch</div></div></div>
-<div class="panel span2"><h3>Reporting timeliness</h3><div class="ring-row"><div id="ring2"></div><div style="font-size:13.5px;color:var(--muted)">August cycle<br><b style="color:#4ade80">100% on time</b><br>September in prep</div></div></div>
-<div class="panel span2"><h3>Payout success</h3><div class="ring-row"><div id="ring3"></div><div style="font-size:13.5px;color:var(--muted)">Last payout run<br><b style="color:#4ade80">99.2% first-try</b><br>2 retries succeeded</div></div></div>
+<div class="panel span2"><h3>Reporting timeliness</h3><div class="ring-row"><div id="ring2"></div><div style="font-size:13.5px;color:var(--muted)">August cycle<br><b style="color:#ffd97a">100% on time</b><br>September in prep</div></div></div>
+<div class="panel span2"><h3>Payout success</h3><div class="ring-row"><div id="ring3"></div><div style="font-size:13.5px;color:var(--muted)">Last payout run<br><b style="color:#ffd97a">99.2% first-try</b><br>2 retries succeeded</div></div></div>
 </div>
 <div class="panel"><h3>Latest audit events</h3><p class="ph-sub">Append-only · newest first</p><div class="feed" id="auditPrev"></div>
 <button class="btn btn-ghost btn-sm" style="margin-top:12px" onclick="goTab('governance')">Full audit log →</button></div>
@@ -137,7 +137,7 @@
 <div class="doc-row"><div>Total payout<b style="display:block;color:var(--muted);font-weight:400">AED 84,000 → 250 units · AED 336/unit</b></div></div>
 <div class="doc-row"><div>Per-unit<b style="display:block;color:var(--muted);font-weight:400">AED 210 net of 1% admin fee accrual</b></div></div>
 <div style="display:grid;gap:10px;margin-top:16px">
-<button class="btn btn-green" onclick="demoApprove('DIST-SEP26','Distribution')">Approve & schedule release</button>
+<button class="btn btn-gold" onclick="demoApprove('DIST-SEP26','Distribution')">Approve & schedule release</button>
 <button class="btn btn-ghost" onclick="demoReject('DIST-SEP26','Distribution')">Send back with note</button>
 </div>
 <p style="font-size:12.5px;color:var(--dim);margin-top:12px">You are acting as the second approver. The preparer cannot approve their own batch — the system enforces this.</p></div>
@@ -198,7 +198,7 @@ document.getElementById("kpis").innerHTML = BIDEMO.adminKpis.map(k=>`
   <div class="kcard" onclick="goTab('${kpiTab[k[0]]}')"><b>${k[1]}</b><span>${k[0]}</span><span class="trend ${k[3]}">${k[2]}</span></div>`).join("");
 
 bars("chVel",["Apr","May","Jun","Jul","Aug","Sep"],[420,610,880,1240,1610,1490].map(v=>v));
-ring("ring1",94,"#ffb020"); ring("ring2",100,"#22c55e"); ring("ring3",99,"#22c55e");
+ring("ring1",94,"#ffb020"); ring("ring2",100,"#f0b429"); ring("ring3",99,"#f0b429");
 
 document.getElementById("alerts").innerHTML = [
   ["Unmatched payment PAY-55240 — AED 60,000","2h ago","warn","treasury"],
@@ -244,7 +244,7 @@ document.getElementById("kycBody").innerHTML = BIDEMO.compliance.map(c=>`
   <tr><td class="num"><b class="hl">${c.id}</b></td><td>${c.who}</td><td>${c.type}</td>
   <td><span class="badge ${c.risk==="High"?"warn":c.risk==="Low"?"ok":"info"}">${c.risk}</span></td>
   <td>${c.sla}</td><td><span class="badge ${c.state==="Approved"?"ok":"warn"}">${c.state}</span></td>
-  <td>${c.state==="Approved"?"—":`<button class="btn btn-green btn-sm" onclick="demoApprove('${c.id}','Case')">Approve</button> <button class="btn btn-ghost btn-sm" onclick="demoReject('${c.id}','Case')">Reject</button>`}</td></tr>`).join("");
+  <td>${c.state==="Approved"?"—":`<button class="btn btn-gold btn-sm" onclick="demoApprove('${c.id}','Case')">Approve</button> <button class="btn btn-ghost btn-sm" onclick="demoReject('${c.id}','Case')">Reject</button>`}</td></tr>`).join("");
 
 /* projects admin */
 document.getElementById("projAdmin").innerHTML = BIDEMO.projects.filter(p=>p.units).map(p=>{
@@ -290,7 +290,7 @@ document.getElementById("intGrid").innerHTML = BIDEMO.integrations.map(g=>`
   <h3 style="font-size:16.5px">${g[0]}</h3><p style="font-size:13px">${g[2]}</p>
   <div style="display:flex;justify-content:space-between;align-items:center;margin-top:14px">
   <span class="badge mut">${g[1]}</span>
-  <button class="btn btn-sm ${g[3]==="connected"?"btn-green":"btn-ghost"}" data-on="${g[3]==="connected"?"1":"0"}" onclick="demoToggle('${g[0]}',this)">${g[3]==="connected"?"✓ Connected":"Connect"}</button>
+  <button class="btn btn-sm ${g[3]==="connected"?"btn-gold":"btn-ghost"}" data-on="${g[3]==="connected"?"1":"0"}" onclick="demoToggle('${g[0]}',this)">${g[3]==="connected"?"✓ Connected":"Connect"}</button>
   </div></div>`).join("");
 
 /* team */

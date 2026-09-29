@@ -83,7 +83,7 @@
     vals.forEach((v, i) => {
       const h = Math.abs(v) / max * (H - 60), x = 10 + i * bw + bw * 0.22, y = v >= 0 ? H - 30 - h : H - 30;
       const g = c.createLinearGradient(0, y, 0, y + h);
-      const col = colors ? colors[i] : (v >= 0 ? "#22c55e" : "#ff7a1a");
+      const col = colors ? colors[i] : (v >= 0 ? "#f0b429" : "#ff7a1a");
       g.addColorStop(0, col); g.addColorStop(1, col + "55");
       c.fillStyle = g;
       const r = 6;
@@ -159,7 +159,7 @@
     const on = el.dataset.on === "1";
     el.dataset.on = on ? "0" : "1";
     el.innerHTML = on ? "Connect" : "✓ Connected";
-    el.className = "btn btn-sm " + (on ? "btn-ghost" : "btn-green");
+    el.className = "btn btn-sm " + (on ? "btn-ghost" : "btn-gold");
     toast(`Demo: ${name} ${on ? "disconnected" : "connected"} — keys stored in vault in production`);
   };
 })();
