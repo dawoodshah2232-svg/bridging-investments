@@ -210,3 +210,4 @@ const BIDEMO = {
 };
 
 const fmtAED = n => "AED " + Number(n).toLocaleString("en-US");
+window.BIDEMO = BIDEMO; window.fmtAED = fmtAED;
