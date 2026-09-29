@@ -11,9 +11,10 @@
   const burger = document.getElementById("burger"), drawer = document.getElementById("drawer");
   if (burger && drawer) burger.addEventListener("click", () => {
     const open = drawer.classList.toggle("open");
+    burger.classList.toggle("open", open);
     burger.setAttribute("aria-expanded", open);
   });
-  if (drawer) drawer.querySelectorAll("a").forEach(a => a.addEventListener("click", () => drawer.classList.remove("open")));
+  if (drawer) drawer.querySelectorAll("a").forEach(a => a.addEventListener("click", () => { drawer.classList.remove("open"); if (burger) burger.classList.remove("open"); }));
 
   const page = document.body.dataset.page;
   document.querySelectorAll("[data-nav]").forEach(a => { if (a.dataset.nav === page) a.classList.add("active"); });
