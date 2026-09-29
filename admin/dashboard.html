@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin CRM — Bridging Investments</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%2322c55e'/%3E%3Ctext x='32' y='42' font-size='26' font-family='Arial' font-weight='900' text-anchor='middle' fill='%230a0d10'%3EBI%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body data-role="admin">
+<div class="portal">
+<aside class="side" id="side">
+<a class="logo" href="../index.html"><span class="logo-mark" style="background:linear-gradient(135deg,#22c55e,#0e9f5c)">BI</span><span>Bridging Investments<small>Admin CRM</small></span></a>
+<div class="side-sec">Command</div>
+<a class="tab on" data-tab="overview"><span class="ti">◈</span>Overview</a>
+<a class="tab" data-tab="investors"><span class="ti">👥</span>Investors</a>
+<a class="tab" data-tab="compliance"><span class="ti">🛡</span>Compliance & KYC</a>
+<div class="side-sec">Operations</div>
+<a class="tab" data-tab="projects"><span class="ti">🏗</span>Projects</a>
+<a class="tab" data-tab="campaigns"><span class="ti">📣</span>Campaigns</a>
+<a class="tab" data-tab="treasury"><span class="ti">🏦</span>Treasury</a>
+<a class="tab" data-tab="register"><span class="ti">📜</span>Ownership register</a>
+<a class="tab" data-tab="finance"><span class="ti">💹</span>Finance & payouts</a>
+<div class="side-sec">System</div>
+<a class="tab" data-tab="integrations"><span class="ti">🔌</span>Integrations & API</a>
+<a class="tab" data-tab="governance"><span class="ti">⚖</span>Governance</a>
+<div class="side-foot">
+<span class="badge demo">DEMO DATA</span>
+<button class="btn btn-ghost btn-sm" onclick="portalLogout()">Log out</button>
+</div>
+</aside>
+
+<div class="main">
+<div class="topbar">
+<button class="side-toggle" aria-label="Menu">☰</button>
+<b style="font-size:15px">Admin CRM</b><span class="badge demo">DEMO</span>
+<div class="who">
+<button class="pal-btn" onclick="togglePalette(true)">⌘K commands</button>
+<div style="text-align:right"><b style="font-size:14px">S. Iqbal</b><div style="font-size:12px;color:var(--dim)">System admin</div></div>
+<div class="avatar" style="background:linear-gradient(135deg,#22c55e,#0e9f5c)">SI</div>
+</div>
+</div>
+
+<!-- OVERVIEW -->
+<section class="pane on" id="pane-overview">
+<h1 class="page-title">Command center</h1>
+<p class="page-sub">Tuesday 29 Sep 2026 · all figures demo · click any metric to drill in.</p>
+<div class="kpi-strip" id="kpis"></div>
+<div class="bento">
+<div class="panel span4"><h3>Funding velocity</h3><p class="ph-sub">Cleared funding per month · AED thousands</p><canvas id="chVel" height="220"></canvas></div>
+<div class="panel span2" style="border-color:rgba(255,176,32,.4)"><h3>⚠ Needs attention</h3><p class="ph-sub">Oldest first</p><div class="feed" id="alerts"></div></div>
+</div>
+<div class="bento">
+<div class="panel span2"><h3>Reconciliation health</h3><div class="ring-row"><div id="ring1"></div><div style="font-size:13.5px;color:var(--muted)">2 breaks open<br><b style="color:var(--orange2)">1 unmatched payment</b><br>1 amount mismatch</div></div></div>
+<div class="panel span2"><h3>Reporting timeliness</h3><div class="ring-row"><div id="ring2"></div><div style="font-size:13.5px;color:var(--muted)">August cycle<br><b style="color:#4ade80">100% on time</b><br>September in prep</div></div></div>
+<div class="panel span2"><h3>Payout success</h3><div class="ring-row"><div id="ring3"></div><div style="font-size:13.5px;color:var(--muted)">Last payout run<br><b style="color:#4ade80">99.2% first-try</b><br>2 retries succeeded</div></div></div>
+</div>
+<div class="panel"><h3>Latest audit events</h3><p class="ph-sub">Append-only · newest first</p><div class="feed" id="auditPrev"></div>
+<button class="btn btn-ghost btn-sm" style="margin-top:12px" onclick="goTab('governance')">Full audit log →</button></div>
+</section>
+
+<!-- INVESTORS -->
+<section class="pane" id="pane-investors">
+<h1 class="page-title">Investors</h1>
+<p class="page-sub">Eligible investors, pipeline and 360° profiles. Click any row for the full picture.</p>
+<div class="panel"><h3>Lead pipeline</h3><p class="ph-sub">Drag-and-drop in production · click a stage card to open the lead</p><div class="kanban" id="kanban"></div></div>
+<div class="panel"><h3>Investor directory</h3><p class="ph-sub">312 eligible investors · showing 6</p>
+<div class="field" style="max-width:340px"><input id="invSearch" placeholder="Search name, ID, project…" oninput="filterInv(this.value)"></div>
+<div class="table-wrap"><table id="invTable"><tr><th>Investor</th><th>ID</th><th>Status</th><th>Holdings</th><th>Contributed</th><th>Last activity</th></tr></table></div></div>
+</section>
+
+<!-- COMPLIANCE -->
+<section class="pane" id="pane-compliance">
+<h1 class="page-title">Compliance & KYC</h1>
+<p class="page-sub">Independent of sales. Compliance decisions cannot be overridden by commercial teams.</p>
+<div class="kpi-strip" style="grid-template-columns:repeat(4,1fr)">
+<div class="kcard"><b>4</b><span>Open cases</span><span class="trend warn">1 high risk</span></div>
+<div class="kcard"><b>100%</b><span>Screened this month</span><span class="trend ok">Sanctions + PEP</span></div>
+<div class="kcard"><b>18h</b><span>Median review time</span><span class="trend ok">SLA 48h</span></div>
+<div class="kcard"><b>0</b><span>Overdue cases</span><span class="trend ok">All clear</span></div>
+</div>
+<div class="panel"><h3>Review queue</h3><p class="ph-sub">Oldest SLA first · dual control on high-risk</p>
+<div class="table-wrap"><table><tr><th>Case</th><th>Investor</th><th>Type</th><th>Risk</th><th>SLA</th><th>Status</th><th>Action</th></tr><tbody id="kycBody"></tbody></table></div></div>
+<div class="panel"><h3>Screening</h3><p class="ph-sub">Automated lanes · demo results</p>
+<div class="doc-row"><div><b>Sanctions lists</b><div class="dm">OFAC · EU · UN · UAE — refreshed daily</div></div><span class="badge ok">0 hits</span></div>
+<div class="doc-row"><div><b>PEP & adverse media</b><div class="dm">Continuous monitoring</div></div><span class="badge warn">1 hit — in review</span></div>
+<div class="doc-row"><div><b>Document authenticity</b><div class="dm">ID + liveness via ComplyCube (demo connected)</div></div><span class="badge ok">Passing</span></div>
+</div>
+</section>
+
+<!-- PROJECTS -->
+<section class="pane" id="pane-projects">
+<h1 class="page-title">Project administration</h1>
+<p class="page-sub">Offer lifecycle: draft → evaluation → committee → live → closing → operating.</p>
+<div id="projAdmin"></div>
+</section>
+
+<!-- CAMPAIGNS -->
+<section class="pane" id="pane-campaigns">
+<h1 class="page-title">Campaign operations</h1>
+<p class="page-sub">Reservation inventory, funding calls and long-stop control.</p>
+<div id="campAdmin"></div>
+</section>
+
+<!-- TREASURY -->
+<section class="pane" id="pane-treasury">
+<h1 class="page-title">Treasury & reconciliation</h1>
+<p class="page-sub">Every dirham matched to a reservation reference. Breaks route to the exception queue.</p>
+<div class="kpi-strip" style="grid-template-columns:repeat(4,1fr)">
+<div class="kcard"><b class="num">AED 320k</b><span>Pending value</span><span class="trend warn">3 transfers</span></div>
+<div class="kcard"><b class="num">AED 4.86M</b><span>Cleared YTD</span><span class="trend ok">Reconciled</span></div>
+<div class="kcard"><b>2</b><span>Open breaks</span><span class="trend warn">Needs review</span></div>
+<div class="kcard"><b>0</b><span>Refunds overdue</span><span class="trend ok">All clear</span></div>
+</div>
+<div class="panel" style="border-color:rgba(255,90,90,.4)"><h3>⚠ Exception queue</h3><p class="ph-sub">Unmatched or mismatched transfers — resolve within 24h</p>
+<div class="table-wrap"><table><tr><th>Reference</th><th>Sender</th><th>Amount</th><th>Issue</th><th>Action</th></tr>
+<tr><td class="num"><b class="hl">PAY-55240</b></td><td>Unknown sender</td><td class="num">AED 60,000</td><td><span class="badge warn">Name mismatch</span></td><td><button class="btn btn-ghost btn-sm" onclick="openModal(`<h3>Match PAY-55240</h3><p style='color:var(--muted);font-size:14px;margin:10px 0 18px'>Select the reservation this transfer belongs to. Matching is logged with your identity.</p><div class='field'><select><option>RSV-88121 — Ahmed Khan · AED 100,000</option><option>RSV-88097 — Ahmed Khan · AED 40,000</option><option>New manual reservation…</option></select></div><button class='btn btn-primary' style='width:100%' onclick='closeModal();toast(\"Demo: PAY-55240 matched — break cleared\")'>Confirm match</button>`)">Match manually</button></td></tr>
+</table></div></div>
+<div class="panel"><h3>All transfers</h3><div class="table-wrap"><table><tr><th>Reference</th><th>Investor</th><th>Amount</th><th>State</th><th>Note</th></tr><tbody id="treasBody"></tbody></table></div></div>
+</section>
+
+<!-- REGISTER -->
+<section class="pane" id="pane-register">
+<h1 class="page-title">Ownership register</h1>
+<p class="page-sub">The legal record. Changes require dual approval and are hash-chained.</p>
+<div class="panel"><div class="table-wrap"><table><tr><th>Holder</th><th>Project</th><th>Class</th><th>Units</th><th>Effective</th><th>Certificate</th><th></th></tr><tbody id="regBody"></tbody></table></div>
+<p style="font-size:12.5px;color:var(--dim);margin-top:12px">⛓ Chain verified 29 Sep 2026 06:00 · 0 breaks · sponsor Class A holdings disclosed per project.</p></div>
+</section>
+
+<!-- FINANCE -->
+<section class="pane" id="pane-finance">
+<h1 class="page-title">Finance & distributions</h1>
+<p class="page-sub">Maker–checker on every payout. Prepared by Finance, approved by a second officer, released on schedule.</p>
+<div class="two-col" style="align-items:start">
+<div class="panel" style="border-color:rgba(255,176,32,.45)"><h3>⏳ Awaiting second approval</h3><p class="ph-sub">Distribution · September 2026 · Business Bay Tower</p>
+<div class="doc-row"><div>Prepared by<b style="display:block;color:var(--muted);font-weight:400">A. Rahman (Finance) · 29 Sep 14:02</b></div><span class="badge info">Prepared</span></div>
+<div class="doc-row"><div>Total payout<b style="display:block;color:var(--muted);font-weight:400">AED 84,000 → 250 units · AED 336/unit</b></div></div>
+<div class="doc-row"><div>Per-unit<b style="display:block;color:var(--muted);font-weight:400">AED 210 net of 1% admin fee accrual</b></div></div>
+<div style="display:grid;gap:10px;margin-top:16px">
+<button class="btn btn-green" onclick="demoApprove('DIST-SEP26','Distribution')">Approve & schedule release</button>
+<button class="btn btn-ghost" onclick="demoReject('DIST-SEP26','Distribution')">Send back with note</button>
+</div>
+<p style="font-size:12.5px;color:var(--dim);margin-top:12px">You are acting as the second approver. The preparer cannot approve their own batch — the system enforces this.</p></div>
+<div class="panel"><h3>September waterfall — draft</h3><p class="ph-sub">Revenue → cash available · AED thousands</p><canvas id="chWfA" height="220"></canvas></div>
+</div>
+<div class="panel"><h3>Payout batches</h3><div class="table-wrap"><table><tr><th>Batch</th><th>Project</th><th>Period</th><th>Amount</th><th>Beneficiaries</th><th>Status</th></tr>
+<tr><td class="num"><b class="hl">DIST-SEP26</b></td><td>Business Bay Tower</td><td>Sep 2026</td><td class="num">AED 84,000</td><td class="num">88</td><td><span class="badge warn">Awaiting approval</span></td></tr>
+<tr><td class="num"><b class="hl">DIST-AUG26</b></td><td>Business Bay Tower</td><td>Aug 2026</td><td class="num">AED 84,000</td><td class="num">88</td><td><span class="badge ok">Released 15 Sep</span></td></tr>
+<tr><td class="num"><b class="hl">DIST-AUG26-Y</b></td><td>Charter Yacht</td><td>Aug 2026</td><td class="num">AED 42,000</td><td class="num">20</td><td><span class="badge ok">Released 15 Sep</span></td></tr>
+</table></div></div>
+</section>
+
+<!-- INTEGRATIONS -->
+<section class="pane" id="pane-integrations">
+<h1 class="page-title">Integrations & API</h1>
+<p class="page-sub">Payments, identity, signatures, messaging and accounting. Connect in minutes — keys live in the vault, never in code.</p>
+<div class="grid cols-3" id="intGrid" style="margin-bottom:26px"></div>
+<div class="two-col" style="align-items:start">
+<div class="panel"><h3>🔌 Platform API</h3><p class="ph-sub">For operators, auditors and money-flow partners</p>
+<div class="doc-row"><div><b>REST endpoints</b><div class="dm">/v1/projects · /v1/reservations · /v1/reports · /v1/register</div></div><span class="badge ok">Live</span></div>
+<div class="doc-row"><div><b>Webhooks</b><div class="dm">payment.cleared · report.published · distribution.released</div></div><span class="badge ok">Live</span></div>
+<div class="doc-row"><div><b>API key</b><div class="dm">bi_live_••••••••3f9a · last rotated 01 Sep 2026</div></div><button class="btn btn-ghost btn-sm" onclick="toast('Demo: new key generated and stored in vault')">Rotate</button></div>
+</div>
+<div class="panel"><h3>💳 Payment rails</h3><p class="ph-sub">How money actually moves</p>
+<div class="doc-row"><div><b>Primary rail</b><div class="dm">Bank transfer via authorised partner — all production flows</div></div><span class="badge ok">Active</span></div>
+<div class="doc-row"><div><b>Card checkout</b><div class="dm">Stripe / Network International — connect above to enable</div></div><span class="badge mut">Available</span></div>
+<div class="doc-row"><div><b>Reconciliation</b><div class="dm">Unique reference per reservation · auto-match · exception queue</div></div><span class="badge ok">Enforced</span></div>
+</div></div>
+</section>
+
+<!-- GOVERNANCE -->
+<section class="pane" id="pane-governance">
+<h1 class="page-title">Governance</h1>
+<p class="page-sub">Audit trail, access control and system safeguards.</p>
+<div class="two-col" style="align-items:start">
+<div class="panel"><h3>Audit log</h3><p class="ph-sub">Append-only · immutable</p><div class="feed" id="auditFull"></div></div>
+<div>
+<div class="panel"><h3>Team & access</h3><p class="ph-sub">Role-based · least privilege</p><div class="rbac" id="teamGrid"></div></div>
+<div class="panel"><h3>Safeguards</h3>
+<div class="doc-row"><div><b>Maker–checker</b><div class="dm">Payouts, offers, register changes</div></div><span class="badge ok">Enforced</span></div>
+<div class="doc-row"><div><b>Session timeout</b><div class="dm">30 min idle · 2FA for finance roles</div></div><span class="badge ok">On</span></div>
+<div class="doc-row"><div><b>Maintenance mode</b><div class="dm">Freezes reservations, keeps reporting live</div></div><button class="btn btn-ghost btn-sm" onclick="toast('Demo: maintenance mode toggled')">Toggle</button></div>
+</div>
+</div></div>
+</section>
+
+</div><!-- /main -->
+</div><!-- /portal -->
+
+<script src="../js/data.js"></script>
+<script src="../js/portal.js"></script>
+<script>
+function goTab(id){ document.querySelector(`.side a.tab[data-tab="${id}"]`).click(); }
+
+/* KPIs */
+const kpiTab = { "Eligible investors":"investors","Reservation conversion":"investors","Cleared funding (YTD)":"treasury","Defaults (30d)":"treasury","Refunds overdue":"treasury","Reconciliation breaks":"treasury","Reports on time":"finance","Payout success":"finance" };
+document.getElementById("kpis").innerHTML = BIDEMO.adminKpis.map(k=>`
+  <div class="kcard" onclick="goTab('${kpiTab[k[0]]}')"><b>${k[1]}</b><span>${k[0]}</span><span class="trend ${k[3]}">${k[2]}</span></div>`).join("");
+
+bars("chVel",["Apr","May","Jun","Jul","Aug","Sep"],[420,610,880,1240,1610,1490].map(v=>v));
+ring("ring1",94,"#ffb020"); ring("ring2",100,"#22c55e"); ring("ring3",99,"#22c55e");
+
+document.getElementById("alerts").innerHTML = [
+  ["Unmatched payment PAY-55240 — AED 60,000","2h ago","warn","treasury"],
+  ["KYC-118 PEP hit awaiting second reviewer","5h ago","warn","compliance"],
+  ["Yacht campaign hits 82% allocation","1d ago","info","campaigns"],
+  ["September reports due in 16 days","2d ago","info","finance"]
+].map(a=>`<div class="feed-item" style="cursor:pointer" onclick="goTab('${a[3]}')"><span class="feed-dot ${a[2]}"></span><div>${a[0]}</div><time>${a[1]}</time></div>`).join("");
+
+const auditHTML = BIDEMO.audit.map(a=>`<div class="feed-item"><span class="feed-dot ${a[3]}"></span><div><b style="color:var(--ivory)">${a[0]}</b> — ${a[1]}</div><time>${a[2]}</time></div>`).join("");
+document.getElementById("auditPrev").innerHTML = auditHTML;
+document.getElementById("auditFull").innerHTML = auditHTML;
+
+/* kanban */
+document.getElementById("kanban").innerHTML = Object.entries(BIDEMO.pipeline).map(([stage,cards])=>`
+  <div class="kcol"><h4>${stage}<b>${cards.length}</b></h4>
+  ${cards.map(c=>`<div class="kcard2" onclick="openLead('${c[0]}')"><b>${c[0]}</b><span>${c[1]}</span></div>`).join("")}</div>`).join("");
+function openLead(name){ openModal(`<h3>${name}</h3><p style="color:var(--muted);font-size:14px;margin:10px 0 18px">360° lead view — source, interactions, documents, eligibility pre-check. (Demo)</p><div class="doc-row"><div>Source<b style="display:block;color:var(--muted);font-weight:400">Website · 24 Sep 2026</b></div></div><div class="doc-row"><div>Eligibility pre-check<b style="display:block;color:var(--muted);font-weight:400">Passed basic screening</b></div><span class="badge ok">Eligible</span></div><button class="btn btn-primary" style="width:100%;margin-top:14px" onclick="closeModal();toast('Demo: moved to next stage')">Advance stage →</button>`); }
+
+/* investors table */
+const invRows = [
+  ["Ahmed Khan","INV-2041","Verified","14 units","AED 280,000","2h ago"],
+  ["Khalid N.","INV-2033","Verified","6 units","AED 120,000","1d ago"],
+  ["Meera J.","INV-2044","Verified","2 units","AED 40,000","3d ago"],
+  ["Rashid B.","INV-2038","Verified","8 units","AED 160,000","5d ago"],
+  ["Sara M.","INV-2051","In review","—","—","6h ago"],
+  ["Tariq A.","INV-2052","Onboarding","—","—","1d ago"]
+];
+function renderInv(q){ document.querySelector("#invTable").querySelectorAll("tr.inv").forEach(r=>r.remove());
+  invRows.filter(r=>!q||r.join(" ").toLowerCase().includes(q.toLowerCase())).forEach(r=>{
+    document.querySelector("#invTable").insertAdjacentHTML("beforeend",
+    `<tr class="inv" style="cursor:pointer" onclick="openInvestor('${r[0]}','${r[1]}')"><td><b class="hl">${r[0]}</b></td><td class="num">${r[1]}</td><td><span class="badge ${r[2]==="Verified"?"ok":"warn"}">${r[2]}</span></td><td class="num">${r[3]}</td><td class="num">${r[4]}</td><td>${r[5]}</td></tr>`); }); }
+function filterInv(v){ renderInv(v); }
+renderInv("");
+function openInvestor(name,id){ openModal(`<h3>${name}</h3><p style="color:var(--muted);font-size:13.5px;margin:6px 0 16px">${id} · 360° profile (demo)</p>
+  <div class="doc-row"><div>Holdings<b style="display:block;color:var(--muted);font-weight:400">14 units · 2 projects</b></div><span class="badge ok">Register verified</span></div>
+  <div class="doc-row"><div>Payments<b style="display:block;color:var(--muted);font-weight:400">AED 280,000 cleared · 0 breaks</b></div><span class="badge ok">Clean</span></div>
+  <div class="doc-row"><div>Compliance<b style="display:block;color:var(--muted);font-weight:400">KYC passed · PEP clear</b></div><span class="badge ok">Eligible</span></div>
+  <div class="doc-row"><div>Support<b style="display:block;color:var(--muted);font-weight:400">1 open ticket</b></div><span class="badge warn">TCK-3091</span></div>
+  <button class="btn btn-ghost" style="width:100%;margin-top:14px" onclick="closeModal()">Close</button>`); }
+
+/* compliance */
+document.getElementById("kycBody").innerHTML = BIDEMO.compliance.map(c=>`
+  <tr><td class="num"><b class="hl">${c.id}</b></td><td>${c.who}</td><td>${c.type}</td>
+  <td><span class="badge ${c.risk==="High"?"warn":c.risk==="Low"?"ok":"info"}">${c.risk}</span></td>
+  <td>${c.sla}</td><td><span class="badge ${c.state==="Approved"?"ok":"warn"}">${c.state}</span></td>
+  <td>${c.state==="Approved"?"—":`<button class="btn btn-green btn-sm" onclick="demoApprove('${c.id}','Case')">Approve</button> <button class="btn btn-ghost btn-sm" onclick="demoReject('${c.id}','Case')">Reject</button>`}</td></tr>`).join("");
+
+/* projects admin */
+document.getElementById("projAdmin").innerHTML = BIDEMO.projects.filter(p=>p.units).map(p=>{
+  const al=Math.round((p.reserved+p.funded)/p.units*100);
+  return `<div class="panel"><div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:14px">
+  <h3 style="margin:0">${p.name}</h3><span class="badge ${p.status==="funding"?"ok":"warn"}">${p.status}</span><span class="badge mut">${p.code} · ${p.version}</span>
+  <span style="margin-left:auto" class="num"><b style="color:var(--ivory)">${fmtAED(p.capital)}</b> <span style="color:var(--dim);font-size:13px">· ${p.units} units</span></span></div>
+  <div class="p-bars" style="margin-bottom:16px"><div class="bar-row"><span>${p.reserved} reserved · ${p.funded} funded</span><b style="color:var(--orange2)">${al}% allocated</b></div><div class="bar o"><i style="width:${al}%"></i></div></div>
+  <div style="display:flex;gap:10px;flex-wrap:wrap">
+  <button class="btn btn-ghost btn-sm" onclick="openModal(\`<h3>Publish terms ${p.code}</h3><p style='color:var(--muted);font-size:14px;margin:10px 0 18px'>New versions require committee approval and notify all reserving investors. (Demo)</p><div class='field'><label>Version note</label><input placeholder='e.g. v1.3 — updated insurance schedule'></div><button class='btn btn-primary' style='width:100%' onclick='closeModal();toast(&quot;Demo: terms submitted for approval&quot;)'>Submit for approval</button>\`)">Publish terms</button>
+  <button class="btn btn-ghost btn-sm" onclick="toast('Demo: document manager opened')">Documents (${p.docs.length})</button>
+  <button class="btn btn-ghost btn-sm" onclick="toast('Demo: long-stop extension requires committee vote')">Long-stop: ${p.longStop}</button>
+  </div></div>`;}).join("");
+
+/* campaigns */
+document.getElementById("campAdmin").innerHTML = BIDEMO.projects.filter(p=>p.status==="funding").map(p=>{
+  const avail=p.units-p.reserved-p.funded;
+  return `<div class="panel"><div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:14px">
+  <h3 style="margin:0">${p.name}</h3><span class="badge ok">● Live</span><span class="badge mut">Ends ${p.campaignEnds}</span></div>
+  <div class="two-col"><div>
+  <div class="doc-row"><div>Available inventory<b style="display:block;color:var(--muted);font-weight:400">${avail} of ${p.units} units</b></div></div>
+  <div class="doc-row"><div>Reservation conversion<b style="display:block;color:var(--muted);font-weight:400">68% reserve → pay</b></div></div>
+  </div><div>
+  <div class="doc-row"><div>Funding call<b style="display:block;color:var(--muted);font-weight:400">Triggers when 100% reserved</b></div><button class="btn btn-ghost btn-sm" onclick="toast('Demo: funding call preview generated')">Preview</button></div>
+  <div class="doc-row"><div>Campaign state<b style="display:block;color:var(--muted);font-weight:400">Accepting reservations</b></div><button class="btn btn-ghost btn-sm" onclick="toast('Demo: campaign paused — reservations frozen')">Pause</button></div>
+  </div></div></div>`;}).join("");
+
+/* treasury */
+document.getElementById("treasBody").innerHTML = BIDEMO.treasury.map(t=>`
+  <tr><td class="num"><b class="hl">${t.ref}</b></td><td>${t.who}</td><td class="num">${fmtAED(t.amount)}</td>
+  <td><span class="badge ${t.state==="Cleared"?"ok":t.state==="Unmatched"?"warn":"info"}">${t.state}</span></td><td style="font-size:13px">${t.note}</td></tr>`).join("");
+
+/* register */
+document.getElementById("regBody").innerHTML = BIDEMO.register.map(r=>`
+  <tr><td><b class="hl">${r.holder}</b></td><td>${r.project}</td><td>${r.cls}</td><td class="num">${r.units}</td><td>${r.effective}</td><td class="num">${r.ref}</td>
+  <td><button class="btn btn-ghost btn-sm" onclick="toast('Demo: transfer requires eligibility check + dual approval')">Transfer</button></td></tr>`).join("");
+
+bars("chWfA",["Revenue","Costs","Depr.","Finance","Tax","Net","Cash avail"],[412,-287,-42,-12,-8,98,84].map(v=>v*1000));
+
+/* integrations */
+document.getElementById("intGrid").innerHTML = BIDEMO.integrations.map(g=>`
+  <div class="card" style="padding:22px"><div style="font-size:26px;margin-bottom:10px">${g[1]==="Payments"?"💳":g[1].startsWith("Identity")?"🪪":g[1]==="E-signature"?"✍":g[1]==="Messaging"?"💬":"📒"}</div>
+  <h3 style="font-size:16.5px">${g[0]}</h3><p style="font-size:13px">${g[2]}</p>
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-top:14px">
+  <span class="badge mut">${g[1]}</span>
+  <button class="btn btn-sm ${g[3]==="connected"?"btn-green":"btn-ghost"}" data-on="${g[3]==="connected"?"1":"0"}" onclick="demoToggle('${g[0]}',this)">${g[3]==="connected"?"✓ Connected":"Connect"}</button>
+  </div></div>`).join("");
+
+/* team */
+document.getElementById("teamGrid").innerHTML = BIDEMO.team.map(t=>`
+  <div class="kcard2"><b>${t[0]}</b><span class="badge info" style="margin:6px 0;display:inline-block">${t[1]}</span><span style="display:block;margin-top:4px">✓ ${t[2]}<br>✕ ${t[3]}</span></div>`).join("");
+</script>
+</body></html>

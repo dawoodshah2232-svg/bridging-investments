@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /investor/
+Disallow: /admin/
+
+Sitemap: https://dawoodshah2232-svg.github.io/bridging-investments/sitemap.xml

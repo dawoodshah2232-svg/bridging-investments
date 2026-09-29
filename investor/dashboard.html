@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Investor portal — Bridging Investments</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23ff7a1a'/%3E%3Ctext x='32' y='42' font-size='26' font-family='Arial' font-weight='900' text-anchor='middle' fill='%230a0d10'%3EBI%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body data-role="investor">
+<div class="portal">
+<aside class="side" id="side">
+<a class="logo" href="../index.html"><span class="logo-mark">BI</span><span>Bridging Investments<small>Investor Portal</small></span></a>
+<div class="side-sec">Portfolio</div>
+<a class="tab on" data-tab="overview"><span class="ti">◈</span>Overview</a>
+<a class="tab" data-tab="reservations"><span class="ti">📌</span>Reservations</a>
+<a class="tab" data-tab="payments"><span class="ti">💳</span>Payments</a>
+<a class="tab" data-tab="investments"><span class="ti">🏛</span>Investments</a>
+<div class="side-sec">Information</div>
+<a class="tab" data-tab="reports"><span class="ti">📊</span>Reports & distributions</a>
+<a class="tab" data-tab="documents"><span class="ti">📁</span>Documents</a>
+<a class="tab" data-tab="profile"><span class="ti">👤</span>Profile & support</a>
+<div class="side-foot">
+<span class="badge demo">DEMO DATA</span>
+<button class="btn btn-ghost btn-sm" onclick="portalLogout()">Log out</button>
+</div>
+</aside>
+
+<div class="main">
+<div class="topbar">
+<button class="side-toggle" aria-label="Menu">☰</button>
+<b style="font-size:15px">Investor portal</b><span class="badge demo">DEMO</span>
+<div class="who">
+<button class="pal-btn" onclick="togglePalette(true)">⌘K commands</button>
+<div style="text-align:right"><b style="font-size:14px" id="whoName">Ahmed Khan</b><div style="font-size:12px;color:var(--dim)">INV-2041 · Verified</div></div>
+<div class="avatar">AK</div>
+</div>
+</div>
+
+<!-- OVERVIEW -->
+<section class="pane on" id="pane-overview">
+<h1 class="page-title">Good evening, Ahmed.</h1>
+<p class="page-sub">Here's your portfolio at a glance — 29 Sep 2026.</p>
+
+<div class="stat-hero">
+<div class="lbl">Total portfolio value · indicative</div>
+<div class="big"><span class="grad-text" id="pfBig">AED 0</span></div>
+<div class="sub">Indicative holding value — not a redemption valuation. There is no public market for these holdings.</div>
+<canvas id="chCurve" height="260"></canvas>
+<div class="stat-meta">
+<div><b class="num">AED 280,000</b><span>Contributed capital</span></div>
+<div><b class="num" style="color:#4ade80">AED 8,600</b><span>Distributions received</span></div>
+<div><b class="num" style="color:var(--orange2)">10.8%</b><span>XIRR (indicative)</span></div>
+<div><b class="num">1.08×</b><span>MOIC (indicative)</span></div>
+</div>
+</div>
+
+<div class="bento">
+<div class="panel span2"><h3>Allocation</h3><p class="ph-sub">By project · indicative</p>
+<canvas id="chAlloc" height="220"></canvas>
+<div class="legend" id="allocLegend"></div></div>
+<div class="panel span2"><h3>Your money journey</h3><p class="ph-sub">Every stage, timestamped</p>
+<div class="journey">
+<div class="j-item done"><div><b>Verified investor</b><span>14 Jun 2026 — KYC & eligibility approved</span></div></div>
+<div class="j-item done"><div><b>First reservation funded</b><span>05 Sep 2026 — 2 units, Business Bay Tower</span></div></div>
+<div class="j-item done"><div><b>Legal issuance</b><span>20 Aug 2026 — certificates CRT-2026-0907/0912</span></div></div>
+<div class="j-item done"><div><b>First distribution</b><span>15 Sep 2026 — AED 2,660 paid</span></div></div>
+<div class="j-item"><div><b>Pending: fund 5 yacht units</b><span>Payment due 03 Oct 2026 — <a href="#" onclick="goTab('payments');return false" style="color:var(--orange2);font-weight:700">pay now →</a></span></div></div>
+</div></div>
+<div class="panel span2" style="border-color:rgba(255,176,32,.4)"><h3>⚠ Needs your attention</h3><p class="ph-sub">One open action</p>
+<div style="background:rgba(255,176,32,.07);border:1px solid rgba(255,176,32,.3);border-radius:14px;padding:18px">
+<b style="font-size:15px">AED 100,000 payment due</b>
+<p style="color:var(--muted);font-size:13.5px;margin:8px 0 12px">Reservation RSV-88121 · 5 units, Dubai Charter Yacht.<br>Holding expires in <b style="color:var(--orange2)" data-cd="23">23h 00m 00s</b>.</p>
+<button class="btn btn-primary btn-sm" style="width:100%" onclick="goTab('payments')">Review payment →</button>
+</div>
+<p style="font-size:12.5px;color:var(--dim);margin-top:14px">If the timer lapses, the hold releases and units return to inventory — no charge.</p>
+</div>
+</div>
+
+<div class="panel"><h3>Holdings</h3><p class="ph-sub">Legal holdings in project company registers</p>
+<div class="table-wrap"><table>
+<tr><th>Project</th><th>Units</th><th>Class</th><th>Capital</th><th>Issued</th><th>Trend</th><th>Certificate</th></tr>
+<tr><td><b class="hl">Business Bay Commercial Tower</b></td><td class="num">10</td><td>Class B</td><td class="num">AED 200,000</td><td>20 Aug 2026</td><td><canvas id="sp1" height="44" style="width:110px"></canvas></td><td class="num">CRT-2026-0912</td></tr>
+<tr><td><b class="hl">Dubai Charter Yacht</b></td><td class="num">4</td><td>Class B</td><td class="num">AED 80,000</td><td>20 Aug 2026</td><td><canvas id="sp2" height="44" style="width:110px"></canvas></td><td class="num">CRT-2026-0907</td></tr>
+</table></div></div>
+
+<div class="panel"><h3>Recent activity</h3><p class="ph-sub">Newest first</p><div class="feed" id="feed"></div></div>
+</section>
+
+<!-- RESERVATIONS -->
+<section class="pane" id="pane-reservations">
+<h1 class="page-title">Reservations</h1>
+<p class="page-sub">Time-limited holds. A reservation is not ownership — cleared funds and legal issuance create ownership.</p>
+<div id="resvList"></div>
+</section>
+
+<!-- PAYMENTS -->
+<section class="pane" id="pane-payments">
+<h1 class="page-title">Payments</h1>
+<p class="page-sub">Bank transfer only. Every payment is reconciled to its reservation reference.</p>
+<div class="panel" style="border-color:rgba(255,176,32,.45)">
+<h3>⏳ Pending — action required</h3>
+<div class="two-col" style="margin-top:14px">
+<div>
+<div class="doc-row"><div>Reference<b style="display:block;color:var(--muted);font-weight:400">PAY-55219 · RSV-88121</b></div><button class="btn btn-ghost btn-sm" onclick="copyRef()">Copy ref</button></div>
+<div class="doc-row"><div>Amount<b style="display:block;color:var(--muted);font-weight:400">AED 100,000</b></div></div>
+<div class="doc-row"><div>Due<b style="display:block;color:var(--muted);font-weight:400">03 Oct 2026 · <span style="color:var(--orange2);font-weight:700" data-cd="23">23h 00m 00s</span> left</b></div></div>
+</div>
+<div>
+<div class="doc-row"><div>Pay to<b style="display:block;color:var(--muted);font-weight:400">BI Yacht One Ltd — client account</b></div></div>
+<div class="doc-row"><div>IBAN<b style="display:block;color:var(--muted);font-weight:400">AE07 0331 2345 6789 0123 456</b></div></div>
+<div class="doc-row"><div>Payment reference<b style="display:block;color:var(--orange2);font-weight:700">BI-88121-AK</b></div><span class="badge warn">Use exactly</span></div>
+</div>
+</div>
+<button class="btn btn-primary" style="width:100%;margin-top:16px" onclick="toast('Demo: marked as paid — treasury would now reconcile this transfer')">I've made this transfer (demo)</button>
+</div>
+<div class="panel"><h3>Payment history</h3><div class="table-wrap"><table>
+<tr><th>Reference</th><th>Reservation</th><th>Amount</th><th>Method</th><th>Date</th><th>Status</th></tr>
+<tr><td class="num"><b class="hl">PAY-55219</b></td><td class="num">RSV-88121</td><td class="num">AED 100,000</td><td>Bank transfer</td><td>Due 03 Oct 2026</td><td><span class="badge warn">Pending</span></td></tr>
+<tr><td class="num"><b class="hl">PAY-55198</b></td><td class="num">RSV-88097</td><td class="num">AED 40,000</td><td>Bank transfer</td><td>05 Sep 2026</td><td><span class="badge ok">Cleared</span></td></tr>
+</table></div></div>
+</section>
+
+<!-- INVESTMENTS -->
+<section class="pane" id="pane-investments">
+<h1 class="page-title">Investments</h1>
+<p class="page-sub">Your legal holdings — issued into project company registers.</p>
+<div id="invList"></div>
+</section>
+
+<!-- REPORTS -->
+<section class="pane" id="pane-reports">
+<h1 class="page-title">Reports & distributions</h1>
+<p class="page-sub">Monthly reports publish on the 15th. Distributions are paid only from real, distributable profit.</p>
+<div class="two-col" style="align-items:start">
+<div>
+<div class="panel"><h3>Distribution history</h3><div class="table-wrap" style="border:0"><table style="min-width:0">
+<tr><th>Period</th><th>Project</th><th>Gross</th><th>Status</th></tr>
+<tr><td>Aug 2026</td><td>Business Bay Tower</td><td class="num"><b class="hl">AED 2,000</b></td><td><span class="badge ok">Paid 15 Sep</span></td></tr>
+<tr><td>Aug 2026</td><td>Charter Yacht</td><td class="num"><b class="hl">AED 660</b></td><td><span class="badge ok">Paid 15 Sep</span></td></tr>
+<tr><td>Sep 2026</td><td>Business Bay Tower</td><td class="num"><b class="hl">AED 2,100</b></td><td><span class="badge warn">Approved · pays 15 Oct</span></td></tr>
+</table></div>
+<p style="font-size:12.5px;color:var(--dim);margin-top:12px">Total received: <b style="color:#4ade80">AED 8,600</b> · paid to Emirates NBD **** 4418</p></div>
+<div class="panel"><h3>August 2026 waterfall — Yacht</h3><p class="ph-sub">Revenue → cash available · illustrative</p>
+<canvas id="chWf" height="220"></canvas></div>
+</div>
+<div class="panel"><h3>Monthly reports</h3>
+<div class="doc-row"><div><b>August 2026 — Business Bay Commercial Tower</b><div class="dm">Revenue AED 412,000 · Net AED 98,400 · Dist. AED 84,000 · v1.0</div></div><button class="btn btn-ghost btn-sm" onclick="toast('Demo: report PDF downloads here')">PDF</button></div>
+<div class="doc-row"><div><b>August 2026 — Dubai Charter Yacht</b><div class="dm">Revenue AED 188,000 · Net AED 53,600 · Dist. AED 42,000 · v1.0</div></div><button class="btn btn-ghost btn-sm" onclick="toast('Demo: report PDF downloads here')">PDF</button></div>
+<div class="doc-row"><div><b>July 2026 — Business Bay Commercial Tower</b><div class="dm">Published 15 Aug 2026 · v1.0</div></div><button class="btn btn-ghost btn-sm" onclick="toast('Demo: report PDF downloads here')">PDF</button></div>
+<div class="doc-row"><div><b>September 2026 — in preparation</b><div class="dm">Publishes 15 Oct 2026</div></div><span class="badge mut">Soon</span></div>
+</div>
+</div></section>
+
+<!-- DOCUMENTS -->
+<section class="pane" id="pane-documents">
+<h1 class="page-title">Documents</h1>
+<p class="page-sub">Version-controlled. Every document carries an integrity hash.</p>
+<div class="panel"><div id="docList"></div></div>
+</section>
+
+<!-- PROFILE -->
+<section class="pane" id="pane-profile">
+<h1 class="page-title">Profile & support</h1>
+<p class="page-sub">Your details, verification and help desk.</p>
+<div class="two-col" style="align-items:start">
+<div>
+<div class="panel"><h3>Investor profile</h3>
+<div class="doc-row"><div>Full name<b style="display:block;color:var(--muted);font-weight:400">Ahmed Khan</b></div><span class="badge ok">Verified</span></div>
+<div class="doc-row"><div>Investor ID<b style="display:block;color:var(--muted);font-weight:400">INV-2041 · since 14 Jun 2026</b></div></div>
+<div class="doc-row"><div>Residence & tax<b style="display:block;color:var(--muted);font-weight:400">United Arab Emirates</b></div></div>
+<div class="doc-row"><div>Risk profile<b style="display:block;color:var(--muted);font-weight:400">Balanced (reviewed Jun 2026)</b></div></div>
+<div class="doc-row"><div>Distribution account<b style="display:block;color:var(--muted);font-weight:400">Emirates NBD **** 4418</b></div><button class="btn btn-ghost btn-sm" onclick="toast('Demo: bank change requires re-verification')">Change</button></div>
+</div>
+<div class="panel"><h3>Support tickets</h3><div id="ticketList"></div>
+<form onsubmit="return newTicket(event)" style="margin-top:16px">
+<div class="field"><label for="tkSub">New ticket</label><input id="tkSub" placeholder="Subject…" required></div>
+<button class="btn btn-ghost" type="submit" style="width:100%">Open ticket (demo)</button>
+</form></div>
+</div>
+<div>
+<div class="panel"><h3>Verification</h3><p class="ph-sub">Compliance status</p>
+<div class="doc-row"><div>Identity<b style="display:block;color:var(--muted);font-weight:400">Passport + liveness</b></div><span class="badge ok">Passed</span></div>
+<div class="doc-row"><div>Address<b style="display:block;color:var(--muted);font-weight:400">Utility bill, Jun 2026</b></div><span class="badge ok">Passed</span></div>
+<div class="doc-row"><div>Sanctions & PEP screening<b style="display:block;color:var(--muted);font-weight:400">Clear · re-screened Sep 2026</b></div><span class="badge ok">Clear</span></div>
+<div class="doc-row"><div>Periodic review<b style="display:block;color:var(--muted);font-weight:400">Next: Jun 2027</b></div><span class="badge mut">Scheduled</span></div>
+</div>
+<div class="panel"><h3>Preferences</h3>
+<div class="doc-row"><div>Report notifications</div><span class="badge ok">Email + SMS</span></div>
+<div class="doc-row"><div>Distribution alerts</div><span class="badge ok">On</span></div>
+<div class="doc-row"><div>Marketing</div><span class="badge mut">Off</span></div>
+</div>
+</div></div>
+</section>
+
+</div><!-- /main -->
+</div><!-- /portal -->
+
+<script src="../js/data.js"></script>
+<script src="../js/portal.js"></script>
+<script>
+function goTab(id){ document.querySelector(`.side a.tab[data-tab="${id}"]`).click(); }
+function copyRef(){ navigator.clipboard && navigator.clipboard.writeText("BI-88121-AK"); toast("Reference BI-88121-AK copied — use it exactly"); }
+function newTicket(e){ e.preventDefault(); const s=document.getElementById("tkSub").value;
+  document.getElementById("ticketList").insertAdjacentHTML("afterbegin", `<div class="doc-row"><div><b>${s}</b><div class="dm">Just now · TCK-${Math.floor(3000+Math.random()*999)}</div></div><span class="badge warn">Open</span></div>`);
+  document.getElementById("tkSub").value=""; toast("Demo ticket opened"); return false; }
+
+/* animated hero number */
+(function(){ const el=document.getElementById("pfBig"),t0=performance.now();
+  (function tick(t){ const p=Math.min((t-t0)/1600,1),e=1-Math.pow(1-p,3);
+    el.textContent="AED "+Math.round(301400*e).toLocaleString("en-US"); if(p<1) requestAnimationFrame(tick); })(t0); })();
+
+areaChart("chCurve", BIDEMO.portfolio.curveLabels, BIDEMO.portfolio.curve, "#ff7a1a", "#22c55e");
+donut("chAlloc", BIDEMO.portfolio.allocation.map(a=>({...a,center:"AED 380k",centerSub:"committed + pending"})));
+document.getElementById("allocLegend").innerHTML = BIDEMO.portfolio.allocation.map(a=>`<span><i style="background:${a.color}"></i>${a.label} · ${a.pct}%</span>`).join("");
+spark("sp1",[20,21,20.5,22,23,22.4,24,25.2],"#22c55e");
+spark("sp2",[10,10.4,10.1,10.8,11.2,10.9,11.6,12.1],"#ff7a1a");
+bars("chWf",["Revenue","Costs","Depr.","Finance","Tax","Net","Cash avail"],[100,-55,-10,-3,-2,30,20].map(v=>v*1000));
+
+document.getElementById("feed").innerHTML = BIDEMO.activity.map(a=>`<div class="feed-item"><span class="feed-dot ${a[2]}"></span><div>${a[0]}</div><time>${a[1]}</time></div>`).join("");
+
+document.getElementById("resvList").innerHTML = BIDEMO.reservations.map(r=>{
+  const p=BIDEMO.projects.find(x=>x.id===r.projectId);
+  return `<div class="panel" style="${r.state==="Awaiting payment"?"border-color:rgba(255,176,32,.45)":""}">
+  <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:12px">
+  <h3 style="margin:0">${r.id} · ${p.name}</h3>
+  <span class="badge ${r.state==="Funded"?"ok":"warn"}">${r.state}</span><span class="badge mut">${r.version}</span></div>
+  <div class="two-col"><div>
+  <div class="doc-row"><div>Units<b style="display:block;color:var(--muted);font-weight:400">${r.qty} × ${fmtAED(p.unitPrice)}</b></div><b style="color:var(--ivory)">${fmtAED(r.value)}</b></div>
+  <div class="doc-row"><div>Created<b style="display:block;color:var(--muted);font-weight:400">${r.created}</b></div></div>
+  </div><div>
+  ${r.state==="Awaiting payment"
+    ? `<div style="background:rgba(255,176,32,.07);border:1px solid rgba(255,176,32,.3);border-radius:14px;padding:16px"><b>Expires in <span style="color:var(--orange2)" data-cd="23">23h 00m 00s</span></b><p style="font-size:13px;color:var(--muted);margin:8px 0 12px">Payment due ${r.paymentDue}.</p><button class="btn btn-primary btn-sm" style="width:100%" onclick="goTab('payments')">Pay AED 100,000 →</button></div>`
+    : `<div class="doc-row"><div>Funded<b style="display:block;color:var(--muted);font-weight:400">Cleared 05 Sep 2026</b></div><span class="badge ok">Closed → issued</span></div>`}
+  </div></div></div>`;}).join("");
+
+document.getElementById("invList").innerHTML = BIDEMO.investments.map(iv=>`
+  <div class="panel"><div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:14px">
+  <h3 style="margin:0">${iv.project}</h3><span class="badge ok">Issued</span><span class="badge info">${iv.cls}</span></div>
+  <div class="two-col"><div>
+  <div class="doc-row"><div>Units held<b style="display:block;color:var(--muted);font-weight:400">${iv.units} units · ${fmtAED(iv.capital)} capital</b></div></div>
+  <div class="doc-row"><div>Share of offered tranche<b style="display:block;color:var(--muted);font-weight:400">${iv.tranchePct} of this offer</b></div></div>
+  </div><div>
+  <div class="doc-row"><div>Share of project company<b style="display:block;color:var(--muted);font-weight:400">${iv.totalPct} (sponsor holds Class A)</b></div></div>
+  <div class="doc-row"><div>Certificate<b style="display:block;color:var(--muted);font-weight:400">${iv.cert} · issued ${iv.issued}</b></div><button class="btn btn-ghost btn-sm" onclick="toast('Demo: certificate PDF downloads here')">PDF</button></div>
+  </div></div></div>`).join("");
+
+document.getElementById("docList").innerHTML = BIDEMO.documents.map(d=>`
+  <div class="doc-row"><div><b>${d[0]}</b><div class="dm">${d[1]} · ${d[2]} · hash ${d[3]}</div></div>
+  <button class="btn btn-ghost btn-sm" onclick="toast('Demo: document preview opens here')">Open</button></div>`).join("");
+
+document.getElementById("ticketList").innerHTML = BIDEMO.tickets.map(t=>`
+  <div class="doc-row"><div><b>${t.subject}</b><div class="dm">${t.id} · ${t.date}</div></div>
+  <span class="badge ${t.state==="Open"?"warn":"ok"}">${t.state}</span></div>`).join("");
+</script>
+</body></html>
