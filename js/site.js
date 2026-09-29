@@ -145,7 +145,7 @@
     const cats = [...new Set(BIDEMO.projects.map(p => p.category))];
     cat.innerHTML = `<option value="">All categories</option>` + cats.map(c => `<option>${c}</option>`).join("");
     function apply() {
-      let L = BIDEMO.projects.filter(p =>
+      let L = BIDEMO.projects.filter(p => !p._hidden &&
         (!cat.value || p.category === cat.value) &&
         (!st.value || p.status === st.value) &&
         (!q.value || (p.name + p.location + p.category).toLowerCase().includes(q.value.toLowerCase())));
@@ -165,7 +165,7 @@
   const det = document.getElementById("projectDetail");
   if (det && window.BIDEMO) {
     const id = new URLSearchParams(location.search).get("id") || "yacht";
-    const p = BIDEMO.projects.find(x => x.id === id) || BIDEMO.projects[0];
+    const p = BIDEMO.projects.find(x => x.id === id && !x._hidden) || BIDEMO.projects.find(x => !x._hidden) || BIDEMO.projects[0];
     const allocated = p.units ? Math.round((p.reserved + p.funded) / p.units * 100) : 0;
     const fundedPct = p.units ? Math.round(p.funded / p.units * 100) : 0;
     const avail = p.units ? p.units - p.reserved - p.funded : 0;
@@ -179,13 +179,13 @@
             <video controls playsinline preload="none" poster="${BASE}${p.img}" style="width:100%;border-radius:14px;background:#000;aspect-ratio:16/9"><source src="${BASE}${p.video}" type="video/mp4"></video></div>` : ""}
           <div class="panel" style="margin-top:22px"><h3>Capital budget</h3><p class="ph-sub">Use of funds — illustrative, from approved documents ${p.version}</p>
             <div class="table-wrap" style="border:0"><table style="min-width:0">
-            ${p.budget.map(b => `<tr><td>${b[0]}</td><td class="num" style="text-align:right">${fmtAED(b[1])}</td></tr>`).join("")}
+            ${(p.budget||[]).map(b => `<tr><td>${b[0]}</td><td class="num" style="text-align:right">${fmtAED(b[1])}</td></tr>`).join("")}
             <tr><td><b>Total capital required</b></td><td class="num" style="text-align:right"><b>${fmtAED(p.capital)}</b></td></tr>
             </table></div></div>
           <div class="panel"><h3>Key risks</h3><p class="ph-sub">Read before reserving. Capital is at risk.</p>
-            <ul style="color:var(--muted);font-size:14.5px;padding-left:20px;display:grid;gap:9px">${p.risks.map(r => `<li>${r}</li>`).join("")}</ul></div>
+            <ul style="color:var(--muted);font-size:14.5px;padding-left:20px;display:grid;gap:9px">${(p.risks||[]).map(r => `<li>${r}</li>`).join("")}</ul></div>
           <div class="panel"><h3>Document room</h3><p class="ph-sub">Approved documents · version-controlled</p>
-            ${p.docs.map(d => `<div class="doc-row"><div><b>${d[0]}</b><div class="dm">${d[1]} · sample PDF</div></div>${d[2] ? `<button class="btn btn-ghost btn-sm" onclick="openDoc('${BASE}${d[2]}','${d[0].replace(/'/g, "")}')">Preview</button>` : '<span class="badge mut">Soon</span>'}</div>`).join("") || '<p style="color:var(--dim)">No documents published yet.</p>'}</div>
+            ${(p.docs||[]).map(d => `<div class="doc-row"><div><b>${d[0]}</b><div class="dm">${d[1]} · sample PDF</div></div>${d[2] ? `<button class="btn btn-ghost btn-sm" onclick="openDoc('${BASE}${d[2]}','${d[0].replace(/'/g, "")}')">Preview</button>` : '<span class="badge mut">Soon</span>'}</div>`).join("") || '<p style="color:var(--dim)">No documents published yet.</p>'}</div>
         </div>
         <div>
           <div class="panel" style="border-color:rgba(255,122,26,.35)">
@@ -212,7 +212,7 @@
                <p style="font-size:12.5px;color:var(--dim);margin-top:12px">This project is not reservable yet. Register interest and we will notify you when the offer is approved.</p>`}
           </div>
           <div class="panel"><h3>Timeline</h3><div class="timeline" style="margin-top:16px">
-            ${p.timeline.map((t, i) => `<div class="tl-item${i > 1 ? " g" : ""}"><b>${t[0]}</b><span>${t[1]}</span></div>`).join("")}
+            ${(p.timeline||[]).map((t, i) => `<div class="tl-item${i > 1 ? " g" : ""}"><b>${t[0]}</b><span>${t[1]}</span></div>`).join("")}
           </div></div>
           <div class="panel"><h3>Structure</h3>
             <div class="doc-row"><div>Issuer<b style="display:block;color:var(--muted);font-weight:400">${p.issuer}</b></div></div>

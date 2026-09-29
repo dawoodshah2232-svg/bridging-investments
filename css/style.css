@@ -589,3 +589,7 @@ video{max-width:100%}
 .stat-card .sl{color:var(--muted);font-size:12.5px;margin-bottom:6px}
 .stat-card .sv{font-size:22px;font-weight:800;letter-spacing:-.02em}
 @media(max-width:640px){.stat-grid{grid-template-columns:repeat(2,1fr)}}
+
+/* ---- wide modal for admin forms ---- */
+.modal-box.wide{width:min(760px,100%)}
+@media(max-width:640px){.modal-box.wide div[style*="grid-template-columns:1fr 1fr"]{grid-template-columns:1fr!important}}

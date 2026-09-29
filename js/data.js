@@ -299,5 +299,18 @@ const BIDEMO = {
   ]
 };
 
+/* Admin-managed projects: overrides to built-ins + brand-new projects (localStorage).
+   Public pages merge these in so admin edits appear on the site the same way. */
+(function () {
+  try {
+    const ov = JSON.parse(localStorage.getItem("bi_projects_overrides") || "{}");
+    const custom = JSON.parse(localStorage.getItem("bi_projects_custom") || "[]");
+    BIDEMO.projects = BIDEMO.projects
+      .map(p => Object.assign({}, p, ov[p.id] || {}))
+      .concat(custom.filter(c => c && c.id && c.name));
+    BIDEMO.projectIsCustom = id => custom.some(c => c.id === id);
+  } catch (e) { BIDEMO.projectIsCustom = () => false; }
+})();
+
 const fmtAED = n => "AED " + Number(n).toLocaleString("en-US");
 window.BIDEMO = BIDEMO; window.fmtAED = fmtAED;

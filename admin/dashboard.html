@@ -307,18 +307,133 @@ document.getElementById("kycBody").innerHTML = BIDEMO.compliance.map(c=>`
   <td>${c.sla}</td><td><span class="badge ${c.state==="Approved"?"ok":"warn"}">${c.state}</span></td>
   <td>${c.state==="Approved"?"—":`<button class="btn btn-gold btn-sm" onclick="demoApprove('${c.id}','Case')">Approve</button> <button class="btn btn-ghost btn-sm" onclick="demoReject('${c.id}','Case')">Reject</button>`}</td></tr>`).join("");
 
-/* projects admin */
-document.getElementById("projAdmin").innerHTML = BIDEMO.projects.filter(p=>p.units).map(p=>{
-  const al=Math.round((p.reserved+p.funded)/p.units*100);
-  return `<div class="panel"><div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:14px">
-  <h3 style="margin:0">${p.name}</h3><span class="badge ${p.status==="funding"?"ok":"warn"}">${p.status}</span><span class="badge mut">${p.code} · ${p.version}</span>
-  <span style="margin-left:auto" class="num"><b style="color:var(--ivory)">${fmtAED(p.capital)}</b> <span style="color:var(--dim);font-size:13px">· ${p.units} units</span></span></div>
-  <div class="p-bars" style="margin-bottom:16px"><div class="bar-row"><span>${p.reserved} reserved · ${p.funded} funded</span><b style="color:var(--orange2)">${al}% allocated</b></div><div class="bar o"><i style="width:${al}%"></i></div></div>
-  <div style="display:flex;gap:10px;flex-wrap:wrap">
-  <button class="btn btn-ghost btn-sm" onclick="openModal(\`<h3>Publish terms ${p.code}</h3><p style='color:var(--muted);font-size:14px;margin:10px 0 18px'>New versions require committee approval and notify all reserving investors. (Demo)</p><div class='field'><label>Version note</label><input placeholder='e.g. v1.3 — updated insurance schedule'></div><button class='btn btn-primary' style='width:100%' onclick='closeModal();toast(&quot;Demo: terms submitted for approval&quot;)'>Submit for approval</button>\`)">Publish terms</button>
-  <button class="btn btn-ghost btn-sm" onclick="toast('Demo: document manager opened')">Documents (${p.docs.length})</button>
-  <button class="btn btn-ghost btn-sm" onclick="toast('Demo: long-stop extension requires committee vote')">Long-stop: ${p.longStop}</button>
-  </div></div>`;}).join("");
+/* projects admin — full manager: add / edit / publish / delete (demo, localStorage) */
+const IMG_OPTS = ["", "assets/yacht.jpg", "assets/property.jpg", "assets/restaurant.jpg", "assets/hero.jpg"];
+const VID_OPTS = ["", "assets/videos/yacht.mp4", "assets/videos/property.mp4", "assets/videos/restaurant.mp4", "assets/videos/falcon.mp4"];
+function projGetCustom(){ try { return JSON.parse(localStorage.getItem("bi_projects_custom")||"[]"); } catch(e){ return []; } }
+function projGetOv(){ try { return JSON.parse(localStorage.getItem("bi_projects_overrides")||"{}"); } catch(e){ return {}; } }
+function projPersist(){ localStorage.setItem("bi_projects_custom", JSON.stringify(projGetCustom())); }
+function renderProjAdmin(){
+  const all = BIDEMO.projects;
+  document.getElementById("projAdmin").innerHTML =
+    `<div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:18px">
+      <button class="btn btn-primary btn-sm" onclick="projForm()">＋ Add new project</button>
+      <span style="font-size:13px;color:var(--dim)">Edits publish to the public site instantly on this device (demo). New projects appear in listings, search, filters and the project page.</span>
+    </div>` +
+    all.map(p => {
+      const al = p.units ? Math.round((p.reserved + p.funded) / p.units * 100) : 0;
+      const isCustom = BIDEMO.projectIsCustom(p.id);
+      return `<div class="panel" style="${p._hidden ? "opacity:.65;border-style:dashed" : ""}">
+      <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:14px">
+        <h3 style="margin:0">${p.name}</h3>
+        <span class="badge ${p.status==="funding"?"ok":"warn"}">${p.status}</span>
+        ${isCustom ? '<span class="badge info">Added by admin</span>' : '<span class="badge mut">Built-in</span>'}
+        ${p._hidden ? '<span class="badge warn">Hidden from site</span>' : ""}
+        <span class="badge mut">${p.code} · ${p.version||"v1.0"}</span>
+        <span style="margin-left:auto" class="num"><b style="color:var(--ivory)">${fmtAED(p.capital||0)}</b> <span style="color:var(--dim);font-size:13px">· ${p.units||0} units</span></span>
+      </div>
+      ${p.units ? `<div class="p-bars" style="margin-bottom:16px"><div class="bar-row"><span>${p.reserved||0} reserved · ${p.funded||0} funded</span><b style="color:var(--orange2)">${al}% allocated</b></div><div class="bar o"><i style="width:${al}%"></i></div></div>` : ""}
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn btn-ghost btn-sm" onclick="projForm('${p.id}')">Edit</button>
+        <button class="btn btn-ghost btn-sm" onclick="projToggle('${p.id}')">${p._hidden ? "Publish" : "Hide"}</button>
+        <a class="btn btn-ghost btn-sm" href="../project.html?id=${p.id}" target="_blank" style="text-decoration:none">View live</a>
+        ${isCustom ? `<button class="btn btn-ghost btn-sm" style="color:#ff9d9d" onclick="projDelete('${p.id}')">Delete</button>` : ""}
+      </div></div>`;
+    }).join("");
+}
+function projForm(id){
+  const p = id ? BIDEMO.projects.find(x => x.id === id) : null;
+  const v = (k, d="") => p ? (p[k] ?? d) : d;
+  const fld = (label, inner) => `<div class="field" style="margin-bottom:12px"><label style="font-size:12.5px;color:var(--muted)">${label}</label>${inner}</div>`;
+  const inp = (k, ph="", type="text") => `<input id="pf_${k}" type="${type}" value="${String(v(k,"")).replace(/"/g,"&quot;")}" placeholder="${ph}" style="width:100%;background:#0d141b;border:1px solid var(--line2);color:var(--ivory);border-radius:10px;padding:10px 12px;font-size:14px;margin-top:4px">`;
+  const imgSel = IMG_OPTS.map(o=>`<option value="${o}" ${v("img")===o?"selected":""}>${o||"No image"}</option>`).join("");
+  const vidSel = VID_OPTS.map(o=>`<option value="${o}" ${v("video")===o?"selected":""}>${o||"No video"}</option>`).join("");
+  const budget = (p && p.budget ? p.budget.map(b=>b[0]+" | "+b[1]).join("\n") : "");
+  const risks = (p && p.risks ? p.risks.join("\n") : "");
+  openModal(`<h3 style="margin-bottom:4px">${p ? "Edit project" : "Add new project"}</h3>
+  <p style="color:var(--muted);font-size:13px;margin-bottom:16px">Demo — saved on this device and shown on the public site.</p>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:0 14px">
+  ${fld("Project name *", inp("name","e.g. JLT Office Suites"))}
+  ${fld("Project code *", inp("code","e.g. BI-PR-02"))}
+  ${fld("Category", inp("category","e.g. Commercial property"))}
+  ${fld("Location", inp("location","e.g. JLT, Dubai"))}
+  ${fld("Status", `<select id="pf_status" style="width:100%;background:#0d141b;border:1px solid var(--line2);color:var(--ivory);border-radius:10px;padding:10px 12px;font-size:14px;margin-top:4px">${["funding","evaluation","review"].map(o=>`<option ${v("status")==="funding"&&!p||v("status")===o?"selected":""}>${o}</option>`).join("")}</select>`)}
+  ${fld("Version", inp("version","v1.0"))}
+  ${fld("Total capital (AED) *", inp("capital","2000000","number"))}
+  ${fld("Units offered *", inp("units","100","number"))}
+  ${fld("Unit price (AED)", inp("unitPrice","20000","number"))}
+  ${fld("Min / max units per investor", `<div style="display:flex;gap:8px;margin-top:4px">${inp("min","1","number")}${inp("max","20","number")}</div>`)}
+  ${fld("Campaign ends", inp("campaignEnds","31 Dec 2026"))}
+  ${fld("Long-stop date", inp("longStop","28 Feb 2027"))}
+  ${fld("Operator", inp("operator",""))}
+  ${fld("Issuer (project company)", inp("issuer",""))}
+  ${fld("Cover image", `<select id="pf_img" style="width:100%;background:#0d141b;border:1px solid var(--line2);color:var(--ivory);border-radius:10px;padding:10px 12px;font-size:14px;margin-top:4px">${imgSel}</select>`)}
+  ${fld("Project film (optional)", `<select id="pf_video" style="width:100%;background:#0d141b;border:1px solid var(--line2);color:var(--ivory);border-radius:10px;padding:10px 12px;font-size:14px;margin-top:4px">${vidSel}</select>`)}
+  </div>
+  ${fld("Tagline", inp("tagline","One-line summary for the card"))}
+  ${fld("Capital budget — one per line: Label | amount", `<textarea id="pf_budget" rows="3" style="width:100%;background:#0d141b;border:1px solid var(--line2);color:var(--ivory);border-radius:10px;padding:10px 12px;font-size:13px;margin-top:4px">${budget}</textarea>`)}
+  ${fld("Key risks — one per line", `<textarea id="pf_risks" rows="3" style="width:100%;background:#0d141b;border:1px solid var(--line2);color:var(--ivory);border-radius:10px;padding:10px 12px;font-size:13px;margin-top:4px">${risks}</textarea>`)}
+  <button class="btn btn-primary" style="width:100%;margin-top:6px" onclick="projSave(${p ? "'"+p.id+"'" : "null"})">${p ? "Save changes" : "Publish project"}</button>`);
+  document.querySelector("#modal .modal-box").classList.add("wide");
+}
+function projSave(id){
+  const g = k => document.getElementById("pf_"+k).value.trim();
+  const n = k => Math.max(0, Number(g(k))||0);
+  const name = g("name"), code = g("code");
+  if(!name || !code){ toast("Project name and code are required"); return; }
+  const budget = g("budget").split("\n").map(l=>l.split("|").map(x=>x.trim())).filter(x=>x[0]).map(x=>[x[0], Number(x[1])||0]);
+  const risks = g("risks").split("\n").map(l=>l.trim()).filter(Boolean);
+  const data = { name, code, category: g("category")||"New listing", location: g("location")||"Dubai, UAE",
+    tagline: g("tagline")||"", capital: n("capital"), units: n("units"), unitPrice: n("unitPrice"),
+    min: n("min")||1, max: n("max")||20, status: g("status")||"funding", version: g("version")||"v1.0",
+    longStop: g("longStop"), campaignEnds: g("campaignEnds"), operator: g("operator"), issuer: g("issuer"),
+    img: g("img"), video: g("video"), budget, risks };
+  if(id && BIDEMO.projectIsCustom(id)){
+    const arr = projGetCustom(); const i = arr.findIndex(c=>c.id===id);
+    arr[i] = Object.assign({}, arr[i], data); localStorage.setItem("bi_projects_custom", JSON.stringify(arr));
+    Object.assign(BIDEMO.projects.find(x=>x.id===id), data);
+    audit("Project updated", code+" · "+name);
+    toast("Demo: project updated — live on the site now");
+  } else if(id){
+    const ov = projGetOv(); ov[id] = Object.assign({}, ov[id], data);
+    localStorage.setItem("bi_projects_overrides", JSON.stringify(ov));
+    Object.assign(BIDEMO.projects.find(x=>x.id===id), data);
+    audit("Project updated", code+" · "+name);
+    toast("Demo: project updated — live on the site now");
+  } else {
+    const np = Object.assign({ id: "custom-"+Date.now().toString(36), reserved: 0, funded: 0, docs: [] }, data);
+    const arr = projGetCustom(); arr.push(np); localStorage.setItem("bi_projects_custom", JSON.stringify(arr));
+    BIDEMO.projects.push(np);
+    audit("Project created", np.code+" · "+np.name);
+    toast("Demo: project published — it is live on the site now");
+  }
+  closeModal(); renderProjAdmin();
+}
+function projToggle(id){
+  const p = BIDEMO.projects.find(x=>x.id===id); if(!p) return;
+  const hide = !p._hidden;
+  if(BIDEMO.projectIsCustom(id)){
+    const arr = projGetCustom(); arr.find(c=>c.id===id)._hidden = hide || undefined;
+    localStorage.setItem("bi_projects_custom", JSON.stringify(arr.filter(c=>c)));
+  } else {
+    const ov = projGetOv(); ov[id] = ov[id]||{}; if(hide) ov[id]._hidden = true; else delete ov[id]._hidden;
+    localStorage.setItem("bi_projects_overrides", JSON.stringify(ov));
+  }
+  p._hidden = hide || undefined;
+  audit(hide ? "Project hidden" : "Project published", p.code+" · "+p.name);
+  toast(hide ? "Demo: hidden from the public site" : "Demo: visible on the public site again");
+  renderProjAdmin();
+}
+function projDelete(id){
+  const p = BIDEMO.projects.find(x=>x.id===id); if(!p) return;
+  if(!confirm("Delete "+p.name+"? This cannot be undone (demo).")) return;
+  localStorage.setItem("bi_projects_custom", JSON.stringify(projGetCustom().filter(c=>c.id!==id)));
+  BIDEMO.projects = BIDEMO.projects.filter(x=>x.id!==id);
+  audit("Project deleted", p.code+" · "+p.name);
+  toast("Demo: project deleted");
+  renderProjAdmin();
+}
+renderProjAdmin();
 
 /* campaigns */
 document.getElementById("campAdmin").innerHTML = BIDEMO.projects.filter(p=>p.status==="funding").map(p=>{
