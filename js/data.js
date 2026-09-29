@@ -308,7 +308,7 @@ const BIDEMO = {
     BIDEMO.projects = BIDEMO.projects
       .map(p => Object.assign({}, p, ov[p.id] || {}))
       .concat(custom.filter(c => c && c.id && c.name));
-    BIDEMO.projectIsCustom = id => custom.some(c => c.id === id);
+    BIDEMO.projectIsCustom = id => { try { return JSON.parse(localStorage.getItem("bi_projects_custom") || "[]").some(c => c && c.id === id); } catch (e) { return false; } };
   } catch (e) { BIDEMO.projectIsCustom = () => false; }
 })();
 
