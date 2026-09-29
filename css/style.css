@@ -561,6 +561,10 @@ canvas{width:100%;display:block}
   body{padding-bottom:0}
 }
 @media(max-width:620px){
+  .topbar{gap:10px;padding:12px 14px}
+  .topbar>b{white-space:nowrap;font-size:14px;overflow:hidden;text-overflow:ellipsis}
+  .topbar .pal-btn,.topbar .who-name{display:none}
+  .topbar .who{gap:0}
   .section{padding:70px 0}
   .cols-2,.cols-3,.cols-4{grid-template-columns:1fr}
   .steps{grid-template-columns:1fr}
