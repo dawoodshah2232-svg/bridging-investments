@@ -358,7 +358,7 @@ document.getElementById("intGrid").innerHTML = BIDEMO.integrations.map(g=>`
 (function(){
   const P = BIDEMO.referralProgram;
   document.getElementById("ibRates").innerHTML = P.levels.map(l=>`
-    <div class="stat-card"><div class="sl">Level ${l.level} · ${l.label}</div><div class="sv" style="color:var(--orange2)">${l.rate}%</div><div class="sl" style="margin:6px 0 0">${l.desc}</div></div>`).join("");
+    <div class="stat-card"><div class="sl">Level ${l.level} · ${l.label}</div><div class="sv" style="color:var(--orange2)">${l.rate===0.5?'0.50':l.rate}%</div><div class="sl" style="margin:6px 0 0">${l.desc}</div></div>`).join("");
   renderIbApps(); renderIbTree(); renderIbLedger();
 })();
 function ibBadge(st){ return `<span class="badge ${st==="Approved"||st==="Paid"?"ok":st==="Rejected"?"warn":"info"}">${st}</span>`; }
@@ -393,7 +393,7 @@ function ibCom(i, st){
 function calcCom(){
   const amt = Math.max(0, Number(document.getElementById("calcAmt").value)||0);
   const rows = BIDEMO.referralProgram.levels.map(l=>{ const c = amt*l.rate/100;
-    return `<div class="doc-row"><div><b>Level ${l.level} — ${l.label}</b><div class="dm">${l.rate}% of ${fmtAED(amt)}</div></div><b style="color:var(--orange2)">${fmtAED(c)}</b></div>`; }).join("");
+    return `<div class="doc-row"><div><b>Level ${l.level} — ${l.label}</b><div class="dm">${l.rate===0.5?'0.50':l.rate}% of ${fmtAED(amt)}</div></div><b style="color:var(--orange2)">${fmtAED(c)}</b></div>`; }).join("");
   const tot = BIDEMO.referralProgram.levels.reduce((a,l)=>a+amt*l.rate/100,0);
   document.getElementById("calcOut").innerHTML = rows + `<div class="doc-row"><div><b>Total program cost</b></div><b style="color:var(--gold)">${fmtAED(tot)}</b></div>
   <p style="font-size:12.5px;color:var(--dim)">Demo calculator — illustrative only.</p>`;

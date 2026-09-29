@@ -308,7 +308,7 @@ document.getElementById("docList").innerHTML = BIDEMO.documents.map(d=>`
     stat("Network volume", fmtAED(vol)) + stat("Paid out", fmtAED(earn("Paid"))) + stat("Pending", fmtAED(earn("Pending")));
   document.getElementById("refRates").innerHTML = P.levels.map(l=>`
     <div class="doc-row"><div><b>Level ${l.level} — ${l.label}</b><div class="dm">${l.desc}</div></div>
-    <span class="badge ok" style="font-size:16px">${l.rate}%</span></div>`).join("");
+    <span class="badge ok" style="font-size:16px">${l.rate===0.5?'0.50':l.rate}%</span></div>`).join("");
   const lvlName = {1:"Direct — Level 1", 2:"Level 2", 3:"Level 3"};
   document.getElementById("refTree").innerHTML = [1,2,3].map(lv=>`
     <div style="margin-bottom:14px"><b style="font-size:13px;color:var(--orange2)">${lvlName[lv]}</b>
