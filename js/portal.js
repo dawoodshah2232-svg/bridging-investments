@@ -159,7 +159,11 @@
   };
   document.addEventListener("keydown", e => {
     if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") { e.preventDefault(); togglePalette(true); }
-    if (e.key === "Escape" && pal) togglePalette();
+    if (e.key === "Escape") {
+      const m = document.getElementById("modal");
+      if (m && m.classList.contains("on")) closeModal();
+      else if (pal) togglePalette();
+    }
   });
 
   /* ---------- countdowns ---------- */
