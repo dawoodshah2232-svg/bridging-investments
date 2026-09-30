@@ -23,7 +23,7 @@ const BIDEMO = {
   projects: [
     {
       id: "yacht", code: "BI-YT-01", name: "Dubai Charter Yacht", category: "Maritime charter",
-      location: "Dubai Marina, UAE", img: "assets/yacht.jpg", video: "assets/videos/yacht.mp4", status: "funding",
+      location: "Dubai Marina, UAE", img: "assets/yacht.webp", video: "assets/videos/yacht.mp4", status: "funding",
       tagline: "A 78ft luxury charter yacht with an established operator and forward bookings.",
       capital: 2000000, units: 100, unitPrice: 20000, reserved: 62, funded: 20,
       min: 1, max: 20, operator: "Marina Crest Charters LLC", issuer: "BI Yacht One Ltd",
@@ -39,7 +39,7 @@ const BIDEMO = {
     },
     {
       id: "property", code: "BI-CP-02", name: "Business Bay Commercial Tower — Levels 12–14", category: "Commercial property",
-      location: "Business Bay, Dubai, UAE", img: "assets/property.jpg", video: "assets/videos/property.mp4", status: "funding",
+      location: "Business Bay, Dubai, UAE", img: "assets/property.webp", video: "assets/videos/property.mp4", status: "funding",
       tagline: "Three tenanted office floors with contracted rental income and 94% occupancy.",
       capital: 5000000, units: 250, unitPrice: 20000, reserved: 141, funded: 88,
       min: 1, max: 25, operator: "Bayline Facilities Management LLC", issuer: "BI Property Two Ltd",
@@ -55,7 +55,7 @@ const BIDEMO = {
     },
     {
       id: "restaurant", code: "BI-RS-03", name: "JBR Flagship Restaurant", category: "Hospitality",
-      location: "JBR, Dubai, UAE", img: "assets/restaurant.jpg", video: "assets/videos/restaurant.mp4", status: "evaluation",
+      location: "JBR, Dubai, UAE", img: "assets/restaurant.webp", video: "assets/videos/restaurant.mp4", status: "evaluation",
       tagline: "A flagship dining outlet under evaluation — revenue reconciliation in progress.",
       capital: 3200000, units: 160, unitPrice: 20000, reserved: 0, funded: 0,
       min: 1, max: 20, operator: "Under selection", issuer: "TBC", longStop: "TBC", campaignEnds: "TBC", version: "draft",
@@ -286,9 +286,9 @@ const BIDEMO = {
   ],
 
   posts: [
-    { slug: "diversification-private-assets", img: "assets/blog/diversification-private-assets.jpg", title: "Diversification with private assets: how many projects is enough", date: "30 Sep 2026", read: "5 min read", excerpt: "Diversification is about narrowing the range of bad outcomes, not raising the average — and it is a discipline, not a product feature.", tag: "Investor guide" },
-    { slug: "kyc-what-we-check", img: "assets/blog/kyc-what-we-check.jpg", title: "KYC: what we check and why it protects you", date: "30 Sep 2026", read: "4 min read", excerpt: "Identity, address, sanctions screening and source of funds — what happens in verification and why it protects your money.", tag: "How it works" },
-    { slug: "business-bay-vs-difc-offices", img: "assets/blog/business-bay-vs-difc-offices.jpg", title: "Business Bay vs DIFC: two office markets, two investor profiles", date: "30 Sep 2026", read: "5 min read", excerpt: "DIFC offers blue-chip tenants and stability; Business Bay offers higher yields with more management. Which suits your risk appetite?", tag: "Market" },
+    { slug: "diversification-private-assets", img: "assets/blog/diversification-private-assets.webp", title: "Diversification with private assets: how many projects is enough", date: "30 Sep 2026", read: "5 min read", excerpt: "Diversification is about narrowing the range of bad outcomes, not raising the average — and it is a discipline, not a product feature.", tag: "Investor guide" },
+    { slug: "kyc-what-we-check", img: "assets/blog/kyc-what-we-check.webp", title: "KYC: what we check and why it protects you", date: "30 Sep 2026", read: "4 min read", excerpt: "Identity, address, sanctions screening and source of funds — what happens in verification and why it protects your money.", tag: "How it works" },
+    { slug: "business-bay-vs-difc-offices", img: "assets/blog/business-bay-vs-difc-offices.webp", title: "Business Bay vs DIFC: two office markets, two investor profiles", date: "30 Sep 2026", read: "5 min read", excerpt: "DIFC offers blue-chip tenants and stability; Business Bay offers higher yields with more management. Which suits your risk appetite?", tag: "Market" },
     { slug: "due-diligence-checklist", title: "The 10-point checklist before you invest in anything private", date: "30 Sep 2026", read: "7 min read", excerpt: "Twenty minutes that protect your capital. The ten questions every private investment must survive.", tag: "Investor guide" },
     { slug: "guaranteed-returns-myth", title: "Guaranteed returns: why the phrase itself is the warning", date: "30 Sep 2026", read: "5 min read", excerpt: "No honest investment guarantees returns. The tricks behind the word — and the one-sentence test that protects you.", tag: "Investor guide" },
     { slug: "monthly-report-anatomy", title: "Anatomy of a monthly report: every section explained", date: "30 Sep 2026", read: "6 min read", excerpt: "Six sections, ten minutes a month. How to read a project report like an insider and spot trouble early.", tag: "Reporting" },

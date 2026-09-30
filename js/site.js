@@ -112,7 +112,7 @@
       const allocated = p.units ? Math.round((p.reserved + p.funded) / p.units * 100) : 0;
       const fundedPct = p.units ? Math.round(p.funded / p.units * 100) : 0;
       const avail = p.units ? p.units - p.reserved - p.funded : 0;
-      const img = p.img ? `<img src="${BASE}${p.img}" alt="${p.name}" loading="lazy">`
+      const img = p.img ? `<img src="${BASE}${p.img}" alt="${p.name}" loading="lazy" style="width:100%;height:100%;object-fit:cover;aspect-ratio:16/10">`
         : `<div style="width:100%;height:100%;background:linear-gradient(135deg,#1a2230,#0e1318);display:grid;place-items:center;font-size:44px">◈</div>`;
       return `<article class="p-card reveal d${(i % 4) + 1}">
         <div class="p-img">${img}${statusChip(p.status)}</div>
@@ -190,7 +190,7 @@
         <div>
           <div class="panel" style="border-color:rgba(255,122,26,.35)">
             <div style="display:flex;gap:10px;align-items:center;margin-bottom:10px"><span class="badge info">${p.code}</span><span class="badge mut">${p.version}</span></div>
-            <h3 style="font-size:26px">${p.name}</h3>
+            <h1 style="font-size:26px;margin:0 0 8px">${p.name}</h1>
             <p class="ph-sub">📍 ${p.location} · ${p.category}</p>
             <p style="color:var(--muted);font-size:15px;margin-bottom:18px">${p.tagline}</p>
             ${p.units ? `

@@ -611,3 +611,9 @@ video{max-width:100%}
 .card[href^="blog/"]{padding:0}
 .card[href^="blog/"]>div{padding:0 26px 26px}
 .blog-hero{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:20px;margin-top:24px;display:block}
+
+.crumbs{font-size:13px;color:var(--dim);margin-bottom:14px}
+.crumbs a{color:var(--muted);text-decoration:none;font-weight:600}
+.crumbs a:hover{color:var(--orange)}
+.crumbs .c-sep{margin:0 8px;opacity:.5}
+.crumbs [aria-current]{color:var(--ivory)}

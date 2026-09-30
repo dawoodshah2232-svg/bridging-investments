@@ -308,7 +308,7 @@ document.getElementById("kycBody").innerHTML = BIDEMO.compliance.map(c=>`
   <td>${c.state==="Approved"?"—":`<button class="btn btn-gold btn-sm" onclick="demoApprove('${c.id}','Case')">Approve</button> <button class="btn btn-ghost btn-sm" onclick="demoReject('${c.id}','Case')">Reject</button>`}</td></tr>`).join("");
 
 /* projects admin — full manager: add / edit / publish / delete (demo, localStorage) */
-const IMG_OPTS = ["", "assets/yacht.jpg", "assets/property.jpg", "assets/restaurant.jpg", "assets/hero.jpg"];
+const IMG_OPTS = ["", "assets/yacht.webp", "assets/property.webp", "assets/restaurant.webp", "assets/hero.webp"];
 const VID_OPTS = ["", "assets/videos/yacht.mp4", "assets/videos/property.mp4", "assets/videos/restaurant.mp4", "assets/videos/falcon.mp4"];
 function projGetCustom(){ try { return JSON.parse(localStorage.getItem("bi_projects_custom")||"[]"); } catch(e){ return []; } }
 function projGetOv(){ try { return JSON.parse(localStorage.getItem("bi_projects_overrides")||"{}"); } catch(e){ return {}; } }

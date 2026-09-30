@@ -32,7 +32,7 @@ def main():
     ap.add_argument("--date", required=True, help='e.g. "30 Sep 2026"')
     ap.add_argument("--read", required=True, help='e.g. "6 min read"')
     ap.add_argument("--body-file", required=True, help="HTML fragment for inside <div class=prose>")
-    ap.add_argument("--img", default="", help="site-relative cover image, e.g. assets/blog/my-slug.jpg")
+    ap.add_argument("--img", default="", help="site-relative cover image, e.g. assets/blog/my-slug.webp")
     a = ap.parse_args()
 
     slug = re.sub(r"[^a-z0-9-]", "", a.slug.lower().replace("_", "-"))
@@ -72,8 +72,8 @@ def main():
         tpl = re.sub(r'<meta property="og:image" content=".*?">',
                      f'<meta property="og:image" content="{BASE_URL}/{a.img}">', tpl, count=1)
     # body
-    tpl = re.sub(r'<div class="prose">.*?</div>\n<div class="card"',
-                 f'<div class="prose">\n{body}\n</div>\n<div class="card"', tpl, count=1, flags=re.S)
+    tpl = re.sub(r'<div class="prose">.*?</div>\n<div class="card author-box"',
+                 f'<div class="prose">\n{body}\n</div>\n<div class="card author-box"', tpl, count=1, flags=re.S)
 
     (ROOT / f"blog/{slug}.html").write_text(tpl, encoding="utf-8")
 
