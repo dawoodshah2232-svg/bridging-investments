@@ -32,6 +32,7 @@ def main():
     ap.add_argument("--date", required=True, help='e.g. "30 Sep 2026"')
     ap.add_argument("--read", required=True, help='e.g. "6 min read"')
     ap.add_argument("--body-file", required=True, help="HTML fragment for inside <div class=prose>")
+    ap.add_argument("--img", default="", help="site-relative cover image, e.g. assets/blog/my-slug.jpg")
     a = ap.parse_args()
 
     slug = re.sub(r"[^a-z0-9-]", "", a.slug.lower().replace("_", "-"))
@@ -65,6 +66,11 @@ def main():
                  f'<h1 style="font-size:clamp(30px,5vw,52px)">{h1}</h1>', tpl, count=1, flags=re.S)
     tpl = re.sub(r'<p>\d{2} \w{3} \d{4} · By the Bridging Investments team</p>',
                  f'<p>{html.escape(a.date)} · By the Bridging Investments team</p>', tpl, count=1)
+    if a.img:
+        byline = f'<p>{html.escape(a.date)} · By the Bridging Investments team</p>'
+        tpl = tpl.replace(byline, byline + f'\n<img class="blog-hero" src="../{a.img}" alt="{esc_title}">', 1)
+        tpl = re.sub(r'<meta property="og:image" content=".*?">',
+                     f'<meta property="og:image" content="{BASE_URL}/{a.img}">', tpl, count=1)
     # body
     tpl = re.sub(r'<div class="prose">.*?</div>\n<div class="card"',
                  f'<div class="prose">\n{body}\n</div>\n<div class="card"', tpl, count=1, flags=re.S)
@@ -74,8 +80,9 @@ def main():
     # data.js — prepend post entry
     dp = ROOT / "js/data.js"
     s = dp.read_text(encoding="utf-8")
-    entry = ('    { slug: "%s", title: "%s", date: "%s", read: "%s", excerpt: "%s", tag: "%s" },\n'
-             % (slug, a.title.replace('"', '\\"'), a.date, a.read.replace('"', '\\"'),
+    img_field = f', img: "{a.img}"' if a.img else ""
+    entry = ('    { slug: "%s"%s, title: "%s", date: "%s", read: "%s", excerpt: "%s", tag: "%s" },\n'
+             % (slug, img_field, a.title.replace('"', '\\"'), a.date, a.read.replace('"', '\\"'),
                 a.excerpt.replace('"', '\\"'), a.tag.replace('"', '\\"')))
     s2 = s.replace("  posts: [\n", "  posts: [\n" + entry, 1)
     if s2 == s:

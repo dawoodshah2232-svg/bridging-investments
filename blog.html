@@ -44,9 +44,10 @@
 <script src="js/data.js?v=20260930a"></script><script src="js/site.js?v=20260930a"></script>
 <script>
 document.getElementById("blogList").innerHTML = BIDEMO.posts.map((p, i) =>
-`<a class="card reveal d${i % 4}" href="blog/${p.slug}.html" style="display:block">
-<div class="kicker" style="margin-bottom:10px">${p.tag}</div>
+`<a class="card reveal d${i % 4}" href="blog/${p.slug}.html" style="display:block;overflow:hidden">
+${p.img ? `<img class="blog-cover" src="${p.img}" alt="${p.title}" loading="lazy">` : ""}
+<div style="padding:6px 4px 0"><div class="kicker" style="margin-bottom:10px">${p.tag}</div>
 <h3 style="font-size:22px">${p.title}</h3><p>${p.excerpt}</p>
-<div style="margin-top:14px;font-size:13px;color:var(--dim)">${p.date} · ${p.read} →</div></a>`).join("");
+<div style="margin-top:14px;font-size:13px;color:var(--dim)">${p.date} · ${p.read} →</div></div></a>`).join("");
 </script>
 </body></html>

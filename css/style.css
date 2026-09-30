@@ -605,3 +605,9 @@ video{max-width:100%}
 @media(max-width:760px){
   .notif-drop{position:fixed;top:76px;left:14px;right:14px;width:auto}
 }
+
+/* ---- blog covers ---- */
+.blog-cover{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;margin-bottom:20px}
+.card[href^="blog/"]{padding:0}
+.card[href^="blog/"]>div{padding:0 26px 26px}
+.blog-hero{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:20px;margin-top:24px;display:block}
