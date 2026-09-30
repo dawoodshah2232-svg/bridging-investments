@@ -5,7 +5,7 @@
 <title>Investor portal — Bridging Investments</title>
 <meta name="robots" content="noindex">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop stop-color='%23ff7a1a'/%3E%3Cstop offset='1' stop-color='%23ffd97a'/%3E%3C/linearGradient%3E%3ClinearGradient id='s' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop stop-color='%23ffe3a3'/%3E%3Cstop offset='1' stop-color='%23f0b429'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='24' cy='11' r='6.5' fill='url(%23s)'/%3E%3Cpath d='M6 35c5.5-10.5 12-15 18-15s12.5 4.5 18 15' stroke='url(%23g)' stroke-width='4.4' stroke-linecap='round' fill='none'/%3E%3Cpath d='M3.5 35h41' stroke='url(%23g)' stroke-width='4.4' stroke-linecap='round'/%3E%3Ccircle cx='24' cy='35' r='2.2' fill='%23ffd97a'/%3E%3C/svg%3E">
-<link rel="stylesheet" href="../css/style.css?v=20260929e">
+<link rel="stylesheet" href="../css/style.css?v=20260930a">
 <link rel="prefetch" href="../docs/yacht-offering-terms-v1-2.pdf">
 <link rel="prefetch" href="../docs/yacht-risk-acknowledgement.pdf">
 <link rel="prefetch" href="../docs/subscription-agreement-rsv-88097.pdf">
@@ -47,8 +47,8 @@
 
 <!-- OVERVIEW -->
 <section class="pane on" id="pane-overview">
-<h1 class="page-title">Good evening, Ahmed.</h1>
-<p class="page-sub">Here's your portfolio at a glance — 29 Sep 2026.</p>
+<h1 class="page-title" id="greetTitle">Good day, Ahmed.</h1>
+<p class="page-sub">Here's your portfolio at a glance — <span id="greetDate"></span>.</p>
 
 <div class="stat-hero">
 <div class="lbl">Total portfolio value · indicative</div>
@@ -241,7 +241,7 @@
 </div><!-- /main -->
 </div><!-- /portal -->
 
-<script src="../js/data.js?v=20260929e"></script>
+<script src="../js/data.js?v=20260930a"></script>
 <script src="../js/portal.js"></script>
 <script>
 function goTab(id){ document.querySelector(`.side a.tab[data-tab="${id}"]`).click(); }
@@ -250,6 +250,12 @@ function newTicket(e){ e.preventDefault(); const s=document.getElementById("tkSu
   document.getElementById("ticketList").insertAdjacentHTML("afterbegin", `<div class="doc-row"><div><b>${s}</b><div class="dm">Just now · TCK-${Math.floor(3000+Math.random()*999)}</div></div><span class="badge warn">Open</span></div>`);
   document.getElementById("tkSub").value=""; toast("Demo ticket opened"); return false; }
 
+/* dynamic greeting + date */
+(function(){ const h=new Date().getHours();
+  const g = h<12 ? "Good morning" : h<17 ? "Good afternoon" : "Good evening";
+  document.getElementById("greetTitle").textContent = g + ", Ahmed.";
+  document.getElementById("greetDate").textContent = new Date().toLocaleDateString("en-GB",{day:"2-digit",month:"short",year:"numeric"});
+})();
 /* animated hero number */
 (function(){ const el=document.getElementById("pfBig"),t0=performance.now();
   (function tick(t){ const p=Math.min((t-t0)/1600,1),e=1-Math.pow(1-p,3);
