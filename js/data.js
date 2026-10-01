@@ -1,6 +1,6 @@
-/* Bridging Investments — demo dataset (v1). All figures are illustrative demo data. */
+/* OwnStakeX — demo dataset (v2). All figures are illustrative demo data. */
 const BIDEMO = {
-  meta: { brand: "Bridging Investments", version: "1.0-demo", currency: "AED", updated: "29 Sep 2026" },
+  meta: { brand: "OwnStakeX", version: "1.0-demo", currency: "AED", updated: "29 Sep 2026" },
 
   investor: {
     name: "Ahmed Khan", id: "INV-2041", email: "ahmed.k@demo.ae", mobile: "+971 5X XXX 2210",

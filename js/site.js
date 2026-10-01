@@ -1,4 +1,4 @@
-/* Bridging Investments — public site engine */
+/* OwnStakeX — public site engine */
 (function () {
   "use strict";
   const BASE = document.body.dataset.base || "";
@@ -113,7 +113,7 @@
       const fundedPct = p.units ? Math.round(p.funded / p.units * 100) : 0;
       const avail = p.units ? p.units - p.reserved - p.funded : 0;
       const img = p.img ? `<img src="${BASE}${p.img}" alt="${p.name}" loading="lazy" style="width:100%;height:100%;object-fit:cover;aspect-ratio:16/10">`
-        : `<div style="width:100%;height:100%;background:linear-gradient(135deg,#1a2230,#0e1318);display:grid;place-items:center;font-size:44px">◈</div>`;
+        : `<div style="width:100%;height:100%;background:linear-gradient(135deg,#f4efe4,#e6dfcf);display:grid;place-items:center;font-size:44px">◈</div>`;
       return `<article class="p-card reveal d${(i % 4) + 1}">
         <div class="p-img">${img}${statusChip(p.status)}</div>
         <div class="p-body">
@@ -207,7 +207,7 @@
               <div style="margin-left:auto;text-align:right"><div style="font-size:12px;color:var(--dim)">Total</div><b id="qTotal" style="font-size:20px;color:var(--orange2)">${fmtAED(p.unitPrice)}</b></div>
             </div>
             <button class="btn btn-primary btn-lg" style="width:100%" id="reserveBtn">Reserve ${p.unitPrice ? "units" : ""} →</button>
-            <p style="font-size:12.5px;color:var(--dim);margin-top:12px">A reservation holds units for a limited time. It is <b>not</b> ownership — cleared funds and legal issuance create ownership. Campaign long stop: <b style="color:var(--ivory)">${p.longStop}</b>.</p>`
+            <p style="font-size:12.5px;color:var(--dim);margin-top:12px">A reservation holds units for a limited time. It is <b>not</b> ownership — cleared funds and legal issuance create ownership. Campaign long stop: <b>${p.longStop}</b>.</p>`
             : `<button class="btn btn-ghost btn-lg" style="width:100%" onclick="registerInterest('${p.id}')">Register interest</button>
                <p style="font-size:12.5px;color:var(--dim);margin-top:12px">This project is not reservable yet. Register interest and we will notify you when the offer is approved.</p>`}
           </div>
@@ -234,7 +234,7 @@
     if (plus) plus.onclick = () => { qv = Math.min(Math.min(p.max, avail), qv + 1); upd(); };
     const rb = document.getElementById("reserveBtn");
     if (rb) rb.onclick = () => openReserve(p, qv);
-    document.title = p.name + " — Bridging Investments";
+    document.title = p.name + " — OwnStakeX";
   }
 
   /* ---------- reserve modal ---------- */
@@ -269,7 +269,7 @@
   window.closeModal = function () { _cm(); const b = document.querySelector("#modal .modal-box"); if (b) b.classList.remove("wide"); };
   window.toast = function (msg) {
     let t = document.getElementById("toast");
-    if (!t) { t = document.createElement("div"); t.id = "toast"; t.style.cssText = "position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(20px);background:#182028;border:1px solid rgba(255,122,26,.5);color:var(--ivory);padding:14px 22px;border-radius:14px;z-index:300;font-size:14px;font-weight:600;opacity:0;transition:.3s;max-width:92%;text-align:center"; document.body.appendChild(t); }
+    if (!t) { t = document.createElement("div"); t.id = "toast"; t.style.cssText = "position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(20px);background:#ffffff;box-shadow:0 18px 44px -18px rgba(14,26,43,.35);border:1px solid rgba(255,122,26,.5);color:#0e1a2e;padding:14px 22px;border-radius:14px;z-index:300;font-size:14px;font-weight:600;opacity:0;transition:.3s;max-width:92%;text-align:center"; document.body.appendChild(t); }
     t.textContent = msg; t.style.opacity = 1; t.style.transform = "translateX(-50%)";
     clearTimeout(t._h); t._h = setTimeout(() => { t.style.opacity = 0; t.style.transform = "translateX(-50%) translateY(20px)"; }, 3200);
   };

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Bridging Investments — daily blog publisher.
+"""OwnStakeX — daily blog publisher.
 Usage:
   python3 tools/blog_gen.py --slug my-slug --title "Title" --tag "Market" \
       --excerpt "Short excerpt." --date "30 Sep 2026" --read "6 min read" \
@@ -52,7 +52,7 @@ def main():
     esc_title, esc_desc, esc_tag = html.escape(a.title), html.escape(a.excerpt), html.escape(a.tag)
 
     # head
-    tpl = re.sub(r"<title>.*?</title>", f"<title>{esc_title} — Bridging Investments</title>", tpl, count=1)
+    tpl = re.sub(r"<title>.*?</title>", f"<title>{esc_title} — OwnStakeX</title>", tpl, count=1)
     tpl = re.sub(r'<meta name="description" content=".*?">', f'<meta name="description" content="{esc_desc}">', tpl, count=1)
     tpl = re.sub(r'<meta property="og:title" content=".*?">', f'<meta property="og:title" content="{esc_title}">', tpl, count=1)
     tpl = re.sub(r'<meta property="og:description" content=".*?">', f'<meta property="og:description" content="{esc_desc}">', tpl, count=1)
@@ -64,10 +64,10 @@ def main():
                  f'<div class="kicker" style="margin-top:18px">{esc_tag} · {html.escape(a.read)}</div>', tpl, count=1)
     tpl = re.sub(r'<h1 style="font-size:clamp\(30px,5vw,52px\)">.*?</h1>',
                  f'<h1 style="font-size:clamp(30px,5vw,52px)">{h1}</h1>', tpl, count=1, flags=re.S)
-    tpl = re.sub(r'<p>\d{2} \w{3} \d{4} · By the Bridging Investments team</p>',
-                 f'<p>{html.escape(a.date)} · By the Bridging Investments team</p>', tpl, count=1)
+    tpl = re.sub(r'<p>\d{2} \w{3} \d{4} · By the OwnStakeX team</p>',
+                 f'<p>{html.escape(a.date)} · By the OwnStakeX team</p>', tpl, count=1)
     if a.img:
-        byline = f'<p>{html.escape(a.date)} · By the Bridging Investments team</p>'
+        byline = f'<p>{html.escape(a.date)} · By the OwnStakeX team</p>'
         tpl = tpl.replace(byline, byline + f'\n<img class="blog-hero" src="../{a.img}" alt="{esc_title}">', 1)
         tpl = re.sub(r'<meta property="og:image" content=".*?">',
                      f'<meta property="og:image" content="{BASE_URL}/{a.img}">', tpl, count=1)

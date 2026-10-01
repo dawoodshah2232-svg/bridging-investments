@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Investor portal — Bridging Investments</title>
+<title>Investor portal — OwnStakeX</title>
 <meta name="robots" content="noindex">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop stop-color='%23ff7a1a'/%3E%3Cstop offset='1' stop-color='%23ffd97a'/%3E%3C/linearGradient%3E%3ClinearGradient id='s' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop stop-color='%23ffe3a3'/%3E%3Cstop offset='1' stop-color='%23f0b429'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='24' cy='11' r='6.5' fill='url(%23s)'/%3E%3Cpath d='M6 35c5.5-10.5 12-15 18-15s12.5 4.5 18 15' stroke='url(%23g)' stroke-width='4.4' stroke-linecap='round' fill='none'/%3E%3Cpath d='M3.5 35h41' stroke='url(%23g)' stroke-width='4.4' stroke-linecap='round'/%3E%3Ccircle cx='24' cy='35' r='2.2' fill='%23ffd97a'/%3E%3C/svg%3E">
-<link rel="stylesheet" href="../css/style.css?v=20260930a">
+<link rel="icon" href="../assets/favicon.png" type="image/svg+xml">
+<link rel="stylesheet" href="../css/style.css?v=20261001a">
 <link rel="prefetch" href="../docs/yacht-offering-terms-v1-2.pdf">
 <link rel="prefetch" href="../docs/yacht-risk-acknowledgement.pdf">
 <link rel="prefetch" href="../docs/subscription-agreement-rsv-88097.pdf">
@@ -15,7 +15,7 @@
 <body data-role="investor">
 <div class="portal">
 <aside class="side" id="side">
-<a class="logo" href="../index.html"><span class="logo-mark"><svg viewBox="0 0 48 48" fill="none" aria-hidden="true"><defs><linearGradient id="bi-lg" x1="8" y1="4" x2="40" y2="44" gradientUnits="userSpaceOnUse"><stop stop-color="#ff7a1a"/><stop offset="1" stop-color="#ffd97a"/></linearGradient><linearGradient id="bi-sn" x1="24" y1="4" x2="24" y2="22" gradientUnits="userSpaceOnUse"><stop stop-color="#ffe3a3"/><stop offset="1" stop-color="#f0b429"/></linearGradient></defs><circle cx="24" cy="11" r="6.5" fill="url(#bi-sn)"/><path d="M6 35c5.5-10.5 12-15 18-15s12.5 4.5 18 15" stroke="url(#bi-lg)" stroke-width="4.4" stroke-linecap="round" fill="none"/><path d="M3.5 35h41" stroke="url(#bi-lg)" stroke-width="4.4" stroke-linecap="round"/><path d="M13.5 35v-6.5M34.5 35v-6.5" stroke="#ff7a1a" stroke-width="3" stroke-linecap="round" opacity=".8"/><circle cx="24" cy="35" r="2.2" fill="#ffd97a"/></svg></span><span>Bridging Investments<small>Investor Portal</small></span></a>
+<a class="logo" href="../index.html"><img class="logo-img" src="../assets/logo-ownstakex.png" alt="OwnStakeX"></a>
 <div class="side-sec">Portfolio</div>
 <a class="tab on" data-tab="overview"><span class="ti">◈</span>Overview</a>
 <a class="tab" data-tab="reservations"><span class="ti">📌</span>Reservations</a>
@@ -146,7 +146,7 @@
 <div class="panel" style="border-color:rgba(255,122,26,.4)">
 <h3>Your unique referral link</h3>
 <div style="display:flex;gap:10px;margin:14px 0;flex-wrap:wrap">
-<input id="refLink" readonly value="" style="flex:1;min-width:220px;background:#0d141b;border:1px solid var(--line2);color:var(--ivory);border-radius:12px;padding:12px 14px;font-size:13px">
+<input id="refLink" readonly value="" style="flex:1;min-width:220px;background:#ffffff;border:1px solid var(--line2);color:var(--ivory);border-radius:12px;padding:12px 14px;font-size:13px">
 <button class="btn btn-primary btn-sm" onclick="copyRefLink()">Copy link</button>
 </div>
 <div style="display:flex;gap:8px;flex-wrap:wrap">
@@ -191,8 +191,8 @@
 </div>
 <div class="panel"><h3>Monthly reports</h3>
 <div class="doc-row"><div><b>August 2026 — Business Bay Commercial Tower</b><div class="dm">Revenue AED 412,000 · Net AED 98,400 · Dist. AED 84,000 · v1.0</div></div><button class="btn btn-ghost btn-sm" onclick="openDoc('../docs/monthly-report-aug-2026-property.pdf','August 2026 monthly report — Property')">PDF</button></div>
-<div class="doc-row"><div><b>August 2026 — Dubai Charter Yacht</b><div class="dm">Revenue AED 188,000 · Net AED 53,600 · Dist. AED 42,000 · v1.0</div></div><button class="btn btn-ghost btn-sm" onclick="toast('Demo: report PDF downloads here')">PDF</button></div>
-<div class="doc-row"><div><b>July 2026 — Business Bay Commercial Tower</b><div class="dm">Published 15 Aug 2026 · v1.0</div></div><button class="btn btn-ghost btn-sm" onclick="toast('Demo: report PDF downloads here')">PDF</button></div>
+<div class="doc-row"><div><b>August 2026 — Dubai Charter Yacht</b><div class="dm">Revenue AED 188,000 · Net AED 53,600 · Dist. AED 42,000 · v1.0</div></div><button class="btn btn-ghost btn-sm" onclick="toast('Demo: the August 2026 yacht report is not included in this demo build')">PDF</button></div>
+<div class="doc-row"><div><b>July 2026 — Business Bay Commercial Tower</b><div class="dm">Published 15 Aug 2026 · v1.0</div></div><button class="btn btn-ghost btn-sm" onclick="toast('Demo: the July 2026 property report is not included in this demo build')">PDF</button></div>
 <div class="doc-row"><div><b>September 2026 — in preparation</b><div class="dm">Publishes 15 Oct 2026</div></div><span class="badge mut">Soon</span></div>
 </div>
 </div></section>
@@ -241,8 +241,8 @@
 </div><!-- /main -->
 </div><!-- /portal -->
 
-<script src="../js/data.js?v=20260930a"></script>
-<script src="../js/portal.js?v=20260930b"></script>
+<script src="../js/data.js?v=20261001a"></script>
+<script src="../js/portal.js?v=20261001a"></script>
 <script>
 function goTab(id){ document.querySelector(`.side a.tab[data-tab="${id}"]`).click(); }
 function copyRef(){ navigator.clipboard && navigator.clipboard.writeText("BI-88121-AK"); toast("Reference BI-88121-AK copied — use it exactly"); }
@@ -329,7 +329,7 @@ document.getElementById("docList").innerHTML = BIDEMO.documents.map(d=>`
 })();
 function copyRefLink(){ const i=document.getElementById("refLink"); i.select(); try{navigator.clipboard.writeText(i.value);}catch(e){} toast("Referral link copied — share it anywhere"); }
 function shareRef(ch){
-  const u=encodeURIComponent(BIDEMO.myReferral.url), t=encodeURIComponent("Join me on Bridging Investments — curated shared ownership in commercial projects.");
+  const u=encodeURIComponent(BIDEMO.myReferral.url), t=encodeURIComponent("Join me on OwnStakeX — curated shared ownership in commercial projects.");
   const links={whatsapp:"https://wa.me/?text="+t+"%20"+u, telegram:"https://t.me/share/url?url="+u+"&text="+t, x:"https://twitter.com/intent/tweet?text="+t+"&url="+u, email:"mailto:?subject="+t+"&body="+u};
   window.open(links[ch],"_blank");
 }

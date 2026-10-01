@@ -2,15 +2,15 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin CRM — Bridging Investments</title>
+<title>Admin CRM — OwnStakeX</title>
 <meta name="robots" content="noindex">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop stop-color='%23ff7a1a'/%3E%3Cstop offset='1' stop-color='%23ffd97a'/%3E%3C/linearGradient%3E%3ClinearGradient id='s' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop stop-color='%23ffe3a3'/%3E%3Cstop offset='1' stop-color='%23f0b429'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='24' cy='11' r='6.5' fill='url(%23s)'/%3E%3Cpath d='M6 35c5.5-10.5 12-15 18-15s12.5 4.5 18 15' stroke='url(%23g)' stroke-width='4.4' stroke-linecap='round' fill='none'/%3E%3Cpath d='M3.5 35h41' stroke='url(%23g)' stroke-width='4.4' stroke-linecap='round'/%3E%3Ccircle cx='24' cy='35' r='2.2' fill='%23ffd97a'/%3E%3C/svg%3E">
-<link rel="stylesheet" href="../css/style.css?v=20260930a">
+<link rel="icon" href="../assets/favicon.png" type="image/svg+xml">
+<link rel="stylesheet" href="../css/style.css?v=20261001a">
 </head>
 <body data-role="admin">
 <div class="portal">
 <aside class="side" id="side">
-<a class="logo" href="../index.html"><span class="logo-mark"><svg viewBox="0 0 48 48" fill="none" aria-hidden="true"><defs><linearGradient id="bi-lg" x1="8" y1="4" x2="40" y2="44" gradientUnits="userSpaceOnUse"><stop stop-color="#ff7a1a"/><stop offset="1" stop-color="#ffd97a"/></linearGradient><linearGradient id="bi-sn" x1="24" y1="4" x2="24" y2="22" gradientUnits="userSpaceOnUse"><stop stop-color="#ffe3a3"/><stop offset="1" stop-color="#f0b429"/></linearGradient></defs><circle cx="24" cy="11" r="6.5" fill="url(#bi-sn)"/><path d="M6 35c5.5-10.5 12-15 18-15s12.5 4.5 18 15" stroke="url(#bi-lg)" stroke-width="4.4" stroke-linecap="round" fill="none"/><path d="M3.5 35h41" stroke="url(#bi-lg)" stroke-width="4.4" stroke-linecap="round"/><path d="M13.5 35v-6.5M34.5 35v-6.5" stroke="#ff7a1a" stroke-width="3" stroke-linecap="round" opacity=".8"/><circle cx="24" cy="35" r="2.2" fill="#ffd97a"/></svg></span><span>Bridging Investments<small>Admin CRM</small></span></a>
+<a class="logo" href="../index.html"><img class="logo-img" src="../assets/logo-ownstakex.png" alt="OwnStakeX"></a>
 <div class="side-sec">Command</div>
 <a class="tab on" data-tab="overview"><span class="ti">◈</span>Overview</a>
 <a class="tab" data-tab="investors"><span class="ti">👥</span>Investors</a>
@@ -183,7 +183,7 @@
 <div class="panel"><h3>Commission calculator</h3>
 <p class="ph-sub">Enter a funded investment to preview the 3-level split.</p>
 <div style="display:flex;gap:10px;margin:12px 0">
-<input id="calcAmt" type="number" value="100000" min="0" style="flex:1;background:#0d141b;border:1px solid var(--line2);color:var(--ivory);border-radius:12px;padding:12px 14px;font-size:14px">
+<input id="calcAmt" type="number" value="100000" min="0" style="flex:1;background:#ffffff;border:1px solid var(--line2);color:var(--ivory);border-radius:12px;padding:12px 14px;font-size:14px">
 <button class="btn btn-primary btn-sm" onclick="calcCom()">Calculate</button>
 </div>
 <div id="calcOut"></div></div>
@@ -194,7 +194,7 @@
 <div class="panel"><h3>Verify a referral link</h3>
 <p class="ph-sub">Paste an investor referral link to check it resolves.</p>
 <div style="display:flex;gap:10px;margin:12px 0">
-<input id="verifyLink" placeholder="https://…/investor/login.html?ref=INV-2041" style="flex:1;background:#0d141b;border:1px solid var(--line2);color:var(--ivory);border-radius:12px;padding:12px 14px;font-size:13px">
+<input id="verifyLink" placeholder="https://…/investor/login.html?ref=INV-2041" style="flex:1;background:#ffffff;border:1px solid var(--line2);color:var(--ivory);border-radius:12px;padding:12px 14px;font-size:13px">
 <button class="btn btn-ghost btn-sm" onclick="verifyLink()">Verify</button>
 </div>
 <div id="verifyOut"></div></div>
@@ -214,12 +214,12 @@
 <div>
 <div class="panel"><h3>New announcement</h3>
 <label style="font-size:13px;color:var(--muted)">Title</label>
-<input id="anTitle" placeholder="e.g. September distributions approved" style="width:100%;background:#0d141b;border:1px solid var(--line2);color:var(--ivory);border-radius:12px;padding:12px 14px;font-size:14px;margin:6px 0 12px">
+<input id="anTitle" placeholder="e.g. September distributions approved" style="width:100%;background:#ffffff;border:1px solid var(--line2);color:var(--ivory);border-radius:12px;padding:12px 14px;font-size:14px;margin:6px 0 12px">
 <label style="font-size:13px;color:var(--muted)">Audience</label>
-<select id="anAud" style="width:100%;background:#0d141b;border:1px solid var(--line2);color:var(--ivory);border-radius:12px;padding:12px 14px;font-size:14px;margin:6px 0 12px">
+<select id="anAud" style="width:100%;background:#ffffff;border:1px solid var(--line2);color:var(--ivory);border-radius:12px;padding:12px 14px;font-size:14px;margin:6px 0 12px">
 <option>All investors</option><option>Yacht investors</option><option>Property investors</option><option>IB partners</option></select>
 <label style="font-size:13px;color:var(--muted)">Message</label>
-<textarea id="anMsg" rows="3" placeholder="Write the announcement…" style="width:100%;background:#0d141b;border:1px solid var(--line2);color:var(--ivory);border-radius:12px;padding:12px 14px;font-size:14px;margin:6px 0 14px"></textarea>
+<textarea id="anMsg" rows="3" placeholder="Write the announcement…" style="width:100%;background:#ffffff;border:1px solid var(--line2);color:var(--ivory);border-radius:12px;padding:12px 14px;font-size:14px;margin:6px 0 14px"></textarea>
 <button class="btn btn-primary" style="width:100%" onclick="publishAn()">Publish announcement</button>
 <p style="font-size:12.5px;color:var(--dim);margin-top:10px">Demo: publishing notifies the sample investor inbox on this device.</p>
 </div>
@@ -248,8 +248,8 @@
 </div><!-- /main -->
 </div><!-- /portal -->
 
-<script src="../js/data.js?v=20260930a"></script>
-<script src="../js/portal.js?v=20260930b"></script>
+<script src="../js/data.js?v=20261001a"></script>
+<script src="../js/portal.js?v=20261001a"></script>
 <script>
 function goTab(id){ document.querySelector(`.side a.tab[data-tab="${id}"]`).click(); }
 
@@ -345,7 +345,7 @@ function projForm(id){
   const p = id ? BIDEMO.projects.find(x => x.id === id) : null;
   const v = (k, d="") => p ? (p[k] ?? d) : d;
   const fld = (label, inner) => `<div class="field" style="margin-bottom:12px"><label style="font-size:12.5px;color:var(--muted)">${label}</label>${inner}</div>`;
-  const inp = (k, ph="", type="text") => `<input id="pf_${k}" type="${type}" value="${String(v(k,"")).replace(/"/g,"&quot;")}" placeholder="${ph}" style="width:100%;background:#0d141b;border:1px solid var(--line2);color:var(--ivory);border-radius:10px;padding:10px 12px;font-size:14px;margin-top:4px">`;
+  const inp = (k, ph="", type="text") => `<input id="pf_${k}" type="${type}" value="${String(v(k,"")).replace(/"/g,"&quot;")}" placeholder="${ph}" style="width:100%;background:#ffffff;border:1px solid var(--line2);color:var(--ivory);border-radius:10px;padding:10px 12px;font-size:14px;margin-top:4px">`;
   const imgSel = IMG_OPTS.map(o=>`<option value="${o}" ${v("img")===o?"selected":""}>${o||"No image"}</option>`).join("");
   const vidSel = VID_OPTS.map(o=>`<option value="${o}" ${v("video")===o?"selected":""}>${o||"No video"}</option>`).join("");
   const budget = (p && p.budget ? p.budget.map(b=>b[0]+" | "+b[1]).join("\n") : "");
@@ -357,7 +357,7 @@ function projForm(id){
   ${fld("Project code *", inp("code","e.g. BI-PR-02"))}
   ${fld("Category", inp("category","e.g. Commercial property"))}
   ${fld("Location", inp("location","e.g. JLT, Dubai"))}
-  ${fld("Status", `<select id="pf_status" style="width:100%;background:#0d141b;border:1px solid var(--line2);color:var(--ivory);border-radius:10px;padding:10px 12px;font-size:14px;margin-top:4px">${["funding","evaluation","review"].map(o=>`<option ${v("status")==="funding"&&!p||v("status")===o?"selected":""}>${o}</option>`).join("")}</select>`)}
+  ${fld("Status", `<select id="pf_status" style="width:100%;background:#ffffff;border:1px solid var(--line2);color:var(--ivory);border-radius:10px;padding:10px 12px;font-size:14px;margin-top:4px">${["funding","evaluation","review"].map(o=>`<option ${v("status")==="funding"&&!p||v("status")===o?"selected":""}>${o}</option>`).join("")}</select>`)}
   ${fld("Version", inp("version","v1.0"))}
   ${fld("Total capital (AED) *", inp("capital","2000000","number"))}
   ${fld("Units offered *", inp("units","100","number"))}
@@ -367,12 +367,12 @@ function projForm(id){
   ${fld("Long-stop date", inp("longStop","28 Feb 2027"))}
   ${fld("Operator", inp("operator",""))}
   ${fld("Issuer (project company)", inp("issuer",""))}
-  ${fld("Cover image", `<select id="pf_img" style="width:100%;background:#0d141b;border:1px solid var(--line2);color:var(--ivory);border-radius:10px;padding:10px 12px;font-size:14px;margin-top:4px">${imgSel}</select>`)}
-  ${fld("Project film (optional)", `<select id="pf_video" style="width:100%;background:#0d141b;border:1px solid var(--line2);color:var(--ivory);border-radius:10px;padding:10px 12px;font-size:14px;margin-top:4px">${vidSel}</select>`)}
+  ${fld("Cover image", `<select id="pf_img" style="width:100%;background:#ffffff;border:1px solid var(--line2);color:var(--ivory);border-radius:10px;padding:10px 12px;font-size:14px;margin-top:4px">${imgSel}</select>`)}
+  ${fld("Project film (optional)", `<select id="pf_video" style="width:100%;background:#ffffff;border:1px solid var(--line2);color:var(--ivory);border-radius:10px;padding:10px 12px;font-size:14px;margin-top:4px">${vidSel}</select>`)}
   </div>
   ${fld("Tagline", inp("tagline","One-line summary for the card"))}
-  ${fld("Capital budget — one per line: Label | amount", `<textarea id="pf_budget" rows="3" style="width:100%;background:#0d141b;border:1px solid var(--line2);color:var(--ivory);border-radius:10px;padding:10px 12px;font-size:13px;margin-top:4px">${budget}</textarea>`)}
-  ${fld("Key risks — one per line", `<textarea id="pf_risks" rows="3" style="width:100%;background:#0d141b;border:1px solid var(--line2);color:var(--ivory);border-radius:10px;padding:10px 12px;font-size:13px;margin-top:4px">${risks}</textarea>`)}
+  ${fld("Capital budget — one per line: Label | amount", `<textarea id="pf_budget" rows="3" style="width:100%;background:#ffffff;border:1px solid var(--line2);color:var(--ivory);border-radius:10px;padding:10px 12px;font-size:13px;margin-top:4px">${budget}</textarea>`)}
+  ${fld("Key risks — one per line", `<textarea id="pf_risks" rows="3" style="width:100%;background:#ffffff;border:1px solid var(--line2);color:var(--ivory);border-radius:10px;padding:10px 12px;font-size:13px;margin-top:4px">${risks}</textarea>`)}
   <button class="btn btn-primary" style="width:100%;margin-top:6px" onclick="projSave(${p ? "'"+p.id+"'" : "null"})">${p ? "Save changes" : "Publish project"}</button>`);
   document.querySelector("#modal .modal-box").classList.add("wide");
 }

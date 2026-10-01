@@ -1,4 +1,4 @@
-/* Bridging Investments — portal engine (investor + admin demo) */
+/* OwnStakeX — portal engine (investor + admin demo) */
 (function () {
   "use strict";
   const ROLE = document.body.dataset.role; // "investor" | "admin"
@@ -13,7 +13,7 @@
     document.querySelector(".side").classList.remove("open");
     window.scrollTo({ top: 0, behavior: "smooth" });
     const h = document.querySelector("#pane-" + id + " .page-title");
-    if (h) document.title = h.textContent.trim() + " — Bridging Investments";
+    if (h) document.title = h.textContent.trim() + " — OwnStakeX";
   }
   tabs.forEach(t => t.addEventListener("click", e => { e.preventDefault(); go(t.dataset.tab); location.hash = t.dataset.tab; }));
   const st = document.querySelector(".side-toggle");
@@ -26,7 +26,7 @@
   /* ---------- toast / modal ---------- */
   window.toast = function (msg) {
     let t = document.getElementById("toast");
-    if (!t) { t = document.createElement("div"); t.id = "toast"; t.style.cssText = "position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(20px);background:#182028;border:1px solid rgba(255,122,26,.5);color:#f7f4ec;padding:14px 22px;border-radius:14px;z-index:300;font-size:14px;font-weight:600;opacity:0;transition:.3s;max-width:92%;text-align:center"; document.body.appendChild(t); }
+    if (!t) { t = document.createElement("div"); t.id = "toast"; t.style.cssText = "position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(20px);background:#ffffff;box-shadow:0 18px 44px -18px rgba(14,26,43,.35);border:1px solid rgba(255,122,26,.5);color:#0e1a2e;padding:14px 22px;border-radius:14px;z-index:300;font-size:14px;font-weight:600;opacity:0;transition:.3s;max-width:92%;text-align:center"; document.body.appendChild(t); }
     t.textContent = msg; t.style.opacity = 1; t.style.transform = "translateX(-50%)";
     clearTimeout(t._h); t._h = setTimeout(() => { t.style.opacity = 0; }, 3200);
   };
@@ -142,15 +142,15 @@
     if (pal && !force) { pal.remove(); pal = null; return; }
     pal = document.createElement("div");
     pal.style.cssText = "position:fixed;inset:0;z-index:400;background:rgba(5,7,9,.7);backdrop-filter:blur(6px);display:grid;place-items:start center;padding-top:16vh";
-    pal.innerHTML = `<div style="width:min(560px,92%);background:#141b21;border:1px solid rgba(255,255,255,.14);border-radius:18px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.6)">
-      <input id="palIn" placeholder="Type a command…  (go to reports, compliance, log out)" style="width:100%;background:none;border:0;border-bottom:1px solid rgba(255,255,255,.1);padding:18px 22px;color:#f7f4ec;font-size:16px;font-family:inherit;outline:0">
+    pal.innerHTML = `<div style="width:min(560px,92%);background:#ffffff;border:1px solid rgba(14,26,43,.18);border-radius:18px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.6)">
+      <input id="palIn" placeholder="Type a command…  (go to reports, compliance, log out)" style="width:100%;background:none;border:0;border-bottom:1px solid rgba(14,26,43,.1);padding:18px 22px;color:#0e1a2b;font-size:16px;font-family:inherit;outline:0">
       <div id="palList" style="max-height:300px;overflow:auto;padding:8px"></div></div>`;
     pal.addEventListener("click", e => { if (e.target === pal) togglePalette(); });
     document.body.appendChild(pal);
     const inp = pal.querySelector("#palIn"), list = pal.querySelector("#palList");
     const render = q => {
       const hits = actions.filter(a => a.label.toLowerCase().includes(q.toLowerCase()));
-      list.innerHTML = hits.map((h, i) => `<div data-i="${actions.indexOf(h)}" style="padding:13px 18px;border-radius:12px;cursor:pointer;font-size:15px;font-weight:600;${i === 0 ? "background:rgba(255,122,26,.14)" : ""}">${h.label}</div>`).join("") || `<div style="padding:20px;color:#7c868f">No matches</div>`;
+      list.innerHTML = hits.map((h, i) => `<div data-i="${actions.indexOf(h)}" style="padding:13px 18px;border-radius:12px;cursor:pointer;font-size:15px;font-weight:600;${i === 0 ? "background:rgba(255,122,26,.14)" : ""}">${h.label}</div>`).join("") || `<div style="padding:20px;color:#8d99ab">No matches</div>`;
       list.querySelectorAll("div[data-i]").forEach(d => d.onclick = () => { const a = actions[+d.dataset.i]; togglePalette(); a.fn ? a.fn() : go(a.tab); });
     };
     inp.addEventListener("input", () => render(inp.value));
