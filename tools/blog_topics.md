@@ -9,7 +9,7 @@ no guaranteed-return claims, no invented statistics. "Capital at risk" tone.
 - [x] dubai-commercial-yields-explained | Market | How commercial yields work in Dubai, and what "net" really means | yield math, service charges, vacancy
 - [x] business-bay-vs-difc-offices | Market | Business Bay vs DIFC: two office markets, two investor profiles | compare submarkets honestly
 - [x] yacht-charter-seasonality | Market | Why charter income is seasonal — and how operators smooth it | seasonality, forward bookings
-- [ ] jbr-hospitality-footfall | Market | What drives a JBR restaurant's revenue: footfall, not food | location economics
+- [x] jbr-hospitality-footfall | Market | What drives a JBR restaurant's revenue: footfall, not food | location economics
 - [x] fractional-ownership-gcc-trend | Market | Fractional ownership is growing in the GCC — here's what's driving it | trend, accessibility
 - [ ] offplan-vs-tenanted-property | Market | Off-plan vs tenanted: which commercial property suits shared ownership | risk/return contrast
 - [ ] dubai-marina-berth-economics | Market | Berth economics: the hidden cost line in every yacht investment | marina fees, maintenance
@@ -43,7 +43,7 @@ no guaranteed-return claims, no invented statistics. "Capital at risk" tone.
 - [x] kyc-what-we-check | How it works | KYC: what we check and why it protects you | identity, screening
 - [x] payment-reconciliation-explained | How it works | Payment reconciliation: how your money finds your reservation | reference codes
 - [x] monthly-report-anatomy | Reporting | Anatomy of a monthly report: every section explained | report literacy
-- [ ] certificate-register-entry | How it works | Your certificate and register entry: proof of ownership | legal evidence
+- [x] certificate-register-entry | How it works | Your certificate and register entry: proof of ownership | legal evidence
 - [ ] funding-call-process | How it works | The funding call: what happens when a campaign fills | closing process
 - [ ] long-stop-date-meaning | How it works | The long-stop date: your backstop if a campaign stalls | investor protection
 - [ ] document-room-guide | How it works | The document room: which papers matter most | due diligence
@@ -75,7 +75,7 @@ no guaranteed-return claims, no invented statistics. "Capital at risk" tone.
 - [x] due-diligence-checklist | Investor guide | The 10-point checklist before you invest in anything private | diligence
 - [x] diversification-private-assets | Investor guide | Diversification with private assets: how many projects is enough | portfolio theory
 - [x] risk-tolerance-honest-test | Investor guide | Risk tolerance: an honest test before you commit capital | self-assessment
-- [ ] questions-to-ask-operator | Investor guide | 12 questions to ask any project operator | diligence questions
+- [x] questions-to-ask-operator | Investor guide | 12 questions to ask any project operator | diligence questions
 - [ ] red-flags-private-offers | Investor guide | Red flags in private investment offers | warnings
 - [x] guaranteed-returns-myth | Investor guide | "Guaranteed returns": why the phrase itself is the warning | myth-busting
 - [ ] holding-period-mindset | Investor guide | Thinking in holding periods, not headlines | patience
