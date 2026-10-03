@@ -11,7 +11,7 @@ no guaranteed-return claims, no invented statistics. "Capital at risk" tone.
 - [x] yacht-charter-seasonality | Market | Why charter income is seasonal — and how operators smooth it | seasonality, forward bookings
 - [x] jbr-hospitality-footfall | Market | What drives a JBR restaurant's revenue: footfall, not food | location economics
 - [x] fractional-ownership-gcc-trend | Market | Fractional ownership is growing in the GCC — here's what's driving it | trend, accessibility
-- [ ] offplan-vs-tenanted-property | Market | Off-plan vs tenanted: which commercial property suits shared ownership | risk/return contrast
+- [x] offplan-vs-tenanted-property | Market | Off-plan vs tenanted: which commercial property suits shared ownership | risk/return contrast
 - [ ] dubai-marina-berth-economics | Market | Berth economics: the hidden cost line in every yacht investment | marina fees, maintenance
 - [ ] occupancy-rate-truth | Market | "94% occupied" — what occupancy figures do and don't tell you | read tenancy schedules
 - [ ] gcc-tourism-vision-impact | Market | GCC tourism targets and what they mean for hospitality assets | demand drivers, no hype
@@ -44,7 +44,7 @@ no guaranteed-return claims, no invented statistics. "Capital at risk" tone.
 - [x] payment-reconciliation-explained | How it works | Payment reconciliation: how your money finds your reservation | reference codes
 - [x] monthly-report-anatomy | Reporting | Anatomy of a monthly report: every section explained | report literacy
 - [x] certificate-register-entry | How it works | Your certificate and register entry: proof of ownership | legal evidence
-- [ ] funding-call-process | How it works | The funding call: what happens when a campaign fills | closing process
+- [x] funding-call-process | How it works | The funding call: what happens when a campaign fills | closing process
 - [ ] long-stop-date-meaning | How it works | The long-stop date: your backstop if a campaign stalls | investor protection
 - [ ] document-room-guide | How it works | The document room: which papers matter most | due diligence
 - [ ] distribution-calendar | Reporting | The distribution calendar: when money moves and why | monthly cycle
@@ -76,7 +76,7 @@ no guaranteed-return claims, no invented statistics. "Capital at risk" tone.
 - [x] diversification-private-assets | Investor guide | Diversification with private assets: how many projects is enough | portfolio theory
 - [x] risk-tolerance-honest-test | Investor guide | Risk tolerance: an honest test before you commit capital | self-assessment
 - [x] questions-to-ask-operator | Investor guide | 12 questions to ask any project operator | diligence questions
-- [ ] red-flags-private-offers | Investor guide | Red flags in private investment offers | warnings
+- [x] red-flags-private-offers | Investor guide | Red flags in private investment offers | warnings
 - [x] guaranteed-returns-myth | Investor guide | "Guaranteed returns": why the phrase itself is the warning | myth-busting
 - [ ] holding-period-mindset | Investor guide | Thinking in holding periods, not headlines | patience
 - [ ] cash-flow-vs-capital-growth | Investor guide | Cash flow vs capital growth: know which game you're playing | strategy
