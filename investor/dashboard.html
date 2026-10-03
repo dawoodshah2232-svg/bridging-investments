@@ -296,9 +296,21 @@ document.getElementById("invList").innerHTML = BIDEMO.investments.map(iv=>`
   <div class="doc-row"><div>Certificate<b style="display:block;color:var(--muted);font-weight:400">${iv.cert} · issued ${iv.issued}</b></div><button class="btn btn-ghost btn-sm" onclick="openDoc('../docs/share-certificate-crt-2026-0912.pdf','Share certificate CRT-2026-0912')">PDF</button></div>
   </div></div></div>`).join("");
 
-document.getElementById("docList").innerHTML = BIDEMO.documents.map(d=>`
+/* documents: built-ins + admin library uploads (demo, localStorage) */
+(function(){
+  const lib = (() => { try { return JSON.parse(localStorage.getItem("bi_doc_library") || "[]"); } catch(e){ return []; } })()
+    .filter(d => d.aud === "investors");
+  const libRows = lib.map(d => {
+    const u = /^(data:|https?:|\/\/)/i.test(d.u) ? d.u : "../" + d.u;
+    const isData = /^data:/i.test(u);
+    return `<div class="doc-row"><div><b>${d.t}</b><div class="dm">${d.m} · <span class="badge info">New</span></div></div>
+      ${isData ? `<a class="btn btn-ghost btn-sm" href="${u}" download="${d.t.replace(/"/g, "")}.pdf" style="text-decoration:none">Download</a>`
+               : `<button class="btn btn-ghost btn-sm" onclick="openDoc('${u.replace(/'/g, "\\'")}','${d.t.replace(/'/g, "")}')">Preview</button>`}</div>`;
+  }).join("");
+  document.getElementById("docList").innerHTML = BIDEMO.documents.map(d=>`
   <div class="doc-row"><div><b>${d[0]}</b><div class="dm">${d[1]} · ${d[2]} · hash ${d[3]}</div></div>
-  <button class="btn btn-ghost btn-sm" onclick="openDoc('../${d[4]}','${d[0].replace(/'/g, "")}')">Preview</button></div>`).join("");
+  <button class="btn btn-ghost btn-sm" onclick="openDoc('../${d[4]}','${d[0].replace(/'/g, "")}')">Preview</button></div>`).join("") + libRows;
+})();
 
 
 /* ---------- referrals ---------- */

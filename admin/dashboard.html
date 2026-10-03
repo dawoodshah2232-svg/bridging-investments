@@ -23,6 +23,7 @@
 <a class="tab" data-tab="finance"><span class="ti">💹</span>Finance & payouts</a>
 <a class="tab" data-tab="ib"><span class="ti">🤝</span>IB & referrals</a>
 <a class="tab" data-tab="announce"><span class="ti">📢</span>Announcements</a>
+<a class="tab" data-tab="library"><span class="ti">📚</span>Document library</a>
 <div class="side-sec">System</div>
 <a class="tab" data-tab="integrations"><span class="ti">🔌</span>Integrations & API</a>
 <a class="tab" data-tab="governance"><span class="ti">⚖</span>Governance</a>
@@ -230,6 +231,24 @@
 </div>
 </section>
 
+<section class="pane" id="pane-library">
+<h1 class="page-title">Document library</h1>
+<p class="page-sub">Every brochure, term sheet and report in one place — publish to the investor portal or keep internal. Stored on this device for the demo.</p>
+<div class="panel" style="margin-bottom:16px"><h3>Add literature</h3>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:0 12px">
+<div class="field"><label style="font-size:12.5px;color:var(--muted)">Title *</label><input id="lib_title" placeholder="e.g. Yacht offering terms v1.3" style="width:100%;background:#ffffff;border:1px solid var(--line2);color:var(--ivory);border-radius:10px;padding:10px 12px;font-size:14px;margin-top:4px"></div>
+<div class="field"><label style="font-size:12.5px;color:var(--muted)">Category</label><select id="lib_cat" style="width:100%;background:#ffffff;border:1px solid var(--line2);color:var(--ivory);border-radius:10px;padding:10px 12px;font-size:14px;margin-top:4px"><option>Offering</option><option>Legal</option><option>Compliance</option><option>Reporting</option><option>Marketing</option><option>Register</option></select></div>
+<div class="field"><label style="font-size:12.5px;color:var(--muted)">Visible to</label><select id="lib_aud" style="width:100%;background:#ffffff;border:1px solid var(--line2);color:var(--ivory);border-radius:10px;padding:10px 12px;font-size:14px;margin-top:4px"><option value="investors">Investor portal</option><option value="internal">Internal only</option></select></div>
+<div class="field"><label style="font-size:12.5px;color:var(--muted)">Linked project (optional)</label><select id="lib_proj" style="width:100%;background:#ffffff;border:1px solid var(--line2);color:var(--ivory);border-radius:10px;padding:10px 12px;font-size:14px;margin-top:4px"></select></div>
+</div>
+<div class="field" style="margin-top:10px"><label style="font-size:12.5px;color:var(--muted)">File URL (optional — alternative to upload)</label><input id="lib_url" placeholder="https://…/brochure.pdf" style="width:100%;background:#ffffff;border:1px solid var(--line2);color:var(--ivory);border-radius:10px;padding:10px 12px;font-size:14px;margin-top:4px"></div>
+<div style="display:flex;gap:10px;margin-top:12px;flex-wrap:wrap">
+<label class="btn btn-ghost" style="cursor:pointer">Upload PDF<input type="file" accept=".pdf,application/pdf" style="display:none" onchange="libUpload(this)"></label>
+<button class="btn btn-primary" onclick="libAddUrl()">Add link</button>
+</div></div>
+<div class="panel"><h3>Library <span id="libCount" class="badge mut"></span></h3><div id="libList"></div></div>
+</section>
+
 <section class="pane" id="pane-governance">
 <h1 class="page-title">Governance</h1>
 <p class="page-sub">Audit trail, access control and system safeguards.</p>
@@ -341,6 +360,43 @@ function renderProjAdmin(){
       </div></div>`;
     }).join("");
 }
+/* ---------- project media & document helpers (uploads stored on-device for demo) ---------- */
+let PF = null; // {coverUp, gallery:[], videoUp, docs:[]}
+function pfIsUrl(u){ return /^(data:|https?:|\/\/)/i.test(u||""); }
+function pfMediaSrc(u){ return pfIsUrl(u) ? u : "../"+u; }
+function pfCompressImage(file, cb){
+  if(!file.type.startsWith("image/")){ toast("Please choose an image file"); return; }
+  const rd = new FileReader();
+  rd.onload = e => { const img = new Image();
+    img.onload = () => {
+      const MAX = 1400, sc = Math.min(1, MAX/Math.max(img.width, img.height));
+      const w = Math.max(1, Math.round(img.width*sc)), h = Math.max(1, Math.round(img.height*sc));
+      const c = document.createElement("canvas"); c.width = w; c.height = h;
+      c.getContext("2d").drawImage(img, 0, 0, w, h);
+      cb(c.toDataURL("image/jpeg", .82));
+    };
+    img.onerror = () => toast("Could not read that image");
+    img.src = e.target.result;
+  };
+  rd.readAsDataURL(file);
+}
+function pfReadFileCapped(file, maxMB, cb){
+  if(file.size > maxMB*1048576){ toast("File too large for demo storage ("+maxMB+" MB max) — use a link URL instead"); return; }
+  const rd = new FileReader();
+  rd.onload = e => cb(e.target.result, file);
+  rd.onerror = () => toast("Could not read that file");
+  rd.readAsDataURL(file);
+}
+function pfPersistSet(k, v){
+  try { localStorage.setItem(k, v); return true; }
+  catch(e){ toast("Demo storage full — that file is too large. Remove uploads or use a link URL instead."); return false; }
+}
+function pfStorageOk(){
+  try { localStorage.setItem("bi_quota_probe","1"); localStorage.removeItem("bi_quota_probe"); return true; }
+  catch(e){ toast("Demo storage is full — remove some uploads or use link URLs"); return false; }
+}
+function pfFmtSize(b){ return b > 1048576 ? (b/1048576).toFixed(1)+" MB" : Math.max(1, Math.round(b/1024))+" KB"; }
+
 function projForm(id){
   const p = id ? BIDEMO.projects.find(x => x.id === id) : null;
   const v = (k, d="") => p ? (p[k] ?? d) : d;
@@ -367,15 +423,131 @@ function projForm(id){
   ${fld("Long-stop date", inp("longStop","28 Feb 2027"))}
   ${fld("Operator", inp("operator",""))}
   ${fld("Issuer (project company)", inp("issuer",""))}
-  ${fld("Cover image", `<select id="pf_img" style="width:100%;background:#ffffff;border:1px solid var(--line2);color:var(--ivory);border-radius:10px;padding:10px 12px;font-size:14px;margin-top:4px">${imgSel}</select>`)}
-  ${fld("Project film (optional)", `<select id="pf_video" style="width:100%;background:#ffffff;border:1px solid var(--line2);color:var(--ivory);border-radius:10px;padding:10px 12px;font-size:14px;margin-top:4px">${vidSel}</select>`)}
+  </div>
+  <h4 style="margin:20px 0 10px;font-size:15px">Media — images & video</h4>
+  <div class="field" style="margin-bottom:12px"><label style="font-size:12.5px;color:var(--muted)">Cover image</label>
+    <div style="display:flex;gap:8px;margin-top:6px;flex-wrap:wrap;align-items:center">
+      <select id="pf_img" onchange="pfRenderCover()" style="flex:1;min-width:150px;background:#ffffff;border:1px solid var(--line2);color:var(--ivory);border-radius:10px;padding:10px 12px;font-size:14px">${imgSel}</select>
+      <input id="pf_imgurl" oninput="pfRenderCover()" placeholder="…or paste image URL" style="flex:1;min-width:150px;background:#ffffff;border:1px solid var(--line2);color:var(--ivory);border-radius:10px;padding:10px 12px;font-size:14px">
+      <label class="btn btn-ghost btn-sm" style="cursor:pointer">Upload<input type="file" accept="image/*" style="display:none" onchange="pfCoverUpload(this)"></label>
+    </div>
+    <div id="pfCoverPrev" style="margin-top:8px"></div>
+  </div>
+  <div class="field" style="margin-bottom:12px"><label style="font-size:12.5px;color:var(--muted)">Photo gallery</label>
+    <div id="pfGallery" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px"></div>
+    <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap">
+      <input id="pf_galurl" placeholder="Paste image URL, then Add" style="flex:1;min-width:150px;background:#ffffff;border:1px solid var(--line2);color:var(--ivory);border-radius:10px;padding:10px 12px;font-size:14px">
+      <button class="btn btn-ghost btn-sm" onclick="pfAddGalleryUrl()">Add URL</button>
+      <label class="btn btn-ghost btn-sm" style="cursor:pointer">Upload<input type="file" accept="image/*" multiple style="display:none" onchange="pfGalleryUpload(this)"></label>
+    </div>
+  </div>
+  <div class="field" style="margin-bottom:12px"><label style="font-size:12.5px;color:var(--muted)">Project video — YouTube / Vimeo / MP4 link, or upload</label>
+    <div style="display:flex;gap:8px;margin-top:6px;flex-wrap:wrap">
+      <input id="pf_videourl" oninput="pfRenderVideoPrev()" placeholder="https://youtube.com/watch?v=…  or  https://…/film.mp4" style="flex:1;min-width:180px;background:#ffffff;border:1px solid var(--line2);color:var(--ivory);border-radius:10px;padding:10px 12px;font-size:14px">
+      <label class="btn btn-ghost btn-sm" style="cursor:pointer">Upload<input type="file" accept="video/*" style="display:none" onchange="pfVideoUpload(this)"></label>
+    </div>
+    <div id="pfVideoPrev" style="margin-top:8px;font-size:13px;color:var(--muted)"></div>
+  </div>
+  <h4 style="margin:20px 0 10px;font-size:15px">Documents & literature <span style="font-weight:400;color:var(--muted);font-size:12.5px">— PDFs investors can preview & download</span></h4>
+  <div id="pfDocsList"></div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px">
+    <input id="pf_doctitle" placeholder="Document title, e.g. Offering terms v1.3" style="flex:2;min-width:150px;background:#ffffff;border:1px solid var(--line2);color:var(--ivory);border-radius:10px;padding:10px 12px;font-size:14px">
+    <input id="pf_docurl" placeholder="…or paste file URL" style="flex:2;min-width:150px;background:#ffffff;border:1px solid var(--line2);color:var(--ivory);border-radius:10px;padding:10px 12px;font-size:14px">
+    <label class="btn btn-ghost btn-sm" style="cursor:pointer">Upload PDF<input type="file" accept=".pdf,application/pdf" style="display:none" onchange="pfDocUpload(this)"></label>
+    <button class="btn btn-primary btn-sm" onclick="pfAddDoc()">Add</button>
   </div>
   ${fld("Tagline", inp("tagline","One-line summary for the card"))}
   ${fld("Capital budget — one per line: Label | amount", `<textarea id="pf_budget" rows="3" style="width:100%;background:#ffffff;border:1px solid var(--line2);color:var(--ivory);border-radius:10px;padding:10px 12px;font-size:13px;margin-top:4px">${budget}</textarea>`)}
   ${fld("Key risks — one per line", `<textarea id="pf_risks" rows="3" style="width:100%;background:#ffffff;border:1px solid var(--line2);color:var(--ivory);border-radius:10px;padding:10px 12px;font-size:13px;margin-top:4px">${risks}</textarea>`)}
   <button class="btn btn-primary" style="width:100%;margin-top:6px" onclick="projSave(${p ? "'"+p.id+"'" : "null"})">${p ? "Save changes" : "Publish project"}</button>`);
   document.querySelector("#modal .modal-box").classList.add("wide");
+  PF = { coverUp: "", gallery: Array.isArray(p && p.gallery) ? [...p.gallery] : [],
+         videoUp: "", docs: Array.isArray(p && p.docs) ? p.docs.map(d => [...d]) : [] };
+  const curImg = v("img", ""), curVid = v("video", "");
+  if(pfIsUrl(curImg) && curImg.startsWith("data:")) { PF.coverUp = curImg; }
+  else if(pfIsUrl(curImg)) { document.getElementById("pf_imgurl").value = curImg; }
+  if(pfIsUrl(curVid)) { document.getElementById("pf_videourl").value = curVid; }
+  else if(curVid){ /* preset videos removed — URL only now */ }
+  pfRenderCover(); pfRenderGallery(); pfRenderVideoPrev(); pfRenderDocs();
 }
+/* ----- project media & docs UI ----- */
+function pfRenderCover(){
+  const el = document.getElementById("pfCoverPrev"); if(!el) return;
+  const url = document.getElementById("pf_imgurl").value.trim();
+  const src = PF.coverUp || url || document.getElementById("pf_img").value;
+  el.innerHTML = src
+    ? `<div style="display:flex;gap:10px;align-items:center"><img src="${pfMediaSrc(src)}" style="width:120px;height:76px;object-fit:cover;border-radius:10px;border:1px solid var(--line2)" alt="Cover preview">
+       <span style="font-size:12.5px;color:var(--muted)">${PF.coverUp ? "Uploaded image" : url ? "Custom URL" : "Built-in image"}</span>
+       ${PF.coverUp ? `<button class="btn btn-ghost btn-sm" onclick="PF.coverUp='';pfRenderCover()">Remove upload</button>` : ""}</div>`
+    : `<span style="font-size:12.5px;color:var(--muted)">No cover image selected</span>`;
+}
+function pfCoverUpload(input){
+  const f = input.files[0]; input.value = "";
+  if(!f) return;
+  pfCompressImage(f, dataUrl => { PF.coverUp = dataUrl; pfRenderCover(); toast("Cover image ready"); });
+}
+function pfRenderGallery(){
+  const el = document.getElementById("pfGallery"); if(!el) return;
+  el.innerHTML = PF.gallery.length ? PF.gallery.map((u, i) =>
+    `<div style="position:relative"><img src="${pfMediaSrc(u)}" style="width:96px;height:64px;object-fit:cover;border-radius:8px;border:1px solid var(--line2)" alt="Gallery ${i+1}">
+     <button onclick="pfRemoveGallery(${i})" style="position:absolute;top:-8px;right:-8px;width:22px;height:22px;border-radius:50%;border:0;background:#e11d48;color:#fff;font-size:12px;cursor:pointer" aria-label="Remove">✕</button></div>`
+  ).join("") : `<span style="font-size:12.5px;color:var(--muted)">No gallery images yet — add URLs or upload photos.</span>`;
+}
+function pfAddGalleryUrl(){
+  const inp = document.getElementById("pf_galurl"), u = inp.value.trim();
+  if(!u){ toast("Paste an image URL first"); return; }
+  PF.gallery.push(u); inp.value = ""; pfRenderGallery();
+}
+function pfGalleryUpload(input){
+  const files = [...input.files]; input.value = "";
+  if(!files.length) return;
+  let done = 0;
+  files.forEach(f => pfCompressImage(f, dataUrl => {
+    PF.gallery.push(dataUrl); done++;
+    if(done === files.length){ pfRenderGallery(); toast(files.length + " image(s) added"); }
+  }));
+}
+function pfRemoveGallery(i){ PF.gallery.splice(i, 1); pfRenderGallery(); }
+function pfRenderVideoPrev(){
+  const el = document.getElementById("pfVideoPrev"); if(!el) return;
+  const u = document.getElementById("pf_videourl").value.trim();
+  el.innerHTML = PF.videoUp ? "Uploaded video file attached ✓"
+    : u ? `Video link: <span style="color:var(--ivory)">${u.slice(0, 60)}${u.length > 60 ? "…" : ""}</span>` : "No video attached";
+}
+function pfVideoUpload(input){
+  const f = input.files[0]; input.value = "";
+  if(!f) return;
+  pfReadFileCapped(f, 10, dataUrl => { PF.videoUp = dataUrl; pfRenderVideoPrev(); toast("Video attached"); });
+}
+function pfRenderDocs(){
+  const el = document.getElementById("pfDocsList"); if(!el) return;
+  el.innerHTML = PF.docs.length ? PF.docs.map((d, i) =>
+    `<div class="doc-row" style="padding:8px 0"><div><b>${d[0]}</b><div class="dm">${d[1]||"PDF"}</div></div>
+     <a class="btn btn-ghost btn-sm" href="${pfMediaSrc(d[2])}" download target="_blank" style="text-decoration:none">Download</a>
+     <button class="btn btn-ghost btn-sm" style="color:#ff9d9d" onclick="pfRemoveDoc(${i})">Remove</button></div>`
+  ).join("") : `<p style="font-size:12.5px;color:var(--muted)">No documents yet — upload PDFs or add file links investors can download.</p>`;
+}
+function pfDocUpload(input){
+  const f = input.files[0]; input.value = "";
+  if(!f) return;
+  const title = document.getElementById("pf_doctitle").value.trim() || f.name.replace(/\.pdf$/i, "");
+  pfReadFileCapped(f, 4, dataUrl => {
+    PF.docs.push([title, "PDF · " + pfFmtSize(f.size) + " · uploaded", dataUrl]);
+    document.getElementById("pf_doctitle").value = "";
+    pfRenderDocs(); toast("Document added");
+  });
+}
+function pfAddDoc(){
+  const title = document.getElementById("pf_doctitle").value.trim();
+  const url = document.getElementById("pf_docurl").value.trim();
+  if(!title){ toast("Give the document a title first"); return; }
+  if(!url){ toast("Upload a PDF or paste a file URL"); return; }
+  PF.docs.push([title, "File link", url]);
+  document.getElementById("pf_doctitle").value = "";
+  document.getElementById("pf_docurl").value = "";
+  pfRenderDocs(); toast("Document added");
+}
+function pfRemoveDoc(i){ PF.docs.splice(i, 1); pfRenderDocs(); }
 function projSave(id){
   const g = k => document.getElementById("pf_"+k).value.trim();
   const n = k => Math.max(0, Number(g(k))||0);
@@ -387,28 +559,77 @@ function projSave(id){
     tagline: g("tagline")||"", capital: n("capital"), units: n("units"), unitPrice: n("unitPrice"),
     min: n("min")||1, max: n("max")||20, status: g("status")||"funding", version: g("version")||"v1.0",
     longStop: g("longStop"), campaignEnds: g("campaignEnds"), operator: g("operator"), issuer: g("issuer"),
-    img: g("img"), video: g("video"), budget, risks };
+    budget, risks,
+    img: PF.coverUp || document.getElementById("pf_imgurl").value.trim() || g("img"),
+    gallery: [...PF.gallery],
+    video: PF.videoUp || document.getElementById("pf_videourl").value.trim(),
+    docs: PF.docs.map(d => [...d]) };
   if(id && BIDEMO.projectIsCustom(id)){
     const arr = projGetCustom(); const i = arr.findIndex(c=>c.id===id);
-    arr[i] = Object.assign({}, arr[i], data); localStorage.setItem("bi_projects_custom", JSON.stringify(arr));
+    arr[i] = Object.assign({}, arr[i], data); if(!pfPersistSet("bi_projects_custom", JSON.stringify(arr))) return;
     Object.assign(BIDEMO.projects.find(x=>x.id===id), data);
     audit("Project updated", code+" · "+name);
     toast("Demo: project updated — live on the site now");
   } else if(id){
     const ov = projGetOv(); ov[id] = Object.assign({}, ov[id], data);
-    localStorage.setItem("bi_projects_overrides", JSON.stringify(ov));
+    if(!pfPersistSet("bi_projects_overrides", JSON.stringify(ov))) return;
     Object.assign(BIDEMO.projects.find(x=>x.id===id), data);
     audit("Project updated", code+" · "+name);
     toast("Demo: project updated — live on the site now");
   } else {
-    const np = Object.assign({ id: "custom-"+Date.now().toString(36), reserved: 0, funded: 0, docs: [] }, data);
-    const arr = projGetCustom(); arr.push(np); localStorage.setItem("bi_projects_custom", JSON.stringify(arr));
+    const np = Object.assign({ id: "custom-"+Date.now().toString(36), reserved: 0, funded: 0 }, data);
+    const arr = projGetCustom(); arr.push(np); if(!pfPersistSet("bi_projects_custom", JSON.stringify(arr))) return;
     BIDEMO.projects.push(np);
     audit("Project created", np.code+" · "+np.name);
     toast("Demo: project published — it is live on the site now");
   }
-  closeModal(); renderProjAdmin();
+  closeModal(); renderProjAdmin(); libRender();
 }
+/* ---------- document library (demo, localStorage) ---------- */
+function libGet(){ try { return JSON.parse(localStorage.getItem("bi_doc_library") || "[]"); } catch(e){ return []; } }
+function libSet(a){ return pfPersistSet("bi_doc_library", JSON.stringify(a)); }
+function libRender(){
+  const list = document.getElementById("libList"); if(!list) return;
+  const lib = libGet();
+  const psel = document.getElementById("lib_proj");
+  if(psel && !psel.options.length){
+    psel.innerHTML = '<option value="">— All / none —</option>' + BIDEMO.projects.map(p => `<option value="${p.id}">${p.name}</option>`).join("");
+  }
+  document.getElementById("libCount").textContent = lib.length + " uploaded";
+  list.innerHTML = lib.length ? lib.map((d, i) => {
+    const pname = d.proj ? (BIDEMO.projects.find(p => p.id === d.proj) || {}).name || "" : "";
+    return `<div class="doc-row"><div><b>${d.t}</b><div class="dm">${d.m}${pname ? " · " + pname : ""}</div></div>
+      <span class="badge ${d.aud === "investors" ? "ok" : "mut"}">${d.aud === "investors" ? "Investor portal" : "Internal"}</span>
+      <a class="btn btn-ghost btn-sm" href="${pfMediaSrc(d.u)}" download="${d.t.replace(/"/g, "")}.pdf" target="_blank" style="text-decoration:none">Download</a>
+      <button class="btn btn-ghost btn-sm" onclick="libToggle(${i})">${d.aud === "investors" ? "Unpublish" : "Publish"}</button>
+      <button class="btn btn-ghost btn-sm" style="color:#ff9d9d" onclick="libDelete(${i})">Delete</button></div>`;
+  }).join("") : `<p style="color:var(--dim);font-size:13.5px">No uploaded literature yet. Built-in demo documents remain available in the investor portal.</p>`;
+}
+function libAdd(title, meta, url, aud, proj){
+  const lib = libGet();
+  lib.unshift({ t: title, m: meta, u: url, aud: aud || "investors", proj: proj || "", ts: Date.now() });
+  if(libSet(lib)){ libRender(); audit("Document added", title); toast("Document added to library"); }
+}
+function libUpload(input){
+  const f = input.files[0]; input.value = ""; if(!f) return;
+  const title = document.getElementById("lib_title").value.trim() || f.name.replace(/\.pdf$/i, "");
+  const cat = document.getElementById("lib_cat").value, aud = document.getElementById("lib_aud").value, proj = document.getElementById("lib_proj").value;
+  pfReadFileCapped(f, 4, dataUrl => {
+    libAdd(title, cat + " · PDF · " + pfFmtSize(f.size) + " · uploaded", dataUrl, aud, proj);
+    document.getElementById("lib_title").value = ""; document.getElementById("lib_url").value = "";
+  });
+}
+function libAddUrl(){
+  const title = document.getElementById("lib_title").value.trim();
+  const url = document.getElementById("lib_url").value.trim();
+  if(!title){ toast("Give the document a title first"); return; }
+  if(!url){ toast("Upload a PDF or paste a file URL"); return; }
+  const cat = document.getElementById("lib_cat").value, aud = document.getElementById("lib_aud").value, proj = document.getElementById("lib_proj").value;
+  libAdd(title, cat + " · file link", url, aud, proj);
+  document.getElementById("lib_title").value = ""; document.getElementById("lib_url").value = "";
+}
+function libToggle(i){ const lib = libGet(); lib[i].aud = lib[i].aud === "investors" ? "internal" : "investors"; if(libSet(lib)){ libRender(); toast(lib[i].aud === "investors" ? "Published to investor portal" : "Moved to internal"); } }
+function libDelete(i){ const lib = libGet(); const d = lib.splice(i, 1)[0]; if(libSet(lib)){ libRender(); audit("Document removed", d.t); toast("Document removed"); } }
 function projToggle(id){
   const p = BIDEMO.projects.find(x=>x.id===id); if(!p) return;
   const hide = !p._hidden;
@@ -434,6 +655,7 @@ function projDelete(id){
   renderProjAdmin();
 }
 renderProjAdmin();
+libRender();
 
 /* campaigns */
 document.getElementById("campAdmin").innerHTML = BIDEMO.projects.filter(p=>p.status==="funding").map(p=>{

@@ -2,6 +2,22 @@
 (function () {
   "use strict";
   const BASE = document.body.dataset.base || "";
+  window.pfSrcFor = function (u) { return (/^(data:|https?:|\/\/)/i.test(u || "")) ? u : (BASE + u); };
+  window.pfVideoEmbed = function (url, poster) {
+    const u = window.pfSrcFor(url); if (!u) return "";
+    const esc = u.replace(/"/g, "&quot;");
+    const yt = u.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([\w-]{6,})/);
+    const vm = u.match(/vimeo\.com\/(\d+)/);
+    if (yt) return `<iframe src="https://www.youtube.com/embed/${yt[1]}" title="Project video" style="width:100%;aspect-ratio:16/9;border:0;border-radius:14px" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>`;
+    if (vm) return `<iframe src="https://player.vimeo.com/video/${vm[1]}" title="Project video" style="width:100%;aspect-ratio:16/9;border:0;border-radius:14px" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>`;
+    const post = poster ? ` poster="${window.pfSrcFor(poster).replace(/"/g, "&quot;")}"` : "";
+    return `<video controls playsinline preload="none"${post} style="width:100%;border-radius:14px;background:#000;aspect-ratio:16/9"><source src="${esc}"></video>`;
+  };
+  window.pfSwapGal = function (src, el) {
+    const main = document.getElementById("galMain"); if (main) main.src = src;
+    document.querySelectorAll(".gal-thumb").forEach(t => { t.classList.remove("on"); t.style.borderColor = "transparent"; t.style.opacity = ".7"; });
+    if (el) { el.classList.add("on"); el.style.borderColor = "var(--orange)"; el.style.opacity = "1"; }
+  };
 
   /* ---------- header ---------- */
   const nav = document.getElementById("siteNav");
@@ -112,7 +128,7 @@
       const allocated = p.units ? Math.round((p.reserved + p.funded) / p.units * 100) : 0;
       const fundedPct = p.units ? Math.round(p.funded / p.units * 100) : 0;
       const avail = p.units ? p.units - p.reserved - p.funded : 0;
-      const img = p.img ? `<img src="${BASE}${p.img}" alt="${p.name}" loading="lazy" style="width:100%;height:100%;object-fit:cover;aspect-ratio:16/10">`
+      const img = p.img ? `<img src="${window.pfSrcFor(p.img)}" alt="${p.name}" loading="lazy" style="width:100%;height:100%;object-fit:cover;aspect-ratio:16/10">`
         : `<div style="width:100%;height:100%;background:linear-gradient(135deg,#f4efe4,#e6dfcf);display:grid;place-items:center;font-size:44px">◈</div>`;
       return `<article class="p-card reveal d${(i % 4) + 1}">
         <div class="p-img">${img}${statusChip(p.status)}</div>
@@ -172,11 +188,15 @@
     det.innerHTML = `
       <div class="two-col" style="align-items:start">
         <div>
-          <div class="p-img" style="border-radius:var(--r);border:1px solid var(--line)">
-            ${p.img ? `<img src="${BASE}${p.img}" alt="${p.name}" style="width:100%;height:100%;object-fit:cover;aspect-ratio:16/10">` : ""}
-            ${statusChip(p.status)}</div>
-          ${p.video ? `<div class="panel" style="margin-top:22px"><h3>Project film</h3><p class="ph-sub">A 10-second cinematic look at the asset — sample footage</p>
-            <video controls playsinline preload="none" poster="${BASE}${p.img}" style="width:100%;border-radius:14px;background:#000;aspect-ratio:16/9"><source src="${BASE}${p.video}" type="video/mp4"></video></div>` : ""}
+          ${(() => { const gal = [p.img, ...(p.gallery||[])].filter(Boolean); if (!gal.length) return "";
+            const main = window.pfSrcFor(gal[0]);
+            return `<div class="p-img" style="border-radius:var(--r);border:1px solid var(--line)">
+              <img id="galMain" src="${main}" alt="${p.name}" style="width:100%;height:100%;object-fit:cover;aspect-ratio:16/10">
+              ${statusChip(p.status)}</div>` +
+              (gal.length > 1 ? `<div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">` + gal.map((u, i) =>
+                `<img src="${window.pfSrcFor(u)}" onclick="pfSwapGal('${window.pfSrcFor(u).replace(/'/g, "\'")}',this)" class="gal-thumb${i===0?" on":""}" alt="Photo ${i+1}" style="width:84px;height:56px;object-fit:cover;border-radius:8px;cursor:pointer;border:2px solid ${i===0?"var(--orange)":"transparent"}" loading="lazy">`
+              ).join("") + `</div>` : ""); })()}
+          ${p.video ? `<div class="panel" style="margin-top:22px"><h3>Project film</h3>${window.pfVideoEmbed(p.video, p.img)}</div>` : ""}
           <div class="panel" style="margin-top:22px"><h3>Capital budget</h3><p class="ph-sub">Use of funds — illustrative, from approved documents ${p.version}</p>
             <div class="table-wrap" style="border:0"><table style="min-width:0">
             ${(p.budget||[]).map(b => `<tr><td>${b[0]}</td><td class="num" style="text-align:right">${fmtAED(b[1])}</td></tr>`).join("")}
@@ -185,7 +205,12 @@
           <div class="panel"><h3>Key risks</h3><p class="ph-sub">Read before reserving. Capital is at risk.</p>
             <ul style="color:var(--muted);font-size:14.5px;padding-left:20px;display:grid;gap:9px">${(p.risks||[]).map(r => `<li>${r}</li>`).join("")}</ul></div>
           <div class="panel"><h3>Document room</h3><p class="ph-sub">Approved documents · version-controlled</p>
-            ${(p.docs||[]).map(d => `<div class="doc-row"><div><b>${d[0]}</b><div class="dm">${d[1]} · sample PDF</div></div>${d[2] ? `<button class="btn btn-ghost btn-sm" onclick="openDoc('${BASE}${d[2]}','${d[0].replace(/'/g, "")}')">Preview</button>` : '<span class="badge mut">Soon</span>'}</div>`).join("") || '<p style="color:var(--dim)">No documents published yet.</p>'}</div>
+            ${(p.docs||[]).map(d => { const du = window.pfSrcFor(d[2]); const isData = /^data:/i.test(du);
+            return `<div class="doc-row"><div><b>${d[0]}</b><div class="dm">${d[1]}</div></div>
+            ${d[2] ? (isData
+              ? `<a class="btn btn-ghost btn-sm" href="${du}" download="${d[0].replace(/"/g,"")}.pdf" style="text-decoration:none">Download</a>`
+              : `<button class="btn btn-ghost btn-sm" onclick="openDoc('${du.replace(/'/g, "\'")}','${d[0].replace(/'/g, "")}')">Preview</button>`)
+              : '<span class="badge mut">Soon</span>'}</div>`; }).join("") || '<p style="color:var(--dim)">No documents published yet.</p>'}</div>
         </div>
         <div>
           <div class="panel" style="border-color:rgba(255,122,26,.35)">
