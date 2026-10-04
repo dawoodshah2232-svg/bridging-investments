@@ -12,7 +12,7 @@ no guaranteed-return claims, no invented statistics. "Capital at risk" tone.
 - [x] jbr-hospitality-footfall | Market | What drives a JBR restaurant's revenue: footfall, not food | location economics
 - [x] fractional-ownership-gcc-trend | Market | Fractional ownership is growing in the GCC — here's what's driving it | trend, accessibility
 - [x] offplan-vs-tenanted-property | Market | Off-plan vs tenanted: which commercial property suits shared ownership | risk/return contrast
-- [ ] dubai-marina-berth-economics | Market | Berth economics: the hidden cost line in every yacht investment | marina fees, maintenance
+- [x] dubai-marina-berth-economics | Market | Berth economics: the hidden cost line in every yacht investment | marina fees, maintenance
 - [ ] occupancy-rate-truth | Market | "94% occupied" — what occupancy figures do and don't tell you | read tenancy schedules
 - [ ] gcc-tourism-vision-impact | Market | GCC tourism targets and what they mean for hospitality assets | demand drivers, no hype
 - [ ] commercial-vs-residential-investing | Market | Commercial vs residential property: cash flow, leases, effort | honest comparison
@@ -45,7 +45,7 @@ no guaranteed-return claims, no invented statistics. "Capital at risk" tone.
 - [x] monthly-report-anatomy | Reporting | Anatomy of a monthly report: every section explained | report literacy
 - [x] certificate-register-entry | How it works | Your certificate and register entry: proof of ownership | legal evidence
 - [x] funding-call-process | How it works | The funding call: what happens when a campaign fills | closing process
-- [ ] long-stop-date-meaning | How it works | The long-stop date: your backstop if a campaign stalls | investor protection
+- [x] long-stop-date-meaning | How it works | The long-stop date: your backstop if a campaign stalls | investor protection
 - [ ] document-room-guide | How it works | The document room: which papers matter most | due diligence
 - [ ] distribution-calendar | Reporting | The distribution calendar: when money moves and why | monthly cycle
 - [ ] fee-schedule-reading | How it works | Reading the fee schedule: every fee, disclosed | transparency
@@ -78,7 +78,7 @@ no guaranteed-return claims, no invented statistics. "Capital at risk" tone.
 - [x] questions-to-ask-operator | Investor guide | 12 questions to ask any project operator | diligence questions
 - [x] red-flags-private-offers | Investor guide | Red flags in private investment offers | warnings
 - [x] guaranteed-returns-myth | Investor guide | "Guaranteed returns": why the phrase itself is the warning | myth-busting
-- [ ] holding-period-mindset | Investor guide | Thinking in holding periods, not headlines | patience
+- [x] holding-period-mindset | Investor guide | Thinking in holding periods, not headlines | patience
 - [ ] cash-flow-vs-capital-growth | Investor guide | Cash flow vs capital growth: know which game you're playing | strategy
 - [ ] emergency-fund-first | Investor guide | Before you invest: the emergency fund comes first | foundations
 - [ ] reading-financial-statements-basics | Investor guide | Financial statements in 10 minutes: what actually matters | literacy
