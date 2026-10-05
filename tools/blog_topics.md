@@ -13,7 +13,7 @@ no guaranteed-return claims, no invented statistics. "Capital at risk" tone.
 - [x] fractional-ownership-gcc-trend | Market | Fractional ownership is growing in the GCC — here's what's driving it | trend, accessibility
 - [x] offplan-vs-tenanted-property | Market | Off-plan vs tenanted: which commercial property suits shared ownership | risk/return contrast
 - [x] dubai-marina-berth-economics | Market | Berth economics: the hidden cost line in every yacht investment | marina fees, maintenance
-- [ ] occupancy-rate-truth | Market | "94% occupied" — what occupancy figures do and don't tell you | read tenancy schedules
+- [x] occupancy-rate-truth | Market | "94% occupied" — what occupancy figures do and don't tell you | read tenancy schedules
 - [ ] gcc-tourism-vision-impact | Market | GCC tourism targets and what they mean for hospitality assets | demand drivers, no hype
 - [ ] commercial-vs-residential-investing | Market | Commercial vs residential property: cash flow, leases, effort | honest comparison
 - [ ] service-charges-dubai-commercial | Market | Service charges in Dubai commercial towers: the line investors forget | opex drag
@@ -46,7 +46,7 @@ no guaranteed-return claims, no invented statistics. "Capital at risk" tone.
 - [x] certificate-register-entry | How it works | Your certificate and register entry: proof of ownership | legal evidence
 - [x] funding-call-process | How it works | The funding call: what happens when a campaign fills | closing process
 - [x] long-stop-date-meaning | How it works | The long-stop date: your backstop if a campaign stalls | investor protection
-- [ ] document-room-guide | How it works | The document room: which papers matter most | due diligence
+- [x] document-room-guide | How it works | The document room: which papers matter most | due diligence
 - [ ] distribution-calendar | Reporting | The distribution calendar: when money moves and why | monthly cycle
 - [ ] fee-schedule-reading | How it works | Reading the fee schedule: every fee, disclosed | transparency
 - [ ] subscription-agreement-clauses | How it works | Five clauses to read in any subscription agreement | legal literacy
@@ -79,7 +79,7 @@ no guaranteed-return claims, no invented statistics. "Capital at risk" tone.
 - [x] red-flags-private-offers | Investor guide | Red flags in private investment offers | warnings
 - [x] guaranteed-returns-myth | Investor guide | "Guaranteed returns": why the phrase itself is the warning | myth-busting
 - [x] holding-period-mindset | Investor guide | Thinking in holding periods, not headlines | patience
-- [ ] cash-flow-vs-capital-growth | Investor guide | Cash flow vs capital growth: know which game you're playing | strategy
+- [x] cash-flow-vs-capital-growth | Investor guide | Cash flow vs capital growth: know which game you're playing | strategy
 - [ ] emergency-fund-first | Investor guide | Before you invest: the emergency fund comes first | foundations
 - [ ] reading-financial-statements-basics | Investor guide | Financial statements in 10 minutes: what actually matters | literacy
 - [ ] sponsor-alignment | Investor guide | Sponsor alignment: why we invest our own capital alongside you | skin in the game
