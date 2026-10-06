@@ -14,7 +14,7 @@ no guaranteed-return claims, no invented statistics. "Capital at risk" tone.
 - [x] offplan-vs-tenanted-property | Market | Off-plan vs tenanted: which commercial property suits shared ownership | risk/return contrast
 - [x] dubai-marina-berth-economics | Market | Berth economics: the hidden cost line in every yacht investment | marina fees, maintenance
 - [x] occupancy-rate-truth | Market | "94% occupied" — what occupancy figures do and don't tell you | read tenancy schedules
-- [ ] gcc-tourism-vision-impact | Market | GCC tourism targets and what they mean for hospitality assets | demand drivers, no hype
+- [x] gcc-tourism-vision-impact | Market | GCC tourism targets and what they mean for hospitality assets | demand drivers, no hype
 - [ ] commercial-vs-residential-investing | Market | Commercial vs residential property: cash flow, leases, effort | honest comparison
 - [ ] service-charges-dubai-commercial | Market | Service charges in Dubai commercial towers: the line investors forget | opex drag
 - [ ] single-asset-risk | Market | One yacht, one building, one restaurant: understanding single-asset risk | concentration
@@ -47,7 +47,7 @@ no guaranteed-return claims, no invented statistics. "Capital at risk" tone.
 - [x] funding-call-process | How it works | The funding call: what happens when a campaign fills | closing process
 - [x] long-stop-date-meaning | How it works | The long-stop date: your backstop if a campaign stalls | investor protection
 - [x] document-room-guide | How it works | The document room: which papers matter most | due diligence
-- [ ] distribution-calendar | Reporting | The distribution calendar: when money moves and why | monthly cycle
+- [x] distribution-calendar | Reporting | The distribution calendar: when money moves and why | monthly cycle
 - [ ] fee-schedule-reading | How it works | Reading the fee schedule: every fee, disclosed | transparency
 - [ ] subscription-agreement-clauses | How it works | Five clauses to read in any subscription agreement | legal literacy
 - [ ] risk-acknowledgement-why | How it works | Why we ask you to sign a risk acknowledgement | informed consent
@@ -80,7 +80,7 @@ no guaranteed-return claims, no invented statistics. "Capital at risk" tone.
 - [x] guaranteed-returns-myth | Investor guide | "Guaranteed returns": why the phrase itself is the warning | myth-busting
 - [x] holding-period-mindset | Investor guide | Thinking in holding periods, not headlines | patience
 - [x] cash-flow-vs-capital-growth | Investor guide | Cash flow vs capital growth: know which game you're playing | strategy
-- [ ] emergency-fund-first | Investor guide | Before you invest: the emergency fund comes first | foundations
+- [x] emergency-fund-first | Investor guide | Before you invest: the emergency fund comes first | foundations
 - [ ] reading-financial-statements-basics | Investor guide | Financial statements in 10 minutes: what actually matters | literacy
 - [ ] sponsor-alignment | Investor guide | Sponsor alignment: why we invest our own capital alongside you | skin in the game
 - [ ] transparency-as-strategy | Brand | Why we publish everything: transparency as a business strategy | brand story
