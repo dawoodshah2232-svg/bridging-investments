@@ -142,8 +142,9 @@
           <div class="p-bars">
             <div class="bar-row"><span>Allocated</span><b style="color:var(--orange2)">${allocated}%</b></div>
             <div class="bar o"><i data-w="${allocated}"></i></div>
-            <div class="bar-row"><span>Funded</span><b style="color:var(--gold)">${fundedPct}%</b></div>
+            <div class="bar-row"><span>Funded</span><b style="color:#059669">${fundedPct}%</b></div>
             <div class="bar g"><i data-w="${fundedPct}"></i></div>
+            <div style="font-size:12.5px;color:var(--muted);margin-top:8px">${p.reserved} reserved · ${p.funded} funded · ${avail} available</div>
           </div>` : `<p style="color:var(--muted);font-size:14px">${p.tagline}</p>`}
           <div class="p-cta">
             <a class="btn btn-primary btn-sm" href="${BASE}project.html?id=${p.id}">${p.status === "funding" ? "View & reserve" : "View details"}</a>
@@ -223,7 +224,7 @@
             <div class="p-bars" style="margin-bottom:18px">
               <div class="bar-row"><span>${p.reserved} reserved · ${p.funded} funded</span><b style="color:var(--orange2)">${allocated}% allocated</b></div>
               <div class="bar o"><i data-w="${allocated}" style="width:${allocated}%"></i></div>
-              <div class="bar-row"><span>Funded allocations</span><b style="color:var(--gold)">${fundedPct}%</b></div>
+              <div class="bar-row"><span>Funded allocations</span><b style="color:#059669">${fundedPct}%</b></div>
               <div class="bar g"><i data-w="${fundedPct}" style="width:${fundedPct}%"></i></div>
               <div class="bar-row"><span><b style="color:var(--gold)">${avail} units available</b></span><span>Min ${p.min} · Max ${p.max}</span></div>
             </div>
@@ -243,6 +244,7 @@
             <div class="doc-row"><div>Issuer<b style="display:block;color:var(--muted);font-weight:400">${p.issuer}</b></div></div>
             <div class="doc-row"><div>Operator<b style="display:block;color:var(--muted);font-weight:400">${p.operator}</b></div></div>
             <div class="doc-row"><div>Offering currency<b style="display:block;color:var(--muted);font-weight:400">AED — single currency</b></div></div>
+            <div class="doc-row"><div>Payment policy<b style="display:block;color:var(--muted);font-weight:400">Bank transfer only, to the authorised project account. Each reservation receives a unique payment reference. Funds are marked cleared only after finance reconciliation — a transfer screenshot is not proof of payment. Full payment due within 5 business days of the funding call; missed deadlines release the units to the waiting list. <i>(Illustrative policy for demo.)</i></b></div></div>
           </div>
         </div>
       </div>

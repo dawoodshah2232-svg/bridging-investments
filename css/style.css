@@ -156,7 +156,7 @@ header.nav.scrolled{border-color:var(--line);box-shadow:0 8px 30px -18px rgba(14
 .bar{height:8px;border-radius:99px;background:rgba(14,26,43,.08);overflow:hidden}
 .bar i{display:block;height:100%;border-radius:99px;width:0;transition:width 1.2s cubic-bezier(.2,.7,.2,1)}
 .bar.o i{background:linear-gradient(90deg,var(--orange),var(--orange2))}
-.bar.g i{background:linear-gradient(90deg,var(--gold),var(--gold2))}
+.bar.g i{background:linear-gradient(90deg,#34d399,#059669)}
 .bar-row{display:flex;justify-content:space-between;align-items:center}
 .p-cta{margin-top:auto;display:flex;gap:10px}
 .p-cta .btn{flex:1}
@@ -503,6 +503,8 @@ video{max-width:100%}
 .hiw-head p{color:rgba(255,255,255,.62);font-size:16.5px;line-height:1.6}
 .hiw-grid{position:relative;display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
 .hiw-grid::before{content:"";position:absolute;left:5%;right:5%;top:128px;height:1px;background:linear-gradient(90deg,transparent,rgba(249,115,22,.45) 20%,rgba(249,115,22,.45) 80%,transparent);pointer-events:none}
+.hiw-grid.g8{grid-template-columns:repeat(4,1fr)}
+.hiw-grid.g8::before{display:none}
 .hiw-card{position:relative;background:#101F36;border:1px solid rgba(255,255,255,.09);border-radius:22px;padding:28px 22px;overflow:hidden;transition:transform .35s cubic-bezier(.22,1,.36,1),border-color .3s,box-shadow .3s}
 .hiw-card:hover{transform:translateY(-6px);border-color:rgba(249,115,22,.45);box-shadow:0 24px 50px -20px rgba(0,0,0,.6)}
 .hiw-num{display:block;font-size:54px;font-weight:800;letter-spacing:-.03em;line-height:1;margin-bottom:20px;color:transparent;-webkit-text-stroke:1.5px rgba(255,255,255,.25);transition:color .3s}

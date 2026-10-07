@@ -39,23 +39,68 @@
 <section class="section" style="padding-top:30px"><div class="container">
 <div class="two-col" style="align-items:start">
 <div class="panel reveal"><h3>Submit for evaluation</h3><p class="ph-sub">Reviewed by our project team · 10 business days</p>
-<form data-demo>
+<form id="spForm" novalidate>
 <div class="grid cols-2">
-<div class="field"><label for="sName">Your name</label><input id="sName" required placeholder="Full name"></div>
-<div class="field"><label for="sEmail">Work email</label><input id="sEmail" type="email" required placeholder="you@company.com"></div>
+<div class="field"><label for="sName">Your name *</label><input id="sName" required placeholder="Full name"></div>
+<div class="field"><label for="sEmail">Work email *</label><input id="sEmail" type="email" required placeholder="you@company.com"></div>
 </div>
 <div class="grid cols-2">
-<div class="field"><label for="sCo">Company</label><input id="sCo" required placeholder="Operating company"></div>
+<div class="field"><label for="sCo">Company *</label><input id="sCo" required placeholder="Operating company"></div>
 <div class="field"><label for="sRole">Your role</label><input id="sRole" placeholder="Owner / operator / broker"></div>
 </div>
-<div class="field"><label for="sType">Asset type</label><select id="sType"><option>Commercial property</option><option>Hospitality</option><option>Maritime / charter</option><option>Logistics</option><option>Other income asset</option></select></div>
+<div class="field"><label for="sType">Asset type *</label><select id="sType" required><option value="">Select asset type…</option><option>Commercial property</option><option>Hospitality</option><option>Maritime / charter</option><option>Logistics</option><option>Other income asset</option></select></div>
 <div class="grid cols-2">
-<div class="field"><label for="sCap">Capital required (AED)</label><input id="sCap" inputmode="numeric" placeholder="e.g. 2,000,000"></div>
-<div class="field"><label for="sLoc">Location</label><input id="sLoc" placeholder="City, area"></div>
+<div class="field"><label for="sCap">Funding request (AED) *</label><input id="sCap" inputmode="numeric" required placeholder="e.g. 2,000,000"></div>
+<div class="field"><label for="sLoc">Location / country *</label><input id="sLoc" required placeholder="City, country"></div>
 </div>
-<div class="field"><label for="sSum">Project summary</label><textarea id="sSum" required placeholder="Asset, revenue model, why it suits shared ownership…"></textarea></div>
+<div class="field"><label for="sSum">Project description *</label><textarea id="sSum" required placeholder="Asset, revenue model, why it suits shared ownership…"></textarea></div>
+<div class="field"><label for="sFiles">Supporting files</label>
+<p style="font-size:13px;color:var(--muted);margin:0 0 8px">For this demo, note the files you would attach (financials, title documents, licences). In production you can upload them here or email them after submitting — we will reply with a secure upload link.</p>
+<input id="sFiles" placeholder="e.g. audited-accounts-2025.pdf, title-deed.pdf"></div>
+<div class="field"><label style="display:flex;gap:10px;align-items:flex-start;cursor:pointer;font-weight:400">
+<input type="checkbox" id="sConsent" required style="width:18px;height:18px;margin-top:2px;accent-color:var(--orange)">
+<span style="font-size:13.5px;color:var(--muted)">I consent to Bridging Investment LLC reviewing this submission and contacting me about it. I understand that submitting a project does <b>not</b> create a listing — every project goes through independent evaluation before any offer is structured. *</span></label></div>
+<p id="spErr" style="display:none;color:#dc2626;font-size:13.5px;font-weight:600"></p>
 <button class="btn btn-primary btn-lg" style="width:100%" type="submit">Submit for evaluation →</button>
-</form></div>
+</form>
+<script>
+(function(){
+  var f = document.getElementById("spForm"); if(!f) return;
+  var err = document.getElementById("spErr");
+  f.addEventListener("submit", function(e){
+    e.preventDefault(); err.style.display = "none";
+    var v = function(id){ return (document.getElementById(id).value || "").trim(); };
+    var missing = [];
+    ["sName","sEmail","sCo","sType","sCap","sLoc","sSum"].forEach(function(id){
+      if(!v(id)) missing.push(id);
+    });
+    var emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v("sEmail"));
+    var consentOk = document.getElementById("sConsent").checked;
+    if(missing.length || !emailOk || !consentOk){
+      err.textContent = !emailOk && v("sEmail") ? "Please enter a valid work email."
+        : !consentOk ? "Please tick the consent checkbox to submit."
+        : "Please complete all required fields marked *.";
+      err.style.display = "block"; return;
+    }
+    var rec = { name: v("sName"), email: v("sEmail"), company: v("sCo"), role: v("sRole"),
+      assetType: v("sType"), fundingAED: v("sCap"), location: v("sLoc"), description: v("sSum"),
+      files: v("sFiles"), date: new Date().toISOString().slice(0,10) };
+    try {
+      var k = "osx_project_submissions", arr = JSON.parse(localStorage.getItem(k) || "[]");
+      arr.push(rec); localStorage.setItem(k, JSON.stringify(arr));
+    } catch(_){}
+    var box = f.parentElement;
+    box.innerHTML = '<div style="text-align:center;padding:30px 10px">'
+      + '<div style="width:64px;height:64px;border-radius:50%;background:#dcfce7;display:grid;place-items:center;margin:0 auto 16px">'
+      + '<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#15803d" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg></div>'
+      + '<h3 style="font-size:24px;margin-bottom:10px">Submission received</h3>'
+      + '<p style="color:var(--muted);margin-bottom:8px">Thank you, ' + rec.name.split(" ")[0] + '. Our project team will review your submission within 10 business days.</p>'
+      + '<p style="color:var(--muted);margin-bottom:16px">Submitting does <b>not</b> create a listing — every project passes independent evaluation before any offer is structured.</p>'
+      + '<span class="badge demo">DEMO — stored on this device only</span></div>';
+    window.scrollTo({ top: box.offsetTop - 120, behavior: "smooth" });
+  });
+})();
+</script></div>
 <div>
 <div class="panel reveal d1"><h3>What we look for</h3><p class="ph-sub">Evaluation criteria</p>
 <ul style="color:var(--muted);font-size:14.5px;padding-left:20px;display:grid;gap:10px">
