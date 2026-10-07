@@ -134,7 +134,7 @@
         <div class="p-img">${img}${statusChip(p.status)}</div>
         <div class="p-body">
           <h3>${p.name}</h3>
-          <div class="p-meta"><span>📍 ${p.location}</span><span>🏷 ${p.category}</span></div>
+          <div class="p-meta"><span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg> ${p.location}</span><span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2H2v10l9.3 9.3a1 1 0 0 0 1.4 0l8.6-8.6a1 1 0 0 0 0-1.4Z"/><circle cx="7" cy="7" r="1.5"/></svg> ${p.category}</span></div>
           ${p.units ? `<div class="p-econ">
             <div>Unit price<b>${fmtAED(p.unitPrice)}</b></div>
             <div style="text-align:right">Available<b style="color:var(--gold)">${avail} units</b></div>
