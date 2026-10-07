@@ -26,14 +26,12 @@ body[data-role="admin"] .pane:not(.on){display:none;}
 /* ---------- sidebar ---------- */
 body[data-role="admin"] .side{
   width:264px; flex:none; background:var(--ad-navy); color:#fff;
-  position:sticky; top:0; height:100svh; overflow-y:auto; overscroll-behavior:contain;
-  padding:24px 18px; border-right:0; display:flex; flex-direction:column;
+  position:sticky; top:0; height:100svh; overflow:hidden;
+  padding:24px 18px 0; border-right:0; display:flex; flex-direction:column;
 }
-body[data-role="admin"] .side .logo{margin-bottom:0; padding:0 6px 22px; border-bottom:1px solid rgba(255,255,255,.1); display:block; text-decoration:none;}
-body[data-role="admin"] .side .logo-box{
-  display:inline-flex; align-items:center; background:#fff; border-radius:14px; padding:8px 14px;
-}
-body[data-role="admin"] .side .logo img{height:30px; width:auto; display:block;}
+body[data-role="admin"] .side .logo{margin-bottom:0; padding:0 6px 20px; border-bottom:1px solid rgba(255,255,255,.1); display:block; text-decoration:none; flex:none;}
+body[data-role="admin"] .side .logo img{height:32px; width:auto; display:block;}
+body[data-role="admin"] .side-nav{flex:1; min-height:0; overflow-y:auto; overscroll-behavior:contain; padding:6px 0 12px;}
 body[data-role="admin"] .side .logo-sub{
   display:block; font-size:11px; font-weight:700; letter-spacing:.16em;
   text-transform:uppercase; color:rgba(255,255,255,.45); margin-top:8px;
@@ -54,8 +52,9 @@ body[data-role="admin"] .side a.tab .ti{
 }
 body[data-role="admin"] .side a.tab .ti svg{width:16px; height:16px; display:block;}
 body[data-role="admin"] .side-foot{
-  margin-top:auto; padding-top:18px; border-top:1px solid rgba(255,255,255,.1);
-  display:flex; align-items:center; justify-content:space-between; gap:10px;
+  margin-top:auto; padding:16px 6px 20px; border-top:1px solid rgba(255,255,255,.1);
+  display:flex; align-items:center; justify-content:space-between; gap:10px; flex:none;
+  background:var(--ad-navy);
 }
 body[data-role="admin"] .side-foot .btn{
   background:transparent; border:0; color:#9ca3af; font-size:13px; font-weight:700;
