@@ -16,29 +16,24 @@
 /* ---- country filter + waitlist (projects page only) ---- */
 .grid.cols-4.cx-filters{grid-template-columns:repeat(5,1fr)}
 .cx-wrap{position:relative}
-.cx-btn{width:100%;background:#fff;border:1px solid var(--line2);border-radius:12px;padding:13px 15px;color:var(--ivory);font-family:var(--font);font-size:15px;display:flex;align-items:center;justify-content:space-between;gap:8px;cursor:pointer;transition:border-color .2s,box-shadow .2s;text-align:left}
-.cx-btn:hover{border-color:var(--orange)}
-.cx-btn:focus-visible{outline:0;border-color:var(--orange);box-shadow:0 0 0 3px rgba(249,115,22,.18)}
-.cx-btn svg{flex:none;color:var(--dim)}
-.cx-btn span.lbl{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.cx-panel{position:absolute;top:calc(100% + 8px);left:0;right:0;min-width:280px;background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 24px 60px -18px rgba(14,26,43,.35);padding:8px;z-index:60;max-height:360px;overflow:auto}
-.cx-group{font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);padding:10px 10px 6px}
-.cx-opt{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;text-align:left;background:transparent;border:0;border-radius:10px;padding:10px;font-size:14.5px;font-weight:600;color:var(--ivory);cursor:pointer;font-family:var(--font)}
-.cx-opt:hover{background:rgba(249,115,22,.08)}
-.cx-opt.on{background:var(--orange-soft);color:var(--orange-deep)}
-.cx-opt .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cx-wrap input#cxQuery{width:100%;background:#fff;border:1px solid var(--line2);border-radius:12px;padding:13px 40px 13px 15px;color:var(--ivory);font-family:var(--font);font-size:15px;transition:border-color .2s,box-shadow .2s}
+.cx-wrap input#cxQuery:focus{outline:0;border-color:var(--orange);box-shadow:0 0 0 3px rgba(249,115,22,.18)}
+.cx-clear{position:absolute;right:10px;top:50%;transform:translateY(-50%);width:26px;height:26px;border-radius:50%;border:0;background:#eef1f4;color:var(--muted);cursor:pointer;display:grid;place-items:center;padding:0}
+.cx-clear:hover{background:#e0e6ee;color:var(--ivory)}
+.cx-clear[hidden]{display:none}
+.cx-sugg{position:absolute;top:calc(100% + 8px);left:auto;right:0;min-width:300px;background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 24px 60px -18px rgba(14,26,43,.35);padding:8px;z-index:60;max-height:320px;overflow:auto}
+.cx-srow{display:flex;align-items:center;gap:10px;width:100%;text-align:left;background:transparent;border:0;border-radius:10px;padding:9px 10px;font-size:14.5px;font-weight:600;color:var(--ivory);cursor:pointer;font-family:var(--font)}
+.cx-srow:hover,.cx-srow.act{background:rgba(249,115,22,.08)}
+.cx-srow img{width:22px;height:auto;border-radius:3px;flex:none;box-shadow:0 0 0 1px rgba(14,26,43,.08);background:#f1f3f5}
+.cx-srow .nm{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .cx-count{font-size:12px;font-weight:700;color:var(--muted);background:#f1f3f5;border-radius:999px;padding:3px 10px;white-space:nowrap;flex:none}
-.cx-opt.on .cx-count{background:#fff;color:var(--orange-deep)}
-.cx-searchrow{display:flex;gap:8px;padding:6px 10px 12px}
-.cx-searchrow input{flex:1;min-width:0;background:#fff;border:1px solid var(--line2);border-radius:10px;padding:10px 12px;font-size:14px;color:var(--ivory);font-family:var(--font)}
-.cx-searchrow input:focus{outline:0;border-color:var(--orange);box-shadow:0 0 0 3px rgba(249,115,22,.18)}
 .cx-country{display:flex;align-items:center;gap:6px;color:var(--muted);font-size:13px;margin-top:8px}
 .cx-country svg{flex:none;color:var(--dim)}
 .cx-globe{width:56px;height:56px;border-radius:18px;background:var(--orange-soft);display:grid;place-items:center;margin:0 auto 18px;color:var(--orange)}
 .cx-err{color:#b42318;background:#fef3f2;border:1px solid #fecdca;border-radius:10px;padding:10px 12px;font-size:13.5px;margin:0 0 12px;text-align:left}
 .cx-okbadge{width:56px;height:56px;border-radius:50%;background:#dcfae6;color:#067647;display:grid;place-items:center;margin:0 auto 18px}
 @media(max-width:1100px){.grid.cols-4.cx-filters{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:640px){.grid.cols-4.cx-filters{grid-template-columns:1fr}.cx-panel{position:fixed;left:16px;right:16px;top:120px;max-height:70vh}}
+@media(max-width:640px){.grid.cols-4.cx-filters{grid-template-columns:1fr}.cx-sugg{position:fixed;left:16px;right:16px;top:120px;max-height:70vh}}
 #cxWaitlist{scroll-margin-top:110px}
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"CollectionPage","name":"Investment projects","url":"https://dawoodshah2232-svg.github.io/bridging-investments/projects.html"}</script>
@@ -74,15 +69,11 @@
 <div class="field" style="margin:0"><label for="fCat">Category</label><select id="fCat"></select></div>
 <div class="field" style="margin:0"><label for="fStatus">Status</label><select id="fStatus"><option value="">All statuses</option><option value="funding">Funding</option><option value="evaluation">Evaluation</option><option value="review">Under review</option></select></div>
 <div class="field" style="margin:0"><label for="fSort">Sort by</label><select id="fSort"><option value="">Featured</option><option value="avail">Most available</option><option value="capital">Largest capital</option></select></div>
-<div class="field" style="margin:0"><label id="cxLabel">Country</label>
+<div class="field" style="margin:0"><label for="cxQuery">Country</label>
 <div class="cx-wrap">
-<button type="button" class="cx-btn" id="cxBtn" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="cxLabel cxBtnLabel"><span class="lbl" id="cxBtnLabel">All countries</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button>
-<div class="cx-panel" id="cxPanel" role="listbox" aria-label="Country filter" hidden>
-<div class="cx-group">Available now</div>
-<div id="cxAvail"></div>
-<div class="cx-group">Looking elsewhere?</div>
-<div class="cx-searchrow"><input id="cxQuery" placeholder="Type a country&hellip;" aria-label="Type a country" autocomplete="off"><button type="button" class="btn btn-primary btn-sm" id="cxGo">Search</button></div>
-</div>
+<input id="cxQuery" placeholder="Type a country&hellip;" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="cxSugg" aria-autocomplete="list">
+<button type="button" class="cx-clear" id="cxClear" aria-label="Clear country filter" hidden><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+<div class="cx-sugg" id="cxSugg" role="listbox" aria-label="Country suggestions" hidden></div>
 </div></div>
 </div></div>
 <p id="resCount" style="color:var(--muted);font-size:14px;margin-bottom:18px"></p>
@@ -128,7 +119,7 @@
 </div></footer>
 <script src="js/data.js?v=20261007c"></script><script src="js/site.js?v=20261007c"></script>
 <script>
-/* ---- country filter + notify-me waitlist (projects page) ---- */
+/* ---- country search + notify-me waitlist (projects page) ---- */
 (function () {
   if (!window.BIDEMO) return;
   var list = document.getElementById("projectList"); if (!list) return;
@@ -139,66 +130,122 @@
 
   var PIN = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>';
 
-  /* country index from data */
-  var byCode = {};
+  /* ISO 3166-1 country list: [alpha-2 code, full name] */
+  var ISO=[["af","Afghanistan"],["ax","Åland Islands"],["al","Albania"],["dz","Algeria"],["as","American Samoa"],["ad","Andorra"],["ao","Angola"],["ai","Anguilla"],["aq","Antarctica"],["ag","Antigua and Barbuda"],["ar","Argentina"],["am","Armenia"],["aw","Aruba"],["au","Australia"],["at","Austria"],["az","Azerbaijan"],["bs","Bahamas"],["bh","Bahrain"],["bd","Bangladesh"],["bb","Barbados"],["by","Belarus"],["be","Belgium"],["bz","Belize"],["bj","Benin"],["bm","Bermuda"],["bt","Bhutan"],["bo","Bolivia"],["ba","Bosnia and Herzegovina"],["bw","Botswana"],["br","Brazil"],["io","British Indian Ocean Territory"],["vg","British Virgin Islands"],["bn","Brunei"],["bg","Bulgaria"],["bf","Burkina Faso"],["bi","Burundi"],["kh","Cambodia"],["cm","Cameroon"],["ca","Canada"],["cv","Cabo Verde"],["ky","Cayman Islands"],["cf","Central African Republic"],["td","Chad"],["cl","Chile"],["cn","China"],["cx","Christmas Island"],["cc","Cocos Islands"],["co","Colombia"],["km","Comoros"],["cg","Republic of the Congo"],["cd","DR Congo"],["ck","Cook Islands"],["cr","Costa Rica"],["ci","Côte d'Ivoire"],["hr","Croatia"],["cu","Cuba"],["cw","Curaçao"],["cy","Cyprus"],["cz","Czechia"],["dk","Denmark"],["dj","Djibouti"],["dm","Dominica"],["do","Dominican Republic"],["ec","Ecuador"],["eg","Egypt"],["sv","El Salvador"],["gq","Equatorial Guinea"],["er","Eritrea"],["ee","Estonia"],["sz","Eswatini"],["et","Ethiopia"],["fk","Falkland Islands"],["fo","Faroe Islands"],["fj","Fiji"],["fi","Finland"],["fr","France"],["gf","French Guiana"],["pf","French Polynesia"],["ga","Gabon"],["gm","Gambia"],["ge","Georgia"],["de","Germany"],["gh","Ghana"],["gi","Gibraltar"],["gr","Greece"],["gl","Greenland"],["gd","Grenada"],["gp","Guadeloupe"],["gu","Guam"],["gt","Guatemala"],["gg","Guernsey"],["gn","Guinea"],["gw","Guinea-Bissau"],["gy","Guyana"],["ht","Haiti"],["hn","Honduras"],["hk","Hong Kong"],["hu","Hungary"],["is","Iceland"],["in","India"],["id","Indonesia"],["ir","Iran"],["iq","Iraq"],["ie","Ireland"],["im","Isle of Man"],["il","Israel"],["it","Italy"],["jm","Jamaica"],["jp","Japan"],["je","Jersey"],["jo","Jordan"],["kz","Kazakhstan"],["ke","Kenya"],["ki","Kiribati"],["xk","Kosovo"],["kw","Kuwait"],["kg","Kyrgyzstan"],["la","Laos"],["lv","Latvia"],["lb","Lebanon"],["ls","Lesotho"],["lr","Liberia"],["ly","Libya"],["li","Liechtenstein"],["lt","Lithuania"],["lu","Luxembourg"],["mo","Macau"],["mg","Madagascar"],["mw","Malawi"],["my","Malaysia"],["mv","Maldives"],["ml","Mali"],["mt","Malta"],["mh","Marshall Islands"],["mq","Martinique"],["mr","Mauritania"],["mu","Mauritius"],["yt","Mayotte"],["mx","Mexico"],["fm","Micronesia"],["md","Moldova"],["mc","Monaco"],["mn","Mongolia"],["me","Montenegro"],["ms","Montserrat"],["ma","Morocco"],["mz","Mozambique"],["mm","Myanmar"],["na","Namibia"],["nr","Nauru"],["np","Nepal"],["nl","Netherlands"],["nc","New Caledonia"],["nz","New Zealand"],["ni","Nicaragua"],["ne","Niger"],["ng","Nigeria"],["nu","Niue"],["nf","Norfolk Island"],["kp","North Korea"],["mk","North Macedonia"],["mp","Northern Mariana Islands"],["no","Norway"],["om","Oman"],["pk","Pakistan"],["pw","Palau"],["ps","Palestine"],["pa","Panama"],["pg","Papua New Guinea"],["py","Paraguay"],["pe","Peru"],["ph","Philippines"],["pn","Pitcairn Islands"],["pl","Poland"],["pt","Portugal"],["pr","Puerto Rico"],["qa","Qatar"],["re","Réunion"],["ro","Romania"],["ru","Russia"],["rw","Rwanda"],["ws","Samoa"],["sm","San Marino"],["st","São Tomé and Príncipe"],["sa","Saudi Arabia"],["sn","Senegal"],["rs","Serbia"],["sc","Seychelles"],["sl","Sierra Leone"],["sg","Singapore"],["sx","Sint Maarten"],["sk","Slovakia"],["si","Slovenia"],["sb","Solomon Islands"],["so","Somalia"],["za","South Africa"],["gs","South Georgia"],["ss","South Sudan"],["es","Spain"],["lk","Sri Lanka"],["sd","Sudan"],["sr","Suriname"],["sj","Svalbard"],["se","Sweden"],["ch","Switzerland"],["sy","Syria"],["tw","Taiwan"],["tj","Tajikistan"],["tz","Tanzania"],["th","Thailand"],["tl","Timor-Leste"],["tg","Togo"],["tk","Tokelau"],["to","Tonga"],["tt","Trinidad and Tobago"],["tn","Tunisia"],["tr","Turkey"],["tm","Turkmenistan"],["tc","Turks and Caicos"],["tv","Tuvalu"],["ug","Uganda"],["ua","Ukraine"],["ae","United Arab Emirates"],["gb","United Kingdom"],["us","United States"],["vi","US Virgin Islands"],["uy","Uruguay"],["uz","Uzbekistan"],["vu","Vanuatu"],["va","Vatican City"],["ve","Venezuela"],["vn","Vietnam"],["wf","Wallis and Futuna"],["eh","Western Sahara"],["ye","Yemen"],["zm","Zambia"],["zw","Zimbabwe"]];
+
+  /* project country (alpha-3 in data) -> alpha-2 */
+  var A32 = { "UAE": "ae" };
+  function pISO(p) { return A32[p.country] || String(p.country || "").toLowerCase(); }
+  var projCount = {};
   BIDEMO.projects.forEach(function (p) {
     if (p._hidden || !p.country) return;
-    var c = byCode[p.country] || (byCode[p.country] = { code: p.country, name: p.countryName || p.country, n: 0 });
-    c.n++;
+    var c = pISO(p); projCount[c] = (projCount[c] || 0) + 1;
   });
-  var countries = Object.keys(byCode).map(function (k) { return byCode[k]; })
-    .sort(function (a, b) { return b.n - a.n || a.name.localeCompare(b.name); });
 
-  var state = { mode: "all", code: null, query: "" }; /* all | country | search */
+  var state = { mode: "all", code: null, name: "" }; /* all | country | wait */
 
-  /* ---------- dropdown ---------- */
-  var btn = document.getElementById("cxBtn"), panel = document.getElementById("cxPanel"),
-      btnLabel = document.getElementById("cxBtnLabel"), avail = document.getElementById("cxAvail"),
-      queryIn = document.getElementById("cxQuery"), go = document.getElementById("cxGo");
+  var input = document.getElementById("cxQuery"),
+      sugg = document.getElementById("cxSugg"),
+      clearBtn = document.getElementById("cxClear");
 
-  function renderAvail() {
-    avail.innerHTML = "";
-    var mk = function (val, name, count, on) {
-      var b = document.createElement("button");
-      b.type = "button"; b.className = "cx-opt" + (on ? " on" : ""); b.setAttribute("data-cx", val);
-      var nm = document.createElement("span"); nm.className = "nm"; nm.textContent = name; b.appendChild(nm);
-      if (count) { var c = document.createElement("span"); c.className = "cx-count"; c.textContent = count; b.appendChild(c); }
-      b.addEventListener("click", function () { pick(val); });
-      avail.appendChild(b);
-    };
-    mk("all", "All countries", null, state.mode === "all");
-    countries.forEach(function (c) {
-      mk(c.code, c.name, c.n + (c.n === 1 ? " project" : " projects"), state.mode === "country" && state.code === c.code);
+  function cap(s) { s = String(s == null ? "" : s).trim(); return s ? s.charAt(0).toUpperCase() + s.slice(1) : s; }
+  function flagURL(code) { return "https://flagcdn.com/w40/" + code + ".png"; }
+
+  function matchList(needle) {
+    needle = String(needle == null ? "" : needle).trim().toLowerCase();
+    var arr = ISO.filter(function (e) {
+      return !needle || e[1].toLowerCase().indexOf(needle) !== -1 || e[0] === needle;
     });
+    arr.sort(function (a, b) {
+      var ha = projCount[a[0]] ? 0 : 1, hb = projCount[b[0]] ? 0 : 1;
+      if (ha !== hb) return ha - hb;
+      return a[1] < b[1] ? -1 : a[1] > b[1] ? 1 : 0;
+    });
+    return arr;
   }
-  function pick(val) {
-    if (val === "all") { state.mode = "all"; state.code = null; state.query = ""; btnLabel.textContent = "All countries"; }
-    else {
-      var c = null; countries.forEach(function (x) { if (x.code === val) c = x; });
-      state.mode = "country"; state.code = val; state.query = ""; btnLabel.textContent = c ? c.name : val;
+
+  var sugItems = [], sugActive = -1;
+  function renderSugg() {
+    sugItems = matchList(input.value).slice(0, 60);
+    sugActive = -1;
+    sugg.innerHTML = "";
+    if (!sugItems.length) { hideSugg(); return; }
+    sugItems.forEach(function (e, i) {
+      var b = document.createElement("button");
+      b.type = "button"; b.className = "cx-srow"; b.setAttribute("role", "option");
+      var img = document.createElement("img");
+      img.src = flagURL(e[0]); img.alt = ""; img.setAttribute("width", "22"); img.loading = "lazy";
+      img.onerror = function () { this.style.display = "none"; };
+      var nm = document.createElement("span"); nm.className = "nm"; nm.textContent = e[1];
+      b.appendChild(img); b.appendChild(nm);
+      var n = projCount[e[0]] || 0;
+      if (n) { var c = document.createElement("span"); c.className = "cx-count"; c.textContent = n + (n === 1 ? " project" : " projects"); b.appendChild(c); }
+      (function (idx) { b.addEventListener("mousedown", function (ev) { ev.preventDefault(); selectRow(idx); }); })(i);
+      sugg.appendChild(b);
+    });
+    showSugg();
+  }
+  function showSugg() { sugg.hidden = false; input.setAttribute("aria-expanded", "true"); }
+  function hideSugg() { sugg.hidden = true; input.setAttribute("aria-expanded", "false"); sugActive = -1; }
+  function paintActive() {
+    var rows = sugg.querySelectorAll(".cx-srow");
+    for (var j = 0; j < rows.length; j++) rows[j].classList.toggle("act", j === sugActive);
+  }
+  function selectRow(i) { var e = sugItems[i]; if (e) selectCountry(e[0], e[1]); }
+  function selectCountry(code, name) {
+    hideSugg();
+    input.value = name;
+    clearBtn.hidden = false;
+    if (projCount[code]) { state.mode = "country"; state.code = code; state.name = name; }
+    else { state.mode = "wait"; state.code = code; state.name = name; }
+    applyCountry();
+  }
+  function commitText() {
+    var v = input.value.trim();
+    hideSugg();
+    if (!v) { resetCountry(); return; }
+    var exact = null;
+    for (var i = 0; i < ISO.length; i++) {
+      if (ISO[i][1].toLowerCase() === v.toLowerCase() || ISO[i][0] === v.toLowerCase()) { exact = ISO[i]; break; }
     }
-    queryIn.value = ""; renderAvail(); closePanel(); applyCountry();
+    if (exact) { selectCountry(exact[0], exact[1]); return; }
+    state.mode = "wait"; state.code = null; state.name = cap(v);
+    input.value = cap(v);
+    clearBtn.hidden = false;
+    applyCountry();
   }
-  function openPanel() { panel.hidden = false; btn.setAttribute("aria-expanded", "true"); }
-  function closePanel() { panel.hidden = true; btn.setAttribute("aria-expanded", "false"); }
-  btn.addEventListener("click", function (e) { e.stopPropagation(); panel.hidden ? openPanel() : closePanel(); });
-  document.addEventListener("click", function (e) { if (!panel.hidden && !e.target.closest(".cx-wrap")) closePanel(); });
-  document.addEventListener("keydown", function (e) { if (e.key === "Escape") closePanel(); });
+  function resetCountry() {
+    state.mode = "all"; state.code = null; state.name = "";
+    input.value = ""; clearBtn.hidden = true; hideSugg();
+    applyCountry();
+  }
 
-  function cap(s) { s = String(s || "").trim(); return s ? s.charAt(0).toUpperCase() + s.slice(1) : s; }
-  function matchesCountry(p, needle) {
-    needle = String(needle || "").trim().toLowerCase(); if (!needle) return false;
-    return ((p.countryName || "") + " " + (p.country || "")).toLowerCase().indexOf(needle) !== -1;
-  }
-  function doSearch() {
-    var v = queryIn.value.trim(); if (!v) return;
-    state.mode = "search"; state.query = v; state.code = null;
-    btnLabel.textContent = cap(v); renderAvail(); closePanel(); applyCountry();
-  }
-  go.addEventListener("click", doSearch);
-  queryIn.addEventListener("keydown", function (e) { if (e.key === "Enter") { e.preventDefault(); doSearch(); } });
+  input.addEventListener("input", function () {
+    if (!input.value.trim()) { if (state.mode !== "all") resetCountry(); else hideSugg(); return; }
+    renderSugg();
+  });
+  input.addEventListener("focus", function () { renderSugg(); });
+  input.addEventListener("blur", function () { setTimeout(hideSugg, 150); });
+  input.addEventListener("keydown", function (e) {
+    if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+      e.preventDefault();
+      if (sugg.hidden) renderSugg();
+      if (!sugItems.length) return;
+      sugActive = e.key === "ArrowDown"
+        ? Math.min(sugActive + 1, sugItems.length - 1)
+        : Math.max(sugActive - 1, 0);
+      paintActive();
+      var rows = sugg.querySelectorAll(".cx-srow");
+      if (rows[sugActive] && rows[sugActive].scrollIntoView) rows[sugActive].scrollIntoView({ block: "nearest" });
+    } else if (e.key === "Enter") {
+      e.preventDefault();
+      if (!sugg.hidden && sugActive >= 0) selectRow(sugActive); else commitText();
+    } else if (e.key === "Escape") { hideSugg(); }
+  });
+  document.addEventListener("click", function (e) { if (!e.target.closest(".cx-wrap")) hideSugg(); });
+  clearBtn.addEventListener("click", resetCountry);
 
-  /* ---------- filtering (runs after site.js apply; same event order) ---------- */
+  /* ---------- filtering (registered after site.js apply, so this wins) ---------- */
   function baseFilter() {
     var L = BIDEMO.projects.filter(function (p) {
       return !p._hidden &&
@@ -224,10 +271,10 @@
   }
   function applyCountry() {
     var L = baseFilter(), waitFor = null;
-    if (state.mode === "country" && state.code) L = L.filter(function (p) { return p.country === state.code; });
-    else if (state.mode === "search" && state.query) {
-      var any = BIDEMO.projects.some(function (p) { return !p._hidden && matchesCountry(p, state.query); });
-      if (!any) waitFor = state.query; else L = L.filter(function (p) { return matchesCountry(p, state.query); });
+    if (state.mode === "country" && state.code) {
+      L = L.filter(function (p) { return pISO(p) === state.code; });
+    } else if (state.mode === "wait" && state.name) {
+      waitFor = state.name;
     }
     if (waitFor) {
       list.innerHTML = "";
@@ -279,12 +326,8 @@
     catch (_) { wErr.textContent = "Could not save \u2014 your browser storage is unavailable."; wErr.style.display = "block"; return; }
     wForm.style.display = "none"; wOkCountry.textContent = cap(wCountry); wOk.style.display = "block";
   });
-  document.getElementById("cxWBack").addEventListener("click", function () {
-    state.mode = "all"; state.code = null; state.query = ""; queryIn.value = "";
-    btnLabel.textContent = "All countries"; renderAvail(); hideWaitlist(); applyCountry();
-  });
+  document.getElementById("cxWBack").addEventListener("click", function () { resetCountry(); });
 
-  renderAvail();
   applyCountry();
 })();
 </script>
