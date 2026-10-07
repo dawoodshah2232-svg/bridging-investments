@@ -216,6 +216,9 @@ td b,td .hl{color:var(--ivory)}
 .side a.tab .ti{font-size:17px;width:22px;text-align:center}
 .side .logo{margin-bottom:26px;padding:0 8px}
 .side-foot{margin-top:auto;padding:14px 8px 0;border-top:1px solid var(--line);display:grid;gap:10px}
+/* Portal pages have no public nav — remove the 74px top offset reserved for it */
+body[data-role="investor"] .portal{padding-top:0}
+body[data-role="investor"] .side{top:0;height:100svh}
 .main{padding:34px clamp(18px,4vw,44px) 80px;min-width:0}
 .pane{display:none;animation:fadeUp .4s ease}
 .pane.on{display:block}
