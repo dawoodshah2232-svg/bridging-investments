@@ -28,6 +28,7 @@ const BIDEMO = {
       capital: 2000000, units: 100, unitPrice: 20000, reserved: 62, funded: 20,
       min: 1, max: 20, operator: "Marina Crest Charters LLC", issuer: "BI Yacht One Ltd",
       longStop: "30 Nov 2026", campaignEnds: "31 Oct 2026", version: "v1.2",
+      deadlineDays: 40, held: 8,
       budget: [
         ["Yacht purchase", 1500000], ["Survey, registration & insurance setup", 100000],
         ["Refit & charter launch", 150000], ["Working capital & maintenance reserve", 200000],
@@ -44,6 +45,7 @@ const BIDEMO = {
       capital: 5000000, units: 250, unitPrice: 20000, reserved: 141, funded: 88,
       min: 1, max: 25, operator: "Bayline Facilities Management LLC", issuer: "BI Property Two Ltd",
       longStop: "15 Dec 2026", campaignEnds: "30 Nov 2026", version: "v1.0",
+      deadlineDays: 12, held: 5,
       budget: [
         ["Property acquisition (3 floors)", 4250000], ["Transfer & registration fees", 170000],
         ["Fit-out & common-area upgrade", 280000], ["Leasing & legal costs", 140000],
@@ -59,6 +61,7 @@ const BIDEMO = {
       tagline: "A flagship dining outlet under evaluation — revenue reconciliation in progress.",
       capital: 3200000, units: 160, unitPrice: 20000, reserved: 0, funded: 0,
       min: 1, max: 20, operator: "Under selection", issuer: "TBC", longStop: "TBC", campaignEnds: "TBC", version: "draft",
+      deadlineDays: 5, held: 0,
       budget: [["Fit-out & kitchen", 1800000], ["Licences & approvals", 320000], ["Launch working capital", 780000], ["Reserve", 300000]],
       risks: ["Still under evaluation — no offer has been approved.", "Restaurant revenue is volatile and operator-dependent."],
       docs: [["Evaluation note (summary)", "PDF · 420 KB", "docs/restaurant-evaluation-note.pdf"], ["Risk acknowledgement", "PDF · 300 KB", "docs/restaurant-risk-acknowledgement.pdf"]],
@@ -70,6 +73,7 @@ const BIDEMO = {
       tagline: "Brokerage equity requires separate regulatory approval before any offer can be made.",
       capital: 0, units: 0, unitPrice: 0, reserved: 0, funded: 0,
       min: 0, max: 0, operator: "—", issuer: "—", longStop: "—", campaignEnds: "—", version: "—",
+      deadlineDays: 2, held: 3,
       budget: [], risks: ["Not an approved product. Subscriptions are never trader deposits."], docs: [["Evaluation note (summary)", "PDF · 350 KB", "docs/falcon-evaluation-note.pdf"]], timeline: [["Regulatory review", "Pending"]]
     }
   ],
@@ -243,6 +247,32 @@ const BIDEMO = {
     { id: "IB-203", name: "Tariq A.", email: "tariq.a@sample.ae", country: "UAE", exp: "Real-estate broker network, Dubai", status: "Approved", date: "20 Sep 2026" },
     { id: "IB-204", name: "John P.", email: "john.p@sample.ae", country: "UK", exp: "No relevant experience declared", status: "Rejected", date: "18 Sep 2026" }
   ],
+  deadlines: [
+    { id: "DL-101", projectId: "yacht", type: "Reservation close", days: 40, ext: [] },
+    { id: "DL-102", projectId: "yacht", type: "Funding call", days: 47, ext: [] },
+    { id: "DL-103", projectId: "property", type: "Reservation close", days: 12, ext: [] },
+    { id: "DL-104", projectId: "property", type: "KYC request", days: -2, ext: [] },
+    { id: "DL-105", projectId: "restaurant", type: "Reservation close", days: 5, ext: [
+      { from: "01 Sep 2026", to: "15 Sep 2026", reason: "Operator document delay", by: "A. Rahman", at: "28 Aug 2026", notified: true }
+    ] },
+    { id: "DL-106", projectId: "falcon", type: "Reservation close", days: 2, ext: [] },
+    { id: "DL-107", projectId: "falcon", type: "Funding call", days: 9, ext: [] }
+  ],
+  holdings: [
+    { project: "Dubai Charter Yacht", code: "BI-YT-01", units: 5, pct: "4.00", acquired: "12 Sep 2026", cert: "CRT-2026-0912" },
+    { project: "Business Bay Commercial Tower", code: "BI-CP-02", units: 2, pct: "0.64", acquired: "05 Sep 2026", cert: "CRT-2026-0877" }
+  ],
+  statements: [
+    { period: "September 2026", project: "All holdings", revenue: 84200, net: 21400, dist: 0, state: "In preparation" },
+    { period: "August 2026", project: "All holdings", revenue: 79600, net: 18900, dist: 8600, state: "Published" },
+    { period: "July 2026", project: "All holdings", revenue: 74100, net: 16200, dist: 7300, state: "Published" }
+  ],
+  votes: [
+    { id: "VOTE-31", project: "Dubai Charter Yacht", title: "Approve Q4 2026 charter rate card", closes: "20 Oct 2026", units: 5, state: "open",
+      options: ["Approve", "Reject", "Abstain"] },
+    { id: "VOTE-28", project: "Business Bay Commercial Tower", title: "Approve August distribution of AED 84,000", closes: "12 Sep 2026", state: "closed",
+      result: "Passed", approve: 92, reject: 5, abstain: 3 }
+  ],
 
   ibNetwork: [
     { level: 1, ib: "Tariq A.", name: "Hassan B.", id: "INV-3401", invested: 120000, date: "21 Sep 2026" },
@@ -253,11 +283,11 @@ const BIDEMO = {
   ],
 
   ibLedger: [
-    { id: "COM-910", ib: "Tariq A.", from: "Hassan B.", level: 1, base: 120000, rate: 2.5, amount: 3000, status: "Pending", date: "21 Sep 2026" },
-    { id: "COM-911", ib: "Tariq A.", from: "Rania F.", level: 1, base: 40000, rate: 2.5, amount: 1000, status: "Pending", date: "24 Sep 2026" },
+    { id: "COM-910", ib: "Tariq A.", from: "Hassan B.", level: 1, base: 120000, rate: 2.5, amount: 3000, status: "Accrued", date: "21 Sep 2026" },
+    { id: "COM-911", ib: "Tariq A.", from: "Rania F.", level: 1, base: 40000, rate: 2.5, amount: 1000, status: "Payable", date: "24 Sep 2026" },
     { id: "COM-912", ib: "Tariq A.", from: "Khalid N.", level: 2, base: 60000, rate: 1.25, amount: 750, status: "Pending", date: "26 Sep 2026" },
     { id: "COM-904", ib: "Ahmed Khan", from: "Sara M.", level: 1, base: 60000, rate: 2.5, amount: 1500, status: "Approved", date: "12 Jul 2026" },
-    { id: "COM-906", ib: "Ahmed Khan", from: "Layla H.", level: 2, base: 100000, rate: 1.25, amount: 1250, status: "Pending", date: "09 Aug 2026" }
+    { id: "COM-906", ib: "Ahmed Khan", from: "Layla H.", level: 2, base: 100000, rate: 1.25, amount: 1250, status: "Payable", date: "09 Aug 2026" }
   ],
 
   notifications: [
@@ -338,3 +368,36 @@ const BIDEMO = {
 
 const fmtAED = n => "AED " + Number(n).toLocaleString("en-US");
 window.BIDEMO = BIDEMO; window.fmtAED = fmtAED;
+
+/* ---------- Deadline engine (shared: public site + portals) ----------
+   Severity bands: >30d Normal · 15–30 Active · 7–15 Attention · 3–7 Urgent ·
+   <72h Critical · <24h Final day · past Expired. Deadlines stored as day-offsets
+   so the demo stays evergreen; due dates are computed at runtime. */
+(function () {
+  "use strict";
+  var MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  function dueDate(days){ var d = new Date(); d.setHours(12,0,0,0); d.setDate(d.getDate() + Math.round(days)); return d; }
+  window.dlDateStr = function (days){ var d = dueDate(days); return d.getDate() + " " + MONTHS[d.getMonth()] + " " + d.getFullYear(); };
+  window.dlLeft = function (days){
+    if (days < 0){ var a = Math.abs(Math.round(days)); return "Expired " + a + "d ago"; }
+    if (days < 1){ var h = Math.max(1, Math.round(days * 24)); return h + "h left"; }
+    var dd = Math.round(days); return dd + "d left";
+  };
+  window.dlSev = function (days){
+    if (days < 0)   return { key: "expired",   label: "Expired",   badge: "sev-expired" };
+    if (days < 1)   return { key: "final",     label: "Final day", badge: "sev-final" };
+    if (days < 3)   return { key: "critical",  label: "Critical",  badge: "err" };
+    if (days < 7)   return { key: "urgent",    label: "Urgent",    badge: "sev-urgent" };
+    if (days < 15)  return { key: "attention", label: "Attention", badge: "warn" };
+    if (days <= 30) return { key: "active",    label: "Active",    badge: "info" };
+    return { key: "normal", label: "Normal", badge: "mut" };
+  };
+  window.dlBadge = function (days, extra){
+    var s = window.dlSev(days);
+    return '<span class="badge ' + s.badge + '">' + s.label + '</span><span class="dl-left">' +
+      window.dlLeft(days) + (extra ? ' · ' + extra : '') + '</span>';
+  };
+  window.dlClockSvg = function (sz){ sz = sz || 14;
+    return '<svg width="' + sz + '" height="' + sz + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>';
+  };
+})();

@@ -5,7 +5,7 @@
 <title>Admin CRM — OwnStakeX</title>
 <meta name="robots" content="noindex">
 <link rel="icon" href="../assets/favicon.png" type="image/svg+xml">
-<link rel="stylesheet" href="../css/style.css?v=20261001a">
+<link rel="stylesheet" href="../css/style.css?v=20261007d">
 <link rel="stylesheet" href="admin.css?v=20261007a">
 </head>
 <body data-role="admin">
@@ -19,6 +19,7 @@
 <div class="side-sec">Operations</div>
 <a class="tab" data-tab="projects"><span class="ti"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="1.5"/><path d="M9 21v-4h6v4"/><path d="M8 7h2M14 7h2M8 11h2M14 11h2"/></svg></span>Projects</a>
 <a class="tab" data-tab="campaigns"><span class="ti"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg></span>Campaigns</a>
+<a class="tab" data-tab="deadlines"><span class="ti"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>Deadlines</a>
 <a class="tab" data-tab="treasury"><span class="ti"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 22h18"/><path d="M6 18v-7M10 18v-7M14 18v-7M18 18v-7"/><path d="m12 2 9 5H3z"/></svg></span>Treasury</a>
 <a class="tab" data-tab="register"><span class="ti"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 13h6M9 17h6"/></svg></span>Ownership register</a>
 <a class="tab" data-tab="finance"><span class="ti"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 20v-7M11 20V6M17 20v-11"/><path d="M3 20h18"/></svg></span>Finance & payouts</a>
@@ -104,6 +105,14 @@
 <h1 class="page-title">Campaign operations</h1>
 <p class="page-sub">Reservation inventory, funding calls and long-stop control.</p>
 <div id="campAdmin"></div>
+</section>
+
+<!-- DEADLINES -->
+<section class="pane" id="pane-deadlines">
+<h1 class="page-title">Deadline control center</h1>
+<p class="page-sub">Every deadline, its severity and full extension history. Original dates are never overwritten — extensions are recorded as new versions and investors are notified.</p>
+<div class="fchips" id="dlChips"></div>
+<div class="panel"><div class="table-wrap" style="border:0"><table style="min-width:860px" id="dlTable"></table></div></div>
 </section>
 
 <!-- TREASURY -->
@@ -204,7 +213,8 @@
 </div>
 
 <div class="panel"><h3>Commission ledger</h3>
-<p class="ph-sub">Pending → Approved → Paid. Every action is written to the audit trail.</p>
+<p class="ph-sub">Accrued → Approved → Payable → Paid. Every action is written to the audit trail.</p>
+<p style="font-size:13px;color:var(--muted);background:var(--ad-orange-soft,#fff7ed);border:1px solid rgba(249,115,22,.25);border-radius:12px;padding:10px 14px;margin:0 0 14px">Commission becomes payable only after funding settlement and finance approval.</p>
 <div class="table-wrap" style="border:0"><table style="min-width:760px" id="ibLedger"></table></div></div>
 </section>
 
@@ -268,8 +278,8 @@
 </div><!-- /main -->
 </div><!-- /portal -->
 
-<script src="../js/data.js?v=20261001a"></script>
-<script src="../js/portal.js?v=20261001a"></script>
+<script src="../js/data.js?v=20261007d"></script>
+<script src="../js/portal.js?v=20261007d"></script>
 <script>
 function goTab(id){ document.querySelector(`.side a.tab[data-tab="${id}"]`).click(); }
 
@@ -352,7 +362,12 @@ function renderProjAdmin(){
         <span class="badge mut">${p.code} · ${p.version||"v1.0"}</span>
         <span style="margin-left:auto" class="num"><b style="color:var(--ivory)">${fmtAED(p.capital||0)}</b> <span style="color:var(--dim);font-size:13px">· ${p.units||0} units</span></span>
       </div>
-      ${p.units ? `<div class="p-bars" style="margin-bottom:16px"><div class="bar-row"><span>${p.reserved||0} reserved · ${p.funded||0} funded</span><b style="color:var(--orange2)">${al}% allocated</b></div><div class="bar o"><i style="width:${al}%"></i></div></div>` : ""}
+      ${p.units ? `<div class="p-bars" style="margin-bottom:6px"><div class="bar-row"><span>${p.reserved||0} reserved · ${p.funded||0} funded</span><b style="color:var(--orange2)">${al}% allocated</b></div><div class="bar o"><i style="width:${al}%"></i></div></div>
+      ${(() => { const held=p.held||0, av=Math.max(0,p.units-(p.reserved||0)-(p.funded||0)-held);
+        const pct = v => p.units ? Math.max(0, Math.round(v/p.units*100)) : 0;
+        return `<div style="margin-bottom:16px"><div class="bar-row"><span><b>Unit inventory</b></span><span style="font-size:12.5px">Available ${av} · Held ${held} · Reserved ${p.reserved||0} · Funded ${p.funded||0}</span></div>
+        <div class="inv-strip"><i class="is-av" style="width:${pct(av)}%"></i><i class="is-held" style="width:${pct(held)}%"></i><i class="is-res" style="width:${pct(p.reserved||0)}%"></i><i class="is-fund" style="width:${pct(p.funded||0)}%"></i></div>
+        <div class="inv-legend"><span><span class="dot is-av"></span>Available <b>${av}</b></span><span><span class="dot is-held"></span>Held <b>${held}</b></span><span><span class="dot is-res"></span>Reserved <b>${p.reserved||0}</b></span><span><span class="dot is-fund"></span>Funded <b>${p.funded||0}</b></span></div></div>`; })()}` : ""}
       <div style="display:flex;gap:10px;flex-wrap:wrap">
         <button class="btn btn-ghost btn-sm" onclick="projForm('${p.id}')">Edit</button>
         <button class="btn btn-ghost btn-sm" onclick="projToggle('${p.id}')">${p._hidden ? "Publish" : "Hide"}</button>
@@ -671,6 +686,53 @@ document.getElementById("campAdmin").innerHTML = BIDEMO.projects.filter(p=>p.sta
   <div class="doc-row"><div>Campaign state<b style="display:block;color:var(--muted);font-weight:400">Accepting reservations</b></div><button class="btn btn-ghost btn-sm" onclick="toast('Demo: campaign paused — reservations frozen')">Pause</button></div>
   </div></div></div>`;}).join("");
 
+/* deadlines control center */
+let dlFilter = "all";
+const DL_FILTERS = [["all","All"],["today","Due today"],["7d","7 days"],["30d","30 days"],["expired","Expired"],["extended","Extended"]];
+function dlRowVisible(d){
+  if (dlFilter === "all") return true;
+  if (dlFilter === "today") return d.days >= 0 && d.days < 1;
+  if (dlFilter === "7d") return d.days >= 0 && d.days <= 7;
+  if (dlFilter === "30d") return d.days >= 0 && d.days <= 30;
+  if (dlFilter === "expired") return d.days < 0;
+  if (dlFilter === "extended") return (d.ext||[]).length > 0;
+  return true;
+}
+function renderDeadlines(){
+  document.getElementById("dlChips").innerHTML = DL_FILTERS.map(f=>
+    `<button class="fchip${dlFilter===f[0]?" on":""}" onclick="dlSetFilter('${f[0]}')">${f[1]}</button>`).join("");
+  const rows = BIDEMO.deadlines.filter(dlRowVisible);
+  document.getElementById("dlTable").innerHTML =
+    `<tr><th>Project</th><th>Type</th><th>Due date</th><th>Severity</th><th>Time left</th><th></th></tr>` +
+    (rows.map(d => {
+      const p = BIDEMO.projects.find(x=>x.id===d.projectId) || {};
+      const sev = window.dlSev(d.days);
+      const ext = (d.ext||[]).map(e=>`Extended: ${e.from} → <b>${e.to}</b> · ${e.reason} · approved by ${e.by} · investors notified`).join("<br>");
+      return `<tr><td><b>${p.name||d.projectId}</b><div class="dm">${p.code||""}</div></td>
+        <td><span class="badge info">${d.type}</span></td>
+        <td class="num">${window.dlDateStr(d.days)}</td>
+        <td><span class="badge ${sev.badge}">${sev.label}</span></td>
+        <td style="font-weight:600">${window.dlLeft(d.days)}</td>
+        <td style="white-space:nowrap">${d.days>=0?`<button class="btn btn-ghost btn-sm" onclick="dlExtend('${d.id}')">Extend +7d</button>`:`<span class="dm">—</span>`}</td></tr>
+        <tr class="dl-ext"><td colspan="6">${ext || "No extensions — original published date."}</td></tr>`;
+    }).join("") || `<tr><td colspan="6" style="text-align:center;color:var(--dim);padding:24px">No deadlines in this view.</td></tr>`);
+}
+function dlSetFilter(f){ dlFilter = f; renderDeadlines(); }
+function dlExtend(id){
+  const d = BIDEMO.deadlines.find(x=>x.id===id); if(!d || d.days < 0) return;
+  const p = BIDEMO.projects.find(x=>x.id===d.projectId) || {};
+  const from = window.dlDateStr(d.days);
+  d.days += 7;
+  const to = window.dlDateStr(d.days);
+  const t = new Date(), M = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  d.ext.push({ from, to, reason: "Admin extension (demo)", by: "S. Iqbal", at: t.getDate()+" "+M[t.getMonth()]+" "+t.getFullYear(), notified: true });
+  if (d.type === "Reservation close" && p.deadlineDays != null) p.deadlineDays += 7;
+  audit("Deadline extended +7d", d.id + " · " + (p.name||"") + " · " + from + " → " + to);
+  renderDeadlines();
+  toast("Deadline extended +7 days — history recorded, investors notified (demo)");
+}
+renderDeadlines();
+
 /* treasury */
 document.getElementById("treasBody").innerHTML = BIDEMO.treasury.map(t=>`
   <tr><td class="num"><b class="hl">${t.ref}</b></td><td>${t.who}</td><td class="num">${fmtAED(t.amount)}</td>
@@ -699,7 +761,10 @@ document.getElementById("intGrid").innerHTML = BIDEMO.integrations.map(g=>`
     <div class="stat-card"><div class="sl">Level ${l.level} · ${l.label}</div><div class="sv" style="color:var(--orange2)">${l.rate===0.5?'0.50':l.rate}%</div><div class="sl" style="margin:6px 0 0">${l.desc}</div></div>`).join("");
   renderIbApps(); renderIbTree(); renderIbLedger();
 })();
-function ibBadge(st){ return `<span class="badge ${st==="Approved"||st==="Paid"?"ok":st==="Rejected"?"warn":"info"}">${st}</span>`; }
+function ibBadge(st){
+  const m = {"Accrued":"info","Approved":"ok","Payable":"warn","Paid":"mut","Rejected":"sev-expired","Pending":"info"};
+  return `<span class="badge ${m[st]||"info"}">${st}</span>`;
+}
 function renderIbApps(){
   document.getElementById("ibApps").innerHTML =
     `<tr><th>ID</th><th>Applicant</th><th>Background</th><th>Applied</th><th>Status</th><th></th></tr>` +

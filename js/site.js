@@ -135,6 +135,7 @@
         <div class="p-body">
           <h3>${p.name}</h3>
           <div class="p-meta"><span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg> ${p.location}</span><span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2H2v10l9.3 9.3a1 1 0 0 0 1.4 0l8.6-8.6a1 1 0 0 0 0-1.4Z"/><circle cx="7" cy="7" r="1.5"/></svg> ${p.category}</span></div>
+          ${p.deadlineDays != null ? `<div class="dl-line">${window.dlClockSvg(14)}${window.dlBadge(p.deadlineDays, "closes " + window.dlDateStr(p.deadlineDays))}</div>` : ""}
           ${p.units ? `<div class="p-econ">
             <div>Unit price<b>${fmtAED(p.unitPrice)}</b></div>
             <div style="text-align:right">Available<b style="color:var(--gold)">${avail} units</b></div>
@@ -237,6 +238,21 @@
             : `<button class="btn btn-ghost btn-lg" style="width:100%" onclick="registerInterest('${p.id}')">Register interest</button>
                <p style="font-size:12.5px;color:var(--dim);margin-top:12px">This project is not reservable yet. Register interest and we will notify you when the offer is approved.</p>`}
           </div>
+          ${p.deadlineDays != null ? `
+          <div class="panel"><h3>Reservation deadline</h3>
+            <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:12px 0">${window.dlClockSvg(16)}${window.dlBadge(p.deadlineDays, "closes " + window.dlDateStr(p.deadlineDays))}</div>
+            ${(() => { const dl = (BIDEMO.deadlines||[]).find(d => d.projectId === p.id && d.type === "Reservation close");
+              if (!dl || !dl.ext || !dl.ext.length) return `<p class="dm" style="margin:0">No extensions — this is the original published date.</p>`;
+              return `<div class="dm" style="margin-top:6px"><b>Extension history</b> (original dates are never overwritten):<br>` +
+                dl.ext.map(e => `Extended: ${e.from} → <b>${e.to}</b> · ${e.reason} · approved by ${e.by} · investors notified`).join("<br>") + `</div>`; })()}
+            <p style="font-size:12.5px;color:var(--dim);margin:10px 0 0">Deadlines can be extended by the admin, but the original date is always preserved in history.</p>
+          </div>` : ""}
+          ${p.units ? `
+          <div class="panel"><h3>How payment works</h3>
+            <div class="doc-row"><div>Reserve now — 5%<b style="display:block;color:var(--muted);font-weight:400">${fmtAED(p.unitPrice*0.05)} per unit</b></div><span class="badge info">At reservation</span></div>
+            <div class="doc-row"><div>Balance — 95%<b style="display:block;color:var(--muted);font-weight:400">${fmtAED(p.unitPrice*0.95)} per unit · due on the funding call</b></div><span class="badge warn">Funding call</span></div>
+            <p style="font-size:12.5px;color:var(--dim);margin:12px 0 0">Ownership is issued only after cleared funding and legal closing — never from a browser success message. Capital at risk.</p>
+          </div>` : ""}
           <div class="panel"><h3>Timeline</h3><div class="timeline" style="margin-top:16px">
             ${(p.timeline||[]).map((t, i) => `<div class="tl-item${i > 1 ? " g" : ""}"><b>${t[0]}</b><span>${t[1]}</span></div>`).join("")}
           </div></div>

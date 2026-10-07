@@ -547,3 +547,22 @@ video{max-width:100%}
 .p-body h3{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:break-word}
 .p-meta span{display:inline-flex;align-items:center;gap:6px}
 .p-meta svg{width:14px;height:14px;flex:none;color:var(--orange-deep)}
+
+/* ---------- CRM workflow blueprint: deadline engine, inventory, voting (additive) ---------- */
+.badge.sev-urgent{background:#ffedd5;color:#c2410c}
+.badge.sev-expired{background:#1f2937;color:#e5e7eb}
+.badge.sev-final{background:#fee2e2;color:#b91c1c;font-weight:800}
+.dl-line{display:flex;align-items:center;gap:8px;margin-top:10px;font-size:13px;color:var(--muted)}
+.dl-line .dl-left{font-weight:600;color:var(--ivory)}
+.inv-strip{display:flex;height:10px;border-radius:99px;overflow:hidden;background:var(--line2);margin-top:10px}
+.inv-strip i{display:block;height:100%;min-width:0}
+.is-av{background:#a7f3d0}.is-held{background:#93c5fd}.is-res{background:#fdba74}.is-fund{background:#34d399}
+.inv-legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12.5px;color:var(--muted);margin-top:8px}
+.inv-legend b{font-weight:700}
+.inv-legend .dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px}
+.fchips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.fchip{border:1px solid var(--line2);background:#fff;border-radius:999px;padding:8px 16px;font-size:13px;font-weight:600;color:var(--muted);cursor:pointer}
+.fchip:hover{border-color:var(--orange);color:var(--orange-deep)}
+.fchip.on{background:var(--navy);border-color:var(--navy);color:#fff}
+.dl-ext td{background:#fafbfc;font-size:12.5px;color:var(--muted)}
+.vote-opt{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}

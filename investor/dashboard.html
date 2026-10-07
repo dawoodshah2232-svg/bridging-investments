@@ -5,7 +5,7 @@
 <title>Investor portal — OwnStakeX</title>
 <meta name="robots" content="noindex">
 <link rel="icon" href="../assets/favicon.png" type="image/svg+xml">
-<link rel="stylesheet" href="../css/style.css?v=20261001a">
+<link rel="stylesheet" href="../css/style.css?v=20261007d">
 <link rel="prefetch" href="../docs/yacht-offering-terms-v1-2.pdf">
 <link rel="prefetch" href="../docs/yacht-risk-acknowledgement.pdf">
 <link rel="prefetch" href="../docs/subscription-agreement-rsv-88097.pdf">
@@ -21,6 +21,9 @@
 <a class="tab" data-tab="reservations"><span class="ti">📌</span>Reservations</a>
 <a class="tab" data-tab="payments"><span class="ti">💳</span>Payments</a>
 <a class="tab" data-tab="investments"><span class="ti">🏛</span>Investments</a>
+<a class="tab" data-tab="ownership"><span class="ti"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="6"/><path d="m8.5 14-2 7 5.5-3 5.5 3-2-7"/><path d="m10 9 1.5 1.5L15 7"/></svg></span>Ownership</a>
+<a class="tab" data-tab="statements"><span class="ti"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 13h6M9 17h4"/></svg></span>Statements</a>
+<a class="tab" data-tab="voting"><span class="ti"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 11 3 3 8-8"/><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-6"/><path d="M2 12h20"/></svg></span>Board & voting</a>
 <a class="tab" data-tab="referrals"><span class="ti">🤝</span>Referrals</a>
 <div class="side-sec">Information</div>
 <a class="tab" data-tab="reports"><span class="ti">📊</span>Reports & distributions</a>
@@ -137,6 +140,53 @@
 <div id="invList"></div>
 </section>
 
+<!-- OWNERSHIP -->
+<section class="pane" id="pane-ownership">
+<h1 class="page-title">Ownership</h1>
+<p class="page-sub">Holdings issued at legal closing — reconciled to the project company register. Demo data.</p>
+<div class="panel"><div class="table-wrap" style="border:0"><table style="min-width:720px">
+<tr><th>Project</th><th>Units</th><th>Ownership</th><th>Acquired</th><th>Certificate</th></tr>
+<tr><td><b>Dubai Charter Yacht</b><div class="dm">BI-YT-01</div></td><td class="num">5</td><td class="num">4.00%</td><td>12 Sep 2026</td><td><button class="btn btn-ghost btn-sm" onclick="toast('Demo: share certificate CRT-2026-0912 downloaded')">Certificate</button></td></tr>
+<tr><td><b>Business Bay Commercial Tower</b><div class="dm">BI-CP-02</div></td><td class="num">2</td><td class="num">0.64%</td><td>05 Sep 2026</td><td><button class="btn btn-ghost btn-sm" onclick="toast('Demo: share certificate CRT-2026-0877 downloaded')">Certificate</button></td></tr>
+</table></div>
+<p style="font-size:12.5px;color:var(--dim);margin-top:12px">Ownership % is of total project equity. A portal certificate evidences a recorded position — legal issuance sits in the company register.</p></div>
+</section>
+
+<!-- STATEMENTS -->
+<section class="pane" id="pane-statements">
+<h1 class="page-title">Statements</h1>
+<p class="page-sub">Monthly statements generated from period snapshots. Corrections create a new version — published statements are never edited. Demo data.</p>
+<div class="panel"><div class="table-wrap" style="border:0"><table style="min-width:720px">
+<tr><th>Period</th><th>Revenue</th><th>Net result</th><th>Distribution</th><th>Status</th><th></th></tr>
+<tr><td><b>September 2026</b><div class="dm">All holdings</div></td><td class="num">AED 84,200</td><td class="num">AED 21,400</td><td class="num">—</td><td><span class="badge warn">In preparation</span></td><td></td></tr>
+<tr><td><b>August 2026</b><div class="dm">All holdings</div></td><td class="num">AED 79,600</td><td class="num">AED 18,900</td><td class="num">AED 8,600</td><td><span class="badge ok">Published</span></td><td><button class="btn btn-ghost btn-sm" onclick="toast('Demo: August 2026 statement downloaded (PDF)')">Download</button></td></tr>
+<tr><td><b>July 2026</b><div class="dm">All holdings</div></td><td class="num">AED 74,100</td><td class="num">AED 16,200</td><td class="num">AED 7,300</td><td><span class="badge ok">Published</span></td><td><button class="btn btn-ghost btn-sm" onclick="toast('Demo: July 2026 statement downloaded (PDF)')">Download</button></td></tr>
+</table></div></div>
+</section>
+
+<!-- BOARD & VOTING -->
+<section class="pane" id="pane-voting">
+<h1 class="page-title">Board & voting</h1>
+<p class="page-sub">Investor votes are enabled only where the governing documents grant the right. Demo data.</p>
+<div class="panel" style="border-color:rgba(255,176,32,.45)">
+<h3>VOTE-31 · Approve Q4 2026 charter rate card</h3>
+<p class="ph-sub">Dubai Charter Yacht</p>
+<div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:10px 0">
+<span class="badge ok">You are entitled to vote</span><span class="dm">5 units · closes 20 Oct 2026</span>
+</div>
+<div class="vote-opt">
+<button class="btn btn-primary btn-sm" onclick="castVote(this,'Approve')">Approve</button>
+<button class="btn btn-ghost btn-sm" onclick="castVote(this,'Reject')">Reject</button>
+<button class="btn btn-ghost btn-sm" onclick="castVote(this,'Abstain')">Abstain</button>
+</div>
+<p class="dm" id="voteMsg" style="margin-top:10px"></p>
+</div>
+<div class="panel"><h3>Past resolutions</h3>
+<div class="doc-row"><div><b>VOTE-28 · Approve August distribution of AED 84,000</b><div class="dm">Business Bay Commercial Tower · closed 12 Sep 2026</div></div><span class="badge ok">Passed</span></div>
+<div class="p-bars" style="margin-top:12px"><div class="bar-row"><span>Approve 92%</span><span>Reject 5% · Abstain 3%</span></div><div class="bar g"><i style="width:92%"></i></div></div>
+</div>
+</section>
+
 
 <!-- REFERRALS -->
 <section class="pane" id="pane-referrals">
@@ -241,8 +291,8 @@
 </div><!-- /main -->
 </div><!-- /portal -->
 
-<script src="../js/data.js?v=20261001a"></script>
-<script src="../js/portal.js?v=20261001a"></script>
+<script src="../js/data.js?v=20261007d"></script>
+<script src="../js/portal.js?v=20261007d"></script>
 <script>
 function goTab(id){ document.querySelector(`.side a.tab[data-tab="${id}"]`).click(); }
 function copyRef(){ navigator.clipboard && navigator.clipboard.writeText("BI-88121-AK"); toast("Reference BI-88121-AK copied — use it exactly"); }
@@ -270,6 +320,12 @@ bars("chWf",["Revenue","Costs","Depr.","Finance","Tax","Net","Cash avail"],[100,
 
 document.getElementById("feed").innerHTML = BIDEMO.activity.map(a=>`<div class="feed-item"><span class="feed-dot ${a[2]}"></span><div>${a[0]}</div><time>${a[1]}</time></div>`).join("");
 
+function castVote(btn, choice){
+  const box = btn.closest(".vote-opt");
+  box.querySelectorAll("button").forEach(b=>{ b.disabled = true; b.style.opacity = ".45"; });
+  btn.style.opacity = "1"; btn.classList.remove("btn-ghost"); btn.classList.add("btn-primary");
+  document.getElementById("voteMsg").innerHTML = "Vote recorded: <b>" + choice + "</b> · 5 units · demo — a signed ballot would be issued in production.";
+}
 document.getElementById("resvList").innerHTML = BIDEMO.reservations.map(r=>{
   const p=BIDEMO.projects.find(x=>x.id===r.projectId);
   return `<div class="panel" style="${r.state==="Awaiting payment"?"border-color:rgba(255,176,32,.45)":""}">
@@ -278,6 +334,10 @@ document.getElementById("resvList").innerHTML = BIDEMO.reservations.map(r=>{
   <span class="badge ${r.state==="Funded"?"ok":"warn"}">${r.state}</span><span class="badge mut">${r.version}</span></div>
   <div class="two-col"><div>
   <div class="doc-row"><div>Units<b style="display:block;color:var(--muted);font-weight:400">${r.qty} × ${fmtAED(p.unitPrice)}</b></div><b style="color:var(--ivory)">${fmtAED(r.value)}</b></div>
+  ${r.state==="Awaiting payment"
+    ? `<div class="doc-row"><div>Paid — 5% reservation<b style="display:block;color:var(--muted);font-weight:400">${fmtAED(r.value*0.05)} · cleared</b></div><span class="badge ok">Paid</span></div>
+       <div class="doc-row"><div>Due — 95% on funding call<b style="display:block;color:var(--muted);font-weight:400">${fmtAED(r.value*0.95)} · ${r.paymentDue}</b></div><span class="badge warn">Scheduled</span></div>`
+    : `<div class="doc-row"><div>Paid — 5% + 95%<b style="display:block;color:var(--muted);font-weight:400">${fmtAED(r.value)} · settled in full</b></div><span class="badge ok">Settled</span></div>`}
   <div class="doc-row"><div>Created<b style="display:block;color:var(--muted);font-weight:400">${r.created}</b></div></div>
   </div><div>
   ${r.state==="Awaiting payment"
