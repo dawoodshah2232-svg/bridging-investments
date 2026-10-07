@@ -46,6 +46,12 @@
     }
   }), { threshold: 0.12 });
   document.querySelectorAll(".reveal").forEach(el => io.observe(el));
+  /* auto-observe .reveal elements added later by page scripts (blog, projects, etc.) */
+  new MutationObserver(muts => muts.forEach(m => m.addedNodes.forEach(n => {
+    if (!n || n.nodeType !== 1) return;
+    if (n.classList && n.classList.contains("reveal") && !n.classList.contains("in")) io.observe(n);
+    if (n.querySelectorAll) n.querySelectorAll(".reveal:not(.in)").forEach(el => io.observe(el));
+  }))).observe(document.body, { childList: true, subtree: true });
 
   /* ---------- animated counters ---------- */
   const cio = new IntersectionObserver(es => es.forEach(e => {

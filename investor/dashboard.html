@@ -146,8 +146,8 @@
 <p class="page-sub">Holdings issued at legal closing — reconciled to the project company register. Demo data.</p>
 <div class="panel"><div class="table-wrap" style="border:0"><table style="min-width:720px">
 <tr><th>Project</th><th>Units</th><th>Ownership</th><th>Acquired</th><th>Certificate</th></tr>
-<tr><td><b>Dubai Charter Yacht</b><div class="dm">BI-YT-01</div></td><td class="num">5</td><td class="num">4.00%</td><td>12 Sep 2026</td><td><button class="btn btn-ghost btn-sm" onclick="toast('Demo: share certificate CRT-2026-0912 downloaded')">Certificate</button></td></tr>
-<tr><td><b>Business Bay Commercial Tower</b><div class="dm">BI-CP-02</div></td><td class="num">2</td><td class="num">0.64%</td><td>05 Sep 2026</td><td><button class="btn btn-ghost btn-sm" onclick="toast('Demo: share certificate CRT-2026-0877 downloaded')">Certificate</button></td></tr>
+<tr><td><b>Dubai Charter Yacht</b><div class="dm">BI-YT-01</div></td><td class="num">5</td><td class="num">4.00%</td><td>12 Sep 2026</td><td><button class="btn btn-ghost btn-sm" onclick="openCert({project:'Dubai Charter Yacht',code:'BI-YT-01',units:5,ownership:'4.00%',acquired:'12 Sep 2026',cert:'CRT-2026-0912'})">Certificate</button></td></tr>
+<tr><td><b>Business Bay Commercial Tower</b><div class="dm">BI-CP-02</div></td><td class="num">2</td><td class="num">0.64%</td><td>05 Sep 2026</td><td><button class="btn btn-ghost btn-sm" onclick="openCert({project:'Business Bay Commercial Tower',code:'BI-CP-02',units:2,ownership:'0.64%',acquired:'05 Sep 2026',cert:'CRT-2026-0877'})">Certificate</button></td></tr>
 </table></div>
 <p style="font-size:12.5px;color:var(--dim);margin-top:12px">Ownership % is of total project equity. A portal certificate evidences a recorded position — legal issuance sits in the company register.</p></div>
 </section>
@@ -438,4 +438,86 @@ document.getElementById("ticketList").innerHTML = BIDEMO.tickets.map(t=>`
   <div class="doc-row"><div><b>${t.subject}</b><div class="dm">${t.id} · ${t.date}</div></div>
   <span class="badge ${t.state==="Open"?"warn":"ok"}">${t.state}</span></div>`).join("");
 </script>
+
+<!-- OWNERSHIP CERTIFICATE MODAL -->
+<div class="modal" id="certModal"><div class="modal-bg" onclick="closeCert()"></div>
+<div class="modal-box" style="max-width:720px;padding:0;overflow:hidden">
+<div class="cert-paper">
+<div class="cert-border">
+<img src="../assets/logo-ownstakex.png" alt="OwnStakeX" class="cert-logo">
+<div class="cert-kicker">OwnStakeX · Bridging Investment LLC</div>
+<h2 class="cert-title">Certificate of Ownership</h2>
+<div class="cert-no">Certificate No. <b id="certNo"></b></div>
+<p class="cert-body">This certifies that</p>
+<div class="cert-name" id="certName">Ahmed Khan</div>
+<div class="cert-id">Investor ID INV-2041 · Verified</div>
+<p class="cert-body">is the recorded holder of</p>
+<div class="cert-holding"><b id="certUnits"></b> units · <b id="certOwn"></b> ownership</div>
+<p class="cert-body">in</p>
+<div class="cert-project" id="certProject"></div>
+<div class="cert-code" id="certCode"></div>
+<div class="cert-meta">
+<div><span>Acquired</span><b id="certAcq"></b></div>
+<div><span>Register ref</span><b id="certReg"></b></div>
+<div><span>Issued</span><b>07 Oct 2026</b></div>
+</div>
+<p class="cert-fine">This portal certificate evidences a recorded position. Legal issuance sits in the project company register. Ownership % is of total project equity. Capital at risk — this certificate is not a redemption valuation.</p>
+<div class="cert-sign">
+<div><div class="cert-sigline"></div><span>Authorised signatory, Bridging Investment LLC</span></div>
+<div><div class="cert-sigline"></div><span>Date</span></div>
+</div>
+</div>
+</div>
+<div style="display:flex;gap:10px;justify-content:flex-end;padding:18px 22px;border-top:1px solid var(--line2);background:#fff">
+<button class="btn btn-ghost btn-sm" onclick="closeCert()">Close</button>
+<button class="btn btn-primary btn-sm" onclick="window.print()">Print / Save PDF</button>
+</div>
+</div></div>
+<script>
+function openCert(d){
+  document.getElementById('certNo').textContent = d.cert;
+  document.getElementById('certUnits').textContent = d.units;
+  document.getElementById('certOwn').textContent = d.ownership;
+  document.getElementById('certProject').textContent = d.project;
+  document.getElementById('certCode').textContent = d.code;
+  document.getElementById('certAcq').textContent = d.acquired;
+  document.getElementById('certReg').textContent = 'REG-' + d.code + '-2026';
+  document.getElementById('certModal').classList.add('on');
+  document.body.style.overflow = 'hidden';
+}
+function closeCert(){
+  document.getElementById('certModal').classList.remove('on');
+  document.body.style.overflow = '';
+}
+</script>
+<style>
+.cert-paper{background:#fdfbf6;padding:8px}
+.cert-border{border:2px solid #c9a45c;outline:1px solid #e8dcc0;outline-offset:5px;padding:36px 34px;text-align:center;background:#fffdf8}
+.cert-logo{height:44px;width:auto;margin-bottom:6px}
+.cert-kicker{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:#8a7a5c;font-weight:700}
+.cert-title{font-size:34px;font-weight:800;letter-spacing:-.02em;color:#0e1a2b;margin:10px 0 4px}
+.cert-no{font-size:13px;color:#8a7a5c;margin-bottom:18px}
+.cert-body{font-size:14px;color:#55657b;margin:14px 0 6px}
+.cert-name{font-size:30px;font-weight:800;color:#0e1a2b;letter-spacing:-.01em}
+.cert-id{font-size:12.5px;color:#8a7a5c;margin-top:4px}
+.cert-holding{font-size:22px;color:#0e1a2b;margin-top:4px}
+.cert-holding b{color:#c98a12}
+.cert-project{font-size:24px;font-weight:800;color:#0e1a2b}
+.cert-code{font-size:13px;color:#8a7a5c;margin-top:4px}
+.cert-meta{display:flex;justify-content:center;gap:36px;margin:22px 0 6px;flex-wrap:wrap}
+.cert-meta div span{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:#8a7a5c}
+.cert-meta div b{font-size:15px;color:#0e1a2b}
+.cert-fine{font-size:11.5px;color:#8d99ab;max-width:520px;margin:14px auto 0;line-height:1.6}
+.cert-sign{display:flex;justify-content:space-between;gap:24px;max-width:520px;margin:26px auto 0}
+.cert-sign>div{flex:1}
+.cert-sigline{border-bottom:1px solid #c9a45c;height:34px;margin-bottom:6px}
+.cert-sign span{font-size:11px;color:#8a7a5c}
+@media print{
+  body>*{display:none!important}
+  #certModal{display:block!important;position:static}
+  #certModal .modal-bg{display:none!important}
+  #certModal .modal-box{box-shadow:none;max-width:100%;margin:0}
+}
+@media(max-width:640px){.cert-title{font-size:26px}.cert-name{font-size:24px}.cert-project{font-size:20px}}
+</style>
 </body></html>
