@@ -23,7 +23,7 @@ const BIDEMO = {
   projects: [
     {
       id: "yacht", code: "BI-YT-01", name: "Dubai Charter Yacht", category: "Maritime charter",
-      location: "Dubai Marina, UAE", img: "assets/yacht.webp", video: "assets/videos/yacht.mp4", status: "funding",
+      location: "Dubai Marina, UAE", country: "UAE", countryName: "United Arab Emirates", img: "assets/yacht.webp", video: "assets/videos/yacht.mp4", status: "funding",
       tagline: "A 78ft luxury charter yacht with an established operator and forward bookings.",
       capital: 2000000, units: 100, unitPrice: 20000, reserved: 62, funded: 20,
       min: 1, max: 20, operator: "Marina Crest Charters LLC", issuer: "BI Yacht One Ltd",
@@ -39,7 +39,7 @@ const BIDEMO = {
     },
     {
       id: "property", code: "BI-CP-02", name: "Business Bay Commercial Tower — Levels 12–14", category: "Commercial property",
-      location: "Business Bay, Dubai, UAE", img: "assets/property.webp", video: "assets/videos/property.mp4", status: "funding",
+      location: "Business Bay, Dubai, UAE", country: "UAE", countryName: "United Arab Emirates", img: "assets/property.webp", video: "assets/videos/property.mp4", status: "funding",
       tagline: "Three tenanted office floors with contracted rental income and 94% occupancy.",
       capital: 5000000, units: 250, unitPrice: 20000, reserved: 141, funded: 88,
       min: 1, max: 25, operator: "Bayline Facilities Management LLC", issuer: "BI Property Two Ltd",
@@ -55,7 +55,7 @@ const BIDEMO = {
     },
     {
       id: "restaurant", code: "BI-RS-03", name: "JBR Flagship Restaurant", category: "Hospitality",
-      location: "JBR, Dubai, UAE", img: "assets/restaurant.webp", video: "assets/videos/restaurant.mp4", status: "evaluation",
+      location: "JBR, Dubai, UAE", country: "UAE", countryName: "United Arab Emirates", img: "assets/restaurant.webp", video: "assets/videos/restaurant.mp4", status: "evaluation",
       tagline: "A flagship dining outlet under evaluation — revenue reconciliation in progress.",
       capital: 3200000, units: 160, unitPrice: 20000, reserved: 0, funded: 0,
       min: 1, max: 20, operator: "Under selection", issuer: "TBC", longStop: "TBC", campaignEnds: "TBC", version: "draft",
@@ -66,7 +66,7 @@ const BIDEMO = {
     },
     {
       id: "falcon", code: "BI-FX-04", name: "Project Falcon — FX Brokerage Equity", category: "Financial services",
-      location: "Under review", img: "", video: "assets/videos/falcon.mp4", status: "review",
+      location: "Under review", country: "UAE", countryName: "United Arab Emirates", img: "", video: "assets/videos/falcon.mp4", status: "review",
       tagline: "Brokerage equity requires separate regulatory approval before any offer can be made.",
       capital: 0, units: 0, unitPrice: 0, reserved: 0, funded: 0,
       min: 0, max: 0, operator: "—", issuer: "—", longStop: "—", campaignEnds: "—", version: "—",

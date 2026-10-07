@@ -12,6 +12,35 @@
 <link rel="canonical" href="https://dawoodshah2232-svg.github.io/bridging-investments/projects.html">
 <link rel="icon" href="assets/favicon.png" type="image/png" type="image/svg+xml">
 <link rel="stylesheet" href="css/style.css?v=20261001a">
+<style>
+/* ---- country filter + waitlist (projects page only) ---- */
+.grid.cols-4.cx-filters{grid-template-columns:repeat(5,1fr)}
+.cx-wrap{position:relative}
+.cx-btn{width:100%;background:#fff;border:1px solid var(--line2);border-radius:12px;padding:13px 15px;color:var(--ivory);font-family:var(--font);font-size:15px;display:flex;align-items:center;justify-content:space-between;gap:8px;cursor:pointer;transition:border-color .2s,box-shadow .2s;text-align:left}
+.cx-btn:hover{border-color:var(--orange)}
+.cx-btn:focus-visible{outline:0;border-color:var(--orange);box-shadow:0 0 0 3px rgba(249,115,22,.18)}
+.cx-btn svg{flex:none;color:var(--dim)}
+.cx-btn span.lbl{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cx-panel{position:absolute;top:calc(100% + 8px);left:0;right:0;min-width:280px;background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 24px 60px -18px rgba(14,26,43,.35);padding:8px;z-index:60;max-height:360px;overflow:auto}
+.cx-group{font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);padding:10px 10px 6px}
+.cx-opt{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;text-align:left;background:transparent;border:0;border-radius:10px;padding:10px;font-size:14.5px;font-weight:600;color:var(--ivory);cursor:pointer;font-family:var(--font)}
+.cx-opt:hover{background:rgba(249,115,22,.08)}
+.cx-opt.on{background:var(--orange-soft);color:var(--orange-deep)}
+.cx-opt .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cx-count{font-size:12px;font-weight:700;color:var(--muted);background:#f1f3f5;border-radius:999px;padding:3px 10px;white-space:nowrap;flex:none}
+.cx-opt.on .cx-count{background:#fff;color:var(--orange-deep)}
+.cx-searchrow{display:flex;gap:8px;padding:6px 10px 12px}
+.cx-searchrow input{flex:1;min-width:0;background:#fff;border:1px solid var(--line2);border-radius:10px;padding:10px 12px;font-size:14px;color:var(--ivory);font-family:var(--font)}
+.cx-searchrow input:focus{outline:0;border-color:var(--orange);box-shadow:0 0 0 3px rgba(249,115,22,.18)}
+.cx-country{display:flex;align-items:center;gap:6px;color:var(--muted);font-size:13px;margin-top:8px}
+.cx-country svg{flex:none;color:var(--dim)}
+.cx-globe{width:56px;height:56px;border-radius:18px;background:var(--orange-soft);display:grid;place-items:center;margin:0 auto 18px;color:var(--orange)}
+.cx-err{color:#b42318;background:#fef3f2;border:1px solid #fecdca;border-radius:10px;padding:10px 12px;font-size:13.5px;margin:0 0 12px;text-align:left}
+.cx-okbadge{width:56px;height:56px;border-radius:50%;background:#dcfae6;color:#067647;display:grid;place-items:center;margin:0 auto 18px}
+@media(max-width:1100px){.grid.cols-4.cx-filters{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:640px){.grid.cols-4.cx-filters{grid-template-columns:1fr}.cx-panel{position:fixed;left:16px;right:16px;top:120px;max-height:70vh}}
+#cxWaitlist{scroll-margin-top:110px}
+</style>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"CollectionPage","name":"Investment projects","url":"https://dawoodshah2232-svg.github.io/bridging-investments/projects.html"}</script>
 <script type="application/ld+json">
 {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://dawoodshah2232-svg.github.io/bridging-investments/index.html"}, {"@type": "ListItem", "position": 2, "name": "Projects", "item": "https://dawoodshah2232-svg.github.io/bridging-investments/projects.html"}]}
@@ -40,17 +69,45 @@
 </div></section>
 
 <section class="section" style="padding-top:20px"><div class="container">
-<div class="panel reveal" style="padding:20px"><div class="grid cols-4" style="gap:14px">
+<div class="panel reveal" style="padding:20px"><div class="grid cols-4 cx-filters" style="gap:14px">
 <div class="field" style="margin:0"><label for="fSearch">Search</label><input id="fSearch" placeholder="Name, location, category…"></div>
 <div class="field" style="margin:0"><label for="fCat">Category</label><select id="fCat"></select></div>
 <div class="field" style="margin:0"><label for="fStatus">Status</label><select id="fStatus"><option value="">All statuses</option><option value="funding">Funding</option><option value="evaluation">Evaluation</option><option value="review">Under review</option></select></div>
 <div class="field" style="margin:0"><label for="fSort">Sort by</label><select id="fSort"><option value="">Featured</option><option value="avail">Most available</option><option value="capital">Largest capital</option></select></div>
+<div class="field" style="margin:0"><label id="cxLabel">Country</label>
+<div class="cx-wrap">
+<button type="button" class="cx-btn" id="cxBtn" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="cxLabel cxBtnLabel"><span class="lbl" id="cxBtnLabel">All countries</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button>
+<div class="cx-panel" id="cxPanel" role="listbox" aria-label="Country filter" hidden>
+<div class="cx-group">Available now</div>
+<div id="cxAvail"></div>
+<div class="cx-group">Looking elsewhere?</div>
+<div class="cx-searchrow"><input id="cxQuery" placeholder="Type a country&hellip;" aria-label="Type a country" autocomplete="off"><button type="button" class="btn btn-primary btn-sm" id="cxGo">Search</button></div>
+</div>
+</div></div>
 </div></div>
 <p id="resCount" style="color:var(--muted);font-size:14px;margin-bottom:18px"></p>
 <div class="grid cols-3" id="projectList"></div>
 <div id="noResults" class="card" style="display:none;text-align:center;padding:60px 30px">
 <div style="font-size:44px;margin-bottom:12px">🔍</div><h3>No projects match</h3><p>Try clearing a filter — or register interest and we'll notify you of new offers.</p>
 <div style="margin-top:18px"><a class="btn btn-ghost" href="contact.html">Notify me</a></div></div>
+<div id="cxWaitlist" class="card" style="display:none;max-width:580px;margin:0 auto;text-align:center;padding:48px 36px">
+<div class="cx-globe"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+<h3 id="cxWTitle" style="margin:0 0 10px">We&rsquo;re not in Qatar yet.</h3>
+<p id="cxWText" style="color:var(--muted);margin:0 0 26px;font-size:15px"></p>
+<form id="cxWForm" novalidate>
+<div class="field"><label for="cxWName">Name</label><input id="cxWName" placeholder="Your name" autocomplete="name"></div>
+<div class="field"><label for="cxWEmail">Email</label><input id="cxWEmail" type="email" placeholder="you@email.com" autocomplete="email"></div>
+<p id="cxWErr" class="cx-err" style="display:none" role="alert"></p>
+<button type="submit" class="btn btn-primary" style="width:100%">Notify me</button>
+<p style="font-size:12.5px;color:var(--dim);margin:12px 0 0">One email per country. We&rsquo;ll only write when a project launches there.</p>
+</form>
+<div id="cxWOk" style="display:none">
+<div class="cx-okbadge"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
+<h3 style="margin:0 0 8px">You&rsquo;re on the list</h3>
+<p style="color:var(--muted);margin:0">We&rsquo;ll email you the moment we launch in <b id="cxWOkCountry"></b>.</p>
+</div>
+<div style="margin-top:22px"><button type="button" class="btn btn-ghost btn-sm" id="cxWBack">&larr; Back to all projects</button></div>
+</div>
 </div></section>
 
 <section class="section band"><div class="container"><div class="card reveal" style="text-align:center;padding:54px 30px">
@@ -69,5 +126,166 @@
 <div class="f-owner"><b>OwnStakeX.com</b> is owned by <b>Bridging Investment LLC</b>, Dubai, UAE.</div>
 <div class="f-bottom"><span>© <span id="yr">2026</span> OwnStakeX · Dubai, UAE</span><span>Demo build v1.0</span><a href="admin/login.html" style="color:var(--dim);font-size:12px;text-decoration:none">Admin login</a></div>
 </div></footer>
-<script src="js/data.js?v=20261001a"></script><script src="js/site.js?v=20261001a"></script>
+<script src="js/data.js?v=20261007c"></script><script src="js/site.js?v=20261007c"></script>
+<script>
+/* ---- country filter + notify-me waitlist (projects page) ---- */
+(function () {
+  if (!window.BIDEMO) return;
+  var list = document.getElementById("projectList"); if (!list) return;
+  var cat = document.getElementById("fCat"), st = document.getElementById("fStatus"),
+      q = document.getElementById("fSearch"), sort = document.getElementById("fSort"),
+      resCount = document.getElementById("resCount"), noResults = document.getElementById("noResults"),
+      waitlist = document.getElementById("cxWaitlist");
+
+  var PIN = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>';
+
+  /* country index from data */
+  var byCode = {};
+  BIDEMO.projects.forEach(function (p) {
+    if (p._hidden || !p.country) return;
+    var c = byCode[p.country] || (byCode[p.country] = { code: p.country, name: p.countryName || p.country, n: 0 });
+    c.n++;
+  });
+  var countries = Object.keys(byCode).map(function (k) { return byCode[k]; })
+    .sort(function (a, b) { return b.n - a.n || a.name.localeCompare(b.name); });
+
+  var state = { mode: "all", code: null, query: "" }; /* all | country | search */
+
+  /* ---------- dropdown ---------- */
+  var btn = document.getElementById("cxBtn"), panel = document.getElementById("cxPanel"),
+      btnLabel = document.getElementById("cxBtnLabel"), avail = document.getElementById("cxAvail"),
+      queryIn = document.getElementById("cxQuery"), go = document.getElementById("cxGo");
+
+  function renderAvail() {
+    avail.innerHTML = "";
+    var mk = function (val, name, count, on) {
+      var b = document.createElement("button");
+      b.type = "button"; b.className = "cx-opt" + (on ? " on" : ""); b.setAttribute("data-cx", val);
+      var nm = document.createElement("span"); nm.className = "nm"; nm.textContent = name; b.appendChild(nm);
+      if (count) { var c = document.createElement("span"); c.className = "cx-count"; c.textContent = count; b.appendChild(c); }
+      b.addEventListener("click", function () { pick(val); });
+      avail.appendChild(b);
+    };
+    mk("all", "All countries", null, state.mode === "all");
+    countries.forEach(function (c) {
+      mk(c.code, c.name, c.n + (c.n === 1 ? " project" : " projects"), state.mode === "country" && state.code === c.code);
+    });
+  }
+  function pick(val) {
+    if (val === "all") { state.mode = "all"; state.code = null; state.query = ""; btnLabel.textContent = "All countries"; }
+    else {
+      var c = null; countries.forEach(function (x) { if (x.code === val) c = x; });
+      state.mode = "country"; state.code = val; state.query = ""; btnLabel.textContent = c ? c.name : val;
+    }
+    queryIn.value = ""; renderAvail(); closePanel(); applyCountry();
+  }
+  function openPanel() { panel.hidden = false; btn.setAttribute("aria-expanded", "true"); }
+  function closePanel() { panel.hidden = true; btn.setAttribute("aria-expanded", "false"); }
+  btn.addEventListener("click", function (e) { e.stopPropagation(); panel.hidden ? openPanel() : closePanel(); });
+  document.addEventListener("click", function (e) { if (!panel.hidden && !e.target.closest(".cx-wrap")) closePanel(); });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") closePanel(); });
+
+  function cap(s) { s = String(s || "").trim(); return s ? s.charAt(0).toUpperCase() + s.slice(1) : s; }
+  function matchesCountry(p, needle) {
+    needle = String(needle || "").trim().toLowerCase(); if (!needle) return false;
+    return ((p.countryName || "") + " " + (p.country || "")).toLowerCase().indexOf(needle) !== -1;
+  }
+  function doSearch() {
+    var v = queryIn.value.trim(); if (!v) return;
+    state.mode = "search"; state.query = v; state.code = null;
+    btnLabel.textContent = cap(v); renderAvail(); closePanel(); applyCountry();
+  }
+  go.addEventListener("click", doSearch);
+  queryIn.addEventListener("keydown", function (e) { if (e.key === "Enter") { e.preventDefault(); doSearch(); } });
+
+  /* ---------- filtering (runs after site.js apply; same event order) ---------- */
+  function baseFilter() {
+    var L = BIDEMO.projects.filter(function (p) {
+      return !p._hidden &&
+        (!cat.value || p.category === cat.value) &&
+        (!st.value || p.status === st.value) &&
+        (!q.value || (p.name + " " + p.location + " " + p.category).toLowerCase().indexOf(q.value.toLowerCase()) !== -1);
+    });
+    if (sort.value === "avail") L = L.slice().sort(function (a, b) { return (b.units - b.reserved - b.funded) - (a.units - a.reserved - a.funded); });
+    if (sort.value === "capital") L = L.slice().sort(function (a, b) { return b.capital - a.capital; });
+    return L;
+  }
+  function stampCountry(L) {
+    var cards = list.querySelectorAll(".p-card");
+    for (var i = 0; i < cards.length; i++) {
+      var p = L[i]; if (!p || cards[i].querySelector(".cx-country")) continue;
+      var loc = String(p.location || "").replace(/\s*,?\s*UAE\s*$/i, "").trim();
+      var label = (loc && !/under review/i.test(loc)) ? (p.countryName || p.country) + " \u00b7 " + loc : (p.countryName || p.country || "");
+      var d = document.createElement("div"); d.className = "cx-country";
+      d.innerHTML = PIN + "<span></span>"; d.querySelector("span").textContent = label;
+      var meta = cards[i].querySelector(".p-meta");
+      if (meta) meta.after(d); else { var b = cards[i].querySelector(".p-body"); if (b) b.appendChild(d); }
+    }
+  }
+  function applyCountry() {
+    var L = baseFilter(), waitFor = null;
+    if (state.mode === "country" && state.code) L = L.filter(function (p) { return p.country === state.code; });
+    else if (state.mode === "search" && state.query) {
+      var any = BIDEMO.projects.some(function (p) { return !p._hidden && matchesCountry(p, state.query); });
+      if (!any) waitFor = state.query; else L = L.filter(function (p) { return matchesCountry(p, state.query); });
+    }
+    if (waitFor) {
+      list.innerHTML = "";
+      if (noResults) noResults.style.display = "none";
+      showWaitlist(waitFor);
+      resCount.textContent = "0 projects";
+    } else {
+      hideWaitlist();
+      window.renderProjectCards("projectList", L);
+      stampCountry(L);
+      if (noResults) noResults.style.display = L.length ? "none" : "block";
+      resCount.textContent = L.length + (L.length === 1 ? " project" : " projects");
+    }
+  }
+  [cat, st, sort].forEach(function (el) { el.addEventListener("change", applyCountry); });
+  q.addEventListener("input", applyCountry);
+
+  /* ---------- waitlist ---------- */
+  var wTitle = document.getElementById("cxWTitle"), wText = document.getElementById("cxWText"),
+      wForm = document.getElementById("cxWForm"), wOk = document.getElementById("cxWOk"),
+      wErr = document.getElementById("cxWErr"),
+      wName = document.getElementById("cxWName"), wEmail = document.getElementById("cxWEmail"),
+      wOkCountry = document.getElementById("cxWOkCountry"),
+      wCountry = "";
+  function showWaitlist(country) {
+    wCountry = country;
+    var C = cap(country);
+    wTitle.textContent = "We\u2019re not in " + C + " yet.";
+    wText.textContent = "We\u2019re planning to start business setup in " + C + " soon. Leave your email and we\u2019ll notify you the moment a project launches there.";
+    wForm.style.display = ""; wOk.style.display = "none"; wErr.style.display = "none"; wForm.reset();
+    waitlist.style.display = "block";
+    try { waitlist.scrollIntoView({ behavior: "smooth", block: "start" }); } catch (_) {}
+  }
+  function hideWaitlist() { waitlist.style.display = "none"; }
+  function readWL() { try { return JSON.parse(localStorage.getItem("osx_country_waitlist") || "[]"); } catch (_) { return []; } }
+  wForm.addEventListener("submit", function (e) {
+    e.preventDefault(); wErr.style.display = "none";
+    var name = wName.value.trim(), email = wEmail.value.trim();
+    if (name.length < 2) { wErr.textContent = "Please enter your name."; wErr.style.display = "block"; return; }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { wErr.textContent = "Please enter a valid email address."; wErr.style.display = "block"; return; }
+    var arr = readWL();
+    var dup = arr.some(function (r) {
+      return String(r.email || "").toLowerCase() === email.toLowerCase() &&
+             String(r.country || "").toLowerCase() === String(wCountry).toLowerCase();
+    });
+    if (dup) { wErr.textContent = "This email is already on the list for " + cap(wCountry) + "."; wErr.style.display = "block"; return; }
+    arr.push({ name: name, email: email, country: cap(wCountry), date: new Date().toISOString() });
+    try { localStorage.setItem("osx_country_waitlist", JSON.stringify(arr)); }
+    catch (_) { wErr.textContent = "Could not save \u2014 your browser storage is unavailable."; wErr.style.display = "block"; return; }
+    wForm.style.display = "none"; wOkCountry.textContent = cap(wCountry); wOk.style.display = "block";
+  });
+  document.getElementById("cxWBack").addEventListener("click", function () {
+    state.mode = "all"; state.code = null; state.query = ""; queryIn.value = "";
+    btnLabel.textContent = "All countries"; renderAvail(); hideWaitlist(); applyCountry();
+  });
+
+  renderAvail();
+  applyCountry();
+})();
+</script>
 </body></html>
