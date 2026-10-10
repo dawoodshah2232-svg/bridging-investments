@@ -18,7 +18,7 @@ no guaranteed-return claims, no invented statistics. "Capital at risk" tone.
 - [x] commercial-vs-residential-investing | Market | Commercial vs residential property: cash flow, leases, effort | honest comparison
 - [x] service-charges-dubai-commercial | Market | Service charges in Dubai commercial towers: the line investors forget | opex drag
 - [x] single-asset-risk | Market | One yacht, one building, one restaurant: understanding single-asset risk | concentration
-- [ ] charter-rate-cycles | Market | Charter rates move in cycles — what sets the price of a week at sea | supply/demand
+- [x] charter-rate-cycles | Market | Charter rates move in cycles — what sets the price of a week at sea | supply/demand
 - [ ] restaurant-unit-economics | Market | Restaurant unit economics: covers, average spend, and the break-even line | hospitality math
 - [ ] dubai-office-demand-drivers | Market | Who is actually renting Dubai offices right now | demand sources
 - [ ] cap-rate-plain-english | Market | Cap rates in plain English: the one ratio every property investor should know | valuation basics
@@ -51,7 +51,7 @@ no guaranteed-return claims, no invented statistics. "Capital at risk" tone.
 - [x] fee-schedule-reading | How it works | Reading the fee schedule: every fee, disclosed | transparency
 - [x] subscription-agreement-clauses | How it works | Five clauses to read in any subscription agreement | legal literacy
 - [x] risk-acknowledgement-why | How it works | Why we ask you to sign a risk acknowledgement | informed consent
-- [ ] audit-trail-investor | How it works | The audit trail: every action, timestamped, nobody can edit it | governance
+- [x] audit-trail-investor | How it works | The audit trail: every action, timestamped, nobody can edit it | governance
 - [ ] maker-checker-explained | How it works | Maker-checker: why two people approve your payout | dual control
 - [ ] treasury-exception-queue | How it works | When a payment doesn't match: inside the exception queue | reconciliation
 - [ ] valuation-reports-how-to-read | Reporting | How to read a valuation report without a finance degree | valuation literacy
@@ -84,7 +84,7 @@ no guaranteed-return claims, no invented statistics. "Capital at risk" tone.
 - [x] reading-financial-statements-basics | Investor guide | Financial statements in 10 minutes: what actually matters | literacy
 - [x] sponsor-alignment | Investor guide | Sponsor alignment: why we invest our own capital alongside you | skin in the game
 - [x] transparency-as-strategy | Brand | Why we publish everything: transparency as a business strategy | brand story
-- [ ] how-we-choose-projects | Brand | How projects get chosen: our evaluation process | curation
+- [x] how-we-choose-projects | Brand | How projects get chosen: our evaluation process | curation
 - [ ] what-we-reject-and-why | Brand | What we reject: the deals we said no to and why | selectivity
 - [ ] investor-stories-approach | Brand | What good investor behavior looks like (a composite sketch) | behavior, no fake testimonials
 - [ ] long-term-thinking-wealth | Investor guide | Wealth is built in decades, not quarters | mindset
